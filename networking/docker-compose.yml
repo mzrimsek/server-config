@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=US/Eastern
+      - URL=zrimsek.com
+      - SUBDOMAINS=wildcard,www
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+      - EMAIL=mikezrimsek@gmail.com
+      - DHLEVEL=4096
+    volumes:
+      - /config/letsencrypt:/config
+    restart: unless-stopped
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /config/nginx:/etc/nginx
+      - /config/letsencrypt/etc/letsencrypt/live/zrimsek.com:/etc/ssl/private
+    restart: unless-stopped
