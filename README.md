@@ -16,3 +16,5 @@ Used the following posts to assist:
 * Nginx was kind of a pain. For whatever reason mounting a volume to `etc/nginx` in the container did not allow the container to create the necessary config files. Work around was to not bind the volume until after the container spun up once to allow the files to generate, then use `docker cp` to copy the files from the container to the host in the directory that was then bound to the volume.
 
 * When adding a new nginx site conf, if that site is running in a docker container, the proxy_pass ip address needs to match the address of the network that container is running on.
+
+* `openssl dhparam -out dhparams.pem 4096` generates dhparams.pem when run in the nginx config folder
