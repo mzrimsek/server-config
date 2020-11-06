@@ -27,5 +27,5 @@ services:
       - 443:443
     volumes:
       - /config/nginx:/etc/nginx
-      - /config/letsencrypt/etc/letsencrypt/live/zrimsek.com:/etc/nginx/ssl
+      - /config/letsencrypt/etc/letsencrypt/archive/zrimsek.com:/etc/nginx/ssl
     restart: unless-stopped
