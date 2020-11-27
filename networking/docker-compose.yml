@@ -1,31 +1,20 @@
 version: '2'
 
 services:
-  letsencrypt:
-    image: linuxserver/letsencrypt
-    container_name: letsencrypt
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=US/Eastern
-      - URL=zrimsek.com
-      - SUBDOMAINS=wildcard,www
-      - VALIDATION=dns
-      - DNSPLUGIN=cloudflare
-      - EMAIL=mikezrimsek@gmail.com
-      - DHLEVEL=4096
-    volumes:
-      - /config/letsencrypt:/config
-    restart: unless-stopped
-  
-  reverse:
-    container_name: reverse
-    hostname: reverse
-    image: nginx
+  traefik:
+    container_name: traefik
+    image: traefik:latest
     ports:
       - 80:80
       - 443:443
+      - 8080:8080
     volumes:
-      - /config/nginx:/etc/nginx
-      - /config/letsencrypt/etc/letsencrypt/archive/zrimsek.com:/etc/nginx/ssl
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /config/traefik/traefik.yml:/traefik.yml
+      - /config/traefik/acme.json:/acme.json
+    networks:
+      - public
     restart: unless-stopped
+
+networks:
+  public: 
