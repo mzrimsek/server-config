@@ -1,0 +1,11 @@
+version: '2'
+ 
+services:
+  factorio:
+    container_name: factorio
+    image: factoriotools/factorio
+    ports:
+     - "34197:34197/udp"
+    volumes:
+     - /opt/factorio:/factorio
+    restart: unless-stopped
