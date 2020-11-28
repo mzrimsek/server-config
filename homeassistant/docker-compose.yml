@@ -1,12 +1,25 @@
 version: '2'
 
 services:
-  home_assistant:
+  web:
     image: homeassistant/home-assistant:stable
     container_name: home_assistant
+    ports:
+      - ${HOST_PORT}:8123
     volumes:
       - /config/homeassistant:/config
     environment:
       - TZ=America/New_York
-    network_mode: host
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.server.port=${HOST_PORT}"
     restart: always
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
