@@ -1,20 +1,35 @@
 # server-config
-A repo of files to set up my local server
+
+A repo of files to set up my local server. To achieve a similar set up you must have [Docker](https://docs.docker.com/get-docker/) installed, with Docker Compose recommended. Script included here but it may not run all the way through - each command run separately should do the trick though. Hopefully this will be improved in the future.
+
+[Portainer](https://www.portainer.io/) is highly recommended as an easy-to-use interface to manage your containers. By and large, each ```docker-compose.yml``` is deployed as a stack to take advantage of environment variable substitution.
+
+After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Script included.
+
+Optionally, allowing ssh access makes orchestrating this all remotely much easier. Script included.
 
 ## Networking
 
-Set up SSL certs for the domain that points to the server, as well as an Nginx reverse proxy to route requests to each server.
+Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network.
 
-Used the following posts to assist:
+* Configuration: Mount the ```traefik.yml``` file as a volume to ```/traefik.yml```. Organizing these configuration files into a folder is recommended but not necessary.
 
-* https://medium.com/faun/docker-letsencrypt-dns-validation-75ba8c08a0d
+## Home Assistant
 
-* https://www.freecodecamp.org/news/docker-nginx-letsencrypt-easy-secure-reverse-proxy-40165ba3aee2
+Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.
 
-### Notes
+* Configuration: Must have a directory to persist integration and device configuration, mounted as a volume to ```/config```
 
-* Nginx was kind of a pain. For whatever reason mounting a volume to `etc/nginx` in the container did not allow the container to create the necessary config files. Work around was to not bind the volume until after the container spun up once to allow the files to generate, then use `docker cp` to copy the files from the container to the host in the directory that was then bound to the volume.
+## Games
 
-* When adding a new nginx site conf, if that site is running in a docker container, the proxy_pass ip address needs to match the address of the network that container is running on.
+Set up various game servers.
 
-* `openssl dhparam -out dhparams.pem 4096` generates dhparams.pem when run in the nginx config folder
+### Factorio
+
+* Server Data: Must have a directory to persist server data, mounted as a volume to ```/factorio```
+
+### Minecraft
+
+* World Data: Must have a directory to persist world data, mounted as a volume to ```/data```
+
+* Modpacks: Must have a directory containing the desired modpack as a zip, mounted as a volume to ```/modpacks```
