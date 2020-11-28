@@ -32,6 +32,8 @@ Set up various game servers.
 
 ### Minecraft
 
+This setup allows for potentially running several Minecraft server instances (each with their own volumes and such required), each with their proxy url. This also allows for a cleaner routing to servers due to the port no longer being required when connecting in the game client.
+
 * World Data: Must have a directory to persist world data, mounted as a volume to ```/data```
 
 * Modpacks: Must have a directory containing the desired modpack as a zip, mounted as a volume to ```/modpacks```

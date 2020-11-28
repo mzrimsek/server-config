@@ -9,13 +9,19 @@ services:
     - /opt/minecraft/modpacks:/modpacks
     environment:
       TYPE: CURSEFORGE
-      CF_SERVER_MOD: /modpacks/Enigmatica6Server-0.2.17.zip
+      CF_SERVER_MOD: /modpacks/${MODPACK}
       
       EULA: "true"
       DIFFICULTY: normal
       
       INIT_MEMORY: 1G
       MAX_MEMORY: 8G
+    restart: unless-stopped
+    
+  router:
+    container_name: mc_router
+    image: itzg/mc-router
     ports:
       - 25565:25565
+    command: --mapping=${SERVER_PROXY_URL}=server:25565
     restart: unless-stopped
