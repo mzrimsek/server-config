@@ -1,6 +1,8 @@
 # server-config
 
-A repo of files to set up my local server. To achieve a similar set up you must have [Docker](https://docs.docker.com/get-docker/) installed, with Docker Compose recommended. Script included here but it may not run all the way through - each command run separately should do the trick though. Hopefully this will be improved in the future.
+A repo of files to set up my local server running [Ubuntu 20.04 Server](https://ubuntu.com/server/docs/installation).
+
+To achieve a similar set up you must have [Docker](https://docs.docker.com/get-docker/) installed, with Docker Compose recommended. Script included here but it may not run all the way through - each command run separately should do the trick though. Hopefully this will be improved in the future.
 
 [Portainer](https://www.portainer.io/) is highly recommended as an easy-to-use interface to manage your containers. By and large, each ```docker-compose.yml``` is deployed as a stack to take advantage of environment variable substitution.
 
