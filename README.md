@@ -6,9 +6,17 @@ To achieve a similar set up you must have [Docker](https://docs.docker.com/get-d
 
 [Portainer](https://www.portainer.io/) is highly recommended as an easy-to-use interface to manage your containers. By and large, each ```docker-compose.yml``` is deployed as a stack to take advantage of environment variable substitution.
 
-After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Script included.
+After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Script and docker-compose setup included.
 
 Optionally, allowing ssh access makes orchestrating this all remotely much easier. Script included.
+
+## Portainer
+
+A fantastic interface for managing docker containers. For setting up, I feel it makes the most sense to utilize docker-compose outside of Portainer itself, unlike the other setups...otherwise you're using Portainer to set up Portainer which just feels weird.
+
+* Data: Must have a directory to persist data, mounted as a volume to ```/data```
+
+* Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_portainer.sh``` script to operate correctly.
 
 ## Networking
 
