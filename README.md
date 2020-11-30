@@ -16,6 +16,8 @@ Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Do
 
 * Configuration: Mount the ```traefik.yml``` file as a volume to ```/traefik.yml```. Organizing these configuration files into a folder is recommended but not necessary.
 
+* TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to ```/letsencrypt```. In the ```traefik.yml``` file, ```acme.json``` is specified as the file to be created in this directory to contain all certification information.
+
 ## Home Assistant
 
 Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.

@@ -16,6 +16,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(`${TRAEFIK_PROXY_URL}`)"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.certresolver=${TRAEFIK_TLS_RESOLVER}"
       - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.server.port=${HOST_PORT}"
     restart: always
 
