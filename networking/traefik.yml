@@ -9,3 +9,5 @@ entrypoints:
 
 api:
         insecure: true
+
+accessLog: {}
