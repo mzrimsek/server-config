@@ -20,7 +20,7 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 ## Networking
 
-Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network.
+Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
 
 * Configuration: Mount the ```traefik.yml``` file as a volume to ```/traefik.yml```. Organizing these configuration files into a folder is recommended but not necessary.
 
