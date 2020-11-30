@@ -4,8 +4,6 @@ services:
   web:
     image: homeassistant/home-assistant:stable
     container_name: home_assistant
-    ports:
-      - ${HOST_PORT}:8123
     volumes:
       - /config/homeassistant:/config
     environment:
@@ -14,10 +12,10 @@ services:
       - public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(`${TRAEFIK_PROXY_URL}`)"
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.certresolver=${TRAEFIK_TLS_RESOLVER}"
-      - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.server.port=${HOST_PORT}"
+      - "traefik.http.routers.web_homeassistant.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.web_homeassistant.entrypoints=websecure"
+      - "traefik.http.routers.web_homeassistant.tls.certresolver=tlsresolver"
+      - "traefik.http.services.web_homeassistant.loadbalancer.server.port=8123"
     restart: always
 
 networks:
