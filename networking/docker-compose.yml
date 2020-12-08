@@ -1,5 +1,8 @@
 version: '2'
 
+networks:
+  public: 
+
 services:
   traefik:
     container_name: traefik
@@ -20,6 +23,3 @@ services:
       - "traefik.http.routers.traefik_frontend.tls.certresolver=tlsresolver"
       - "traefik.http.services.traefik_frontend.loadbalancer.server.port=8080"
     restart: unless-stopped
-
-networks:
-  public: 
