@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    server:
+        image: wilso224/valheim_dedicated_server
+        container_name: valheim
+        volumes:
+            - /opt/valheim:/home/steam/valheim
+        ports:
+            - '2456:2456/udp'
+            - '2457:2457/udp'
+            - '2458:2458/udp'
+        environment:
+            - SERVER_NAME=${SERVER_NAME}
+            - SERVER_PORT=2456
+            - SERVER_PASSWORD=${SERVER_PASSWORD}
+            - SERVER_WORLD=Dedicated
+        restart: always
