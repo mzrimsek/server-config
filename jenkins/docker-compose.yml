@@ -9,7 +9,6 @@ services:
           HOST_UID: ${HOST_UID}
           # host docker group id
           HOST_GID: ${HOST_GID}
-    image: jenkins/jenkins:lts
     container_name: jenkins
     volumes:
       - /opt/jenkins:/var/jenkins_home
