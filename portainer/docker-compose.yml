@@ -6,7 +6,7 @@ services:
     image: portainer/portainer-ce:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /config/portainer/data:/data
+      - /opt/portainer/data:/data
     networks:
       - public
     labels:

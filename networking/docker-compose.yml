@@ -12,8 +12,8 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /config/traefik/traefik.yml:/traefik.yml
-      - /config/traefik/letsencrypt:/letsencrypt
+      - /opt/traefik/traefik.yml:/traefik.yml
+      - /opt/traefik/letsencrypt:/letsencrypt
     networks:
       - public
     labels:
