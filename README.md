@@ -20,9 +20,11 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 ## Jenkins
 
-A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. [Reference](https://itnext.io/docker-inside-docker-for-jenkins-d906b7b5f527)
+A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. [Reference](https://itnext.io/docker-inside-docker-for-jenkins-d906b7b5f527).
 
 * Data: Must have a directory to persist data, mounted as a volume to ```/var/jenkins_home```
+
+  * The ```jenkins``` user must have permissions to this volume - ```sudo chown -R $(id -u jenkins)```
 
 * Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_.jenkins``` script to operate correctly.
 
