@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - /opt/homer:/www/assets
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homer.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.homer.entrypoints=websecure"
+      - "traefik.http.routers.homer.tls.certresolver=tlsresolver"
+      - "traefik.http.services.homer.loadbalancer.server.port=8080"
+    restart: unless-stopped
+    
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
