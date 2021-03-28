@@ -55,7 +55,7 @@ Set up a local [Home Assistant](https://www.home-assistant.io/) instance to cont
 
 ## Dashboard
 
-Set up a nice dashboard to access hosted services in a centralized location.
+Set up a nice dashboard with [Homer](https://github.com/bastienwirtz/homer) to access hosted services and frequently accessed sites all in a convenient, centralized location.
 
 * Customization:
   * Must have a directory to persist assets, mounted as a volume to ```/www/assets```
