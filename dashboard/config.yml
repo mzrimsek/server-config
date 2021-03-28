@@ -7,7 +7,7 @@ subtitle: "Homer"
 icon: "fas fa-dice-d20"
 
 header: true
-footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
+footer: false
 
 theme: default
 colors:
@@ -36,25 +36,16 @@ colors:
     card-shadow: rgba(0, 0, 0, 0.4)
     link-hover: "#ffdd57"
 
-# Optional navbar
-# links: [] # Allows for navbar (dark mode, layout, and search) without any links
-# links:
-#   - name: "Contribute"
-#     icon: "fab fa-github"
-#     url: "https://github.com/bastienwirtz/homer"
-#     target: "_blank" # optional html a tag target attribute
-#   - name: "Wiki"
-#     icon: "fas fa-book"
-#     url: "https://www.wikipedia.org/"
-#   # this will link to a second homer page that will load config from additionnal-page.yml and keep default config values as in config.yml file
-#   # see url field and assets/additionnal-page.yml.dist used in this example:
-#   - name: "another page!"
-#     icon: "fas fa-file-alt"
-#     url: "#additionnal-page" 
+links:
+  - name: "Resume Site"
+    icon: "fas fa-file-contract"
+    url: "https://zrimsek.com/"
+    target: "_blank"
+  - name: "Github"
+    icon: "fab fa-github"
+    url: "https://github.com/mzrimsek"
+    target: "_blank"
 
-# Services
-# First level array represent a group.
-# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
 services:
   - name: "Services"
     icon: "fas fa-cloud"
