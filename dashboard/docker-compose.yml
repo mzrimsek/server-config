@@ -5,7 +5,8 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     volumes:
-      - /opt/homer:/www/assets
+      - /opt/homer/assets:/www/assets
+      - /opt/homer/config.yml:/www/assets/config.yml
     networks:
       - public
     labels:
