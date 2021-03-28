@@ -74,3 +74,13 @@ services:
         tag: "docker"
         url: "https://home.zrimsek.com/"
         target: "_blank"
+
+  - name: "Applications"
+    icon: "fab fa-chrome"
+    items:
+      - name: "Track My Playtime"
+        icon: "fas fa-stopwatch"
+        subtitle: "Track Time Spent Playing Video Games"
+        tag: "games"
+        url: "https://trackmyplaytime.com/app/tracker"
+        target: "_blank"
