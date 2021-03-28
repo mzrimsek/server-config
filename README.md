@@ -20,9 +20,11 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 ## Jenkins
 
-A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. Essentially to allow Jenkins to use Docker or Docker Compose commands in pipelines, the container needs those installed. Then the user that Jenkins runs under also needs to be made part of the ```docker``` group, then those ids need to be passed into the Dockerfile when building the image so the container uses the same user and group as the host machine.
+A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. 
 
-[Reference](https://itnext.io/docker-inside-docker-for-jenkins-d906b7b5f527).
+Essentially to allow Jenkins to use Docker or Docker Compose commands in pipelines, the container needs those installed. Then the user that Jenkins runs under also needs to be made part of the ```docker``` group, then those ids need to be passed into the Dockerfile when building the image so the container uses the same user and group as the host machine.
+
+[Reference](https://itnext.io/docker-inside-docker-for-jenkins-d906b7b5f527)
 
 Steps to prep ```jenkins``` user (all commands run on host machine):
 
@@ -31,7 +33,6 @@ Steps to prep ```jenkins``` user (all commands run on host machine):
 3. Restart docker service: ```sudo service docker restart```
 
 * Data: Must have a directory to persist data, mounted as a volume to ```/var/jenkins_home```
-
   * The ```jenkins``` user must have permissions to this volume - ```sudo chown -R $(id -u jenkins)```
 
 * Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_.jenkins``` script to operate correctly.
@@ -51,6 +52,14 @@ Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Do
 Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.
 
 * Configuration: Must have a directory to persist integration and device configuration, mounted as a volume to ```/config```
+
+## Dashboard
+
+Set up a nice dashboard to access hosted services in a centralized location.
+
+* Customization:
+  * Must have a directory to persist assets, mounted as a volume to ```/www/assets```
+  * For ease of use, mount your ```config.yml``` to ```/www/assets/config.yml```
 
 ## Games
 
