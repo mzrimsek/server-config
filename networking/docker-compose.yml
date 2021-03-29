@@ -1,7 +1,8 @@
 version: '2'
 
 networks:
-  public: 
+  public:
+    driver: bridge
 
 services:
   traefik:
@@ -16,10 +17,36 @@ services:
       - /opt/traefik/letsencrypt:/letsencrypt
     networks:
       - public
+    depends_on:
+      - authelia
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_DASH_PROXY_URL}`)"
       - "traefik.http.routers.traefik_frontend.entrypoints=websecure"
       - "traefik.http.routers.traefik_frontend.tls.certresolver=tlsresolver"
       - "traefik.http.services.traefik_frontend.loadbalancer.server.port=8080"
     restart: unless-stopped
+
+  authelia:
+    container_name: authelia
+    image: authelia/authelia:latest
+    volumes:
+      - /opt/authelia:/config
+    networks:
+      - public
+    expose:
+      - 9091
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authelia.rule=Host(`${TRAEFIK_AUTH_PROXY_URL}`)"
+      - "traefik.http.routers.authelia.entrypoints=websecure"
+      - "traefik.http.routers.authelia.tls.certresolver=tlsresolver"
+      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=${TRAEFIK_AUTH_PROXY_URL}'
+      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User, Remote-Groups, Remote-Name, Remote-Email'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.address=http://authelia:9091/api/verify?auth=basic'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.authResponseHeaders=Remote-User, Remote-Groups, Remote-Name, Remote-Email'
+    restart: unless-stopped
+
+
