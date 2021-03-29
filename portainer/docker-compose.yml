@@ -9,7 +9,6 @@ services:
       - /opt/portainer/data:/data
     networks:
       - public
-      - bridge
     ports:
       - 9000:9000
     labels:

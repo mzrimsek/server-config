@@ -10,7 +10,7 @@ After getting Portainer running, getting the networking stack running next is pr
 
 Optionally, allowing ssh access makes orchestrating this all remotely much easier. Script included.
 
-## Portainer
+## Portainer (Run as External Stack)
 
 A fantastic interface for managing docker containers. For setting up, I feel it makes the most sense to utilize docker-compose outside of Portainer itself, unlike the other setups...otherwise you're using Portainer to set up Portainer which just feels weird. It may make sense to exclude the labels from the Portainer container for initial setup, as the setup included assumes Traefik has been configured. If there are multiple devices running Docker on your network, it may make sense to manage them all from the same Portainer instance. [Exposing the Docker daemons](https://stackoverflow.com/questions/40591356/enable-docker-remote-api-raspberry-pi-raspbian/40609248#40609248) on the devices not running Portainer will allow them to be added as endpoints alongside the local Docker instance.
 
@@ -18,7 +18,7 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 * Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_portainer.sh``` script to operate correctly.
 
-## Networking
+## Networking (Run as External Stack)
 
 Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
 
@@ -26,7 +26,7 @@ Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Do
 
 * TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to ```/letsencrypt```. In the ```traefik.yml``` file, ```acme.json``` is specified as the file to be created in this directory to contain all certification information.
 
-## Jenkins
+## Jenkins (Run as External Stack)
 
 A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. 
 
@@ -47,13 +47,13 @@ Steps to prep ```jenkins``` user (all commands run on host machine):
   * Grab the host jenkins user id: ```id -u jenkins```
   * Grab the host docker group id: ```getent group | grep docker```
 
-## Home Assistant
+## Home Assistant (Run as Portainer Stack)
 
 Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.
 
 * Configuration: Must have a directory to persist integration and device configuration, mounted as a volume to ```/config```
 
-## Dashboard
+## Dashboard (Run as Portainer Stack)
 
 Set up a nice dashboard with [Homer](https://github.com/bastienwirtz/homer) to access hosted services and frequently accessed sites all in a convenient, centralized location.
 
@@ -61,7 +61,7 @@ Set up a nice dashboard with [Homer](https://github.com/bastienwirtz/homer) to a
   * Must have a directory to persist assets, mounted as a volume to ```/www/assets```
   * For ease of use, mount your ```config.yml``` to ```/www/assets/config.yml```
 
-## Games
+## Games (Run as Portainer Stacks)
 
 Set up various game servers.
 
@@ -76,3 +76,9 @@ This setup allows for potentially running several Minecraft server instances (ea
 * World Data: Must have a directory to persist world data, mounted as a volume to ```/data```
 
 * Modpacks: Must have a directory containing the desired modpack as a zip, mounted as a volume to ```/modpacks```
+
+### Valheim
+
+* Config: Must have a directory to persist server config, mounted as a volume to ```/config```
+
+* World Data: Must have a directory to persist world data, mounted as volume to ```/opt/valheim```
