@@ -18,6 +18,14 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 * Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_portainer.sh``` script to operate correctly.
 
+## Networking
+
+Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
+
+* Configuration: Mount the ```traefik.yml``` file as a volume to ```/traefik.yml```. Organizing these configuration files into a folder is recommended but not necessary.
+
+* TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to ```/letsencrypt```. In the ```traefik.yml``` file, ```acme.json``` is specified as the file to be created in this directory to contain all certification information.
+
 ## Jenkins
 
 A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. 
@@ -38,14 +46,6 @@ Steps to prep ```jenkins``` user (all commands run on host machine):
 * Environment variables: A ```.env``` file is required with the necessary environment variables filled in for the ```start_.jenkins``` script to operate correctly.
   * Grab the host jenkins user id: ```id -u jenkins```
   * Grab the host docker group id: ```getent group | grep docker```
-
-## Networking
-
-Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
-
-* Configuration: Mount the ```traefik.yml``` file as a volume to ```/traefik.yml```. Organizing these configuration files into a folder is recommended but not necessary.
-
-* TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to ```/letsencrypt```. In the ```traefik.yml``` file, ```acme.json``` is specified as the file to be created in this directory to contain all certification information.
 
 ## Home Assistant
 
