@@ -9,6 +9,8 @@ services:
       - /opt/portainer/data:/data
     networks:
       - public
+    ports:
+      - 9000:9000
     labels:
       - "traefik.enable=true"
       
