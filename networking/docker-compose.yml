@@ -44,12 +44,12 @@ services:
       - public
     environment:
       - TZ=America/New_York
+      - 9091
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.authelia.rule=Host(`${TRAEFIK_AUTH_PROXY_URL}`)"
       - "traefik.http.routers.authelia.entrypoints=websecure"
-      - "traefik.http.routers.authelia.tls.certresolver=tlsresolver"
-      - "traefik.http.services.authelia.loadbalancer.server.port=9091"
+      - "traefik.http.routers.authelia.tls=true"
     restart: unless-stopped
 
 
