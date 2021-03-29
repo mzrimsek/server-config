@@ -44,6 +44,7 @@ services:
       - public
     environment:
       - TZ=America/New_York
+    expose:
       - 9091
     labels:
       - "traefik.enable=true"
