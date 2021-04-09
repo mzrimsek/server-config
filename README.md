@@ -49,6 +49,12 @@ Steps to prep ```jenkins``` user (all commands run on host machine):
   * Grab the host jenkins user id: ```id -u jenkins```
   * Grab the host docker group id: ```getent group | grep docker```
 
+## Monitor (Run as Portainer Stack)
+
+A great stack of services to enable seeing stats on the Docker host, as well as the containers running on it. Adapted from https://github.com/stefanprodan/dockprom.
+
+The necessary files for each dashboard have been included.
+
 ## Home Assistant (Run as Portainer Stack)
 
 Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.
