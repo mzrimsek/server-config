@@ -4,6 +4,10 @@ networks:
   public:
     driver: bridge
 
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+
 services:
   traefik:
     container_name: traefik
@@ -13,8 +17,8 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/traefik/traefik.yml:/traefik.yml
-      - /opt/traefik/letsencrypt:/letsencrypt
+      - /opt/networking/traefik.yml:/traefik.yml
+      - /opt/networking/letsencrypt:/letsencrypt
     networks:
       - public
     labels:
@@ -23,5 +27,49 @@ services:
       - "traefik.http.routers.traefik_frontend.entrypoints=websecure"
       - "traefik.http.routers.traefik_frontend.tls.certresolver=tlsresolver"
       - "traefik.http.services.traefik_frontend.loadbalancer.server.port=8080"
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    container_name: traefik_metrics
+    volumes:
+      - /opt/networking/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    expose:
+      - 9090
+    networks:
+      - public
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:7.5.2
+    container_name: traefik_metrics_graphs
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - /opt/networking/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - /opt/networking/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      
+      # grafana
+      - "traefik.http.routers.traefik_grafana.service=traefik_grafana"
+      - "traefik.http.routers.traefik_grafana.rule=Host(`${TRAEFIK_PROXY_URL}`) && Path(`/stats`)"
+      - "traefik.http.routers.traefik_grafana.entrypoints=websecure"
+      - "traefik.http.routers.traefik_grafana.tls.certresolver=tlsresolver"
+      - "traefik.http.services.traefik_grafana.loadbalancer.server.port=3000"
     restart: unless-stopped
 

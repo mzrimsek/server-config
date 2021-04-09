@@ -24,4 +24,7 @@ certificatesresolvers:
 api:
         insecure: true
 
+metrics:
+        prometheus: {}
+
 accessLog: {}
