@@ -43,7 +43,7 @@ services:
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
     expose:
-      - 9090
+      - 9091
     networks:
       - public
     restart: unless-stopped
