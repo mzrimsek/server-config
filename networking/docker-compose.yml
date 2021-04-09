@@ -67,7 +67,7 @@ services:
       
       # grafana
       - "traefik.http.routers.traefik_grafana.service=traefik_grafana"
-      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_STATS_PROXY_URL}`)"
+      - "traefik.http.routers.traefik_grafana.rule=Host(`${TRAEFIK_STATS_PROXY_URL}`)"
       - "traefik.http.routers.traefik_grafana.entrypoints=websecure"
       - "traefik.http.routers.traefik_grafana.tls.certresolver=tlsresolver"
       - "traefik.http.services.traefik_grafana.loadbalancer.server.port=3000"
