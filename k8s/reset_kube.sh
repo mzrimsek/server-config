@@ -5,6 +5,7 @@ sudo kubeadm reset
 
 # clean up left over config
 sudo rm -rf /etc/cni/net.d
+sudo rm -rf $HOME/.kube
 
 # clean up iptables entries
 sudo iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sudo iptables -X
