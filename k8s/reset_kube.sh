@@ -1,14 +1,16 @@
 #/bin/bash
 
-# reset cluster
+echo "Remove/Leave Cluster"
 sudo kubeadm reset
 
-# clean up left over config
+echo "Clean Leftover Configs"
 sudo rm -rf /etc/cni/net.d
 sudo rm -rf $HOME/.kube
 
-# clean up iptables entries
+echo "Wipe iptables Entries"
 sudo iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sudo iptables -X
 
-# restart docker to re-add port configurations
+echo "Restart Docker Service to Read Port Mappings"
 sudo service docker restart
+
+echo "Reset Complete"
