@@ -9,6 +9,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 5. Install network interface that fits your needs: https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
   * Fabric or Weave seem to be good ones
+6. (Optional) Allow pods to run on the master node: `kubectl taint node <master_node_name> node-role.kubernetes.io/master=:NoSchedule`
 
 References:
 * https://carlosedp.medium.com/building-a-hybrid-x86-64-and-arm-kubernetes-cluster-e7f94ff6e51d
