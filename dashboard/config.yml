@@ -59,7 +59,7 @@ services:
         url: "https://ci.zrimsek.com/"
         target: "_blank"
       - name: "pgAdmin"
-        icon: "fab fa-database"
+        icon: "fas fa-database"
         subtitle: "Manage Databases"
         tag: "infrastructure"
         url: "https://db.zrimsek.com/"
