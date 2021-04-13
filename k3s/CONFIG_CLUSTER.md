@@ -4,7 +4,9 @@ Master Node Setup
 
 1. Install k3s: `curl -sfL https://get.k3s.io | sh -`
   * Using Postgres as the datasource: `curl -sfL https://get.k3s.io | sh -s - server   --datastore-endpoint="postgres://<user>:<pass>@<db_host_ip>:5432/k3s?sslmode=disable"
-  * Make sure to create the "k3s" database
+    * Make sure to create the "k3s" database
+  * k3s ships with Traefik 1.7. If wanting to use 2.x add the `--no-deploy traefik` flag to the install command to prevent the old installation from occurring
+    * TODO: Add guide
 2. Verify master node is running: `sudo k3s kubectl get nodes`
 3. Get nodetoken to add worker nodes: `sudo cat /var/lib/rancher/k3s/server/node-token`
 
