@@ -3,11 +3,10 @@ Using [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/#install-script) 
 Master Node Setup
 
 1. Install k3s: `curl -sfL https://get.k3s.io | sh -`
-  * Using Postgres as the datasource: `curl -sfL https://get.k3s.io | sh -s - server   --datastore-endpoint="postgres://<user>:<pass>@<ip>:5432/k3s?sslmode=disable"
+  * Using Postgres as the datasource: `curl -sfL https://get.k3s.io | sh -s - server   --datastore-endpoint="postgres://<user>:<pass>@<db_host_ip>:5432/k3s?sslmode=disable"
   * Make sure to create the "k3s" database
 2. Verify master node is running: `sudo k3s kubectl get nodes`
-3. (Optional) Allow pods to run on the master node: `sudo k3s kubectl taint node <master_node_name> node-role.kubernetes.io/master=:NoSchedule`
-4. Get nodetoken to add worker nodes: `sudo cat /var/lib/rancher/k3s/server/node-token`
+3. Get nodetoken to add worker nodes: `sudo cat /var/lib/rancher/k3s/server/node-token`
 
 Add Worker Nodes
 
