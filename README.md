@@ -49,6 +49,10 @@ Steps to prep ```jenkins``` user (all commands run on host machine):
   * Grab the host jenkins user id: ```id -u jenkins```
   * Grab the host docker group id: ```getent group | grep docker```
 
+## Postgres (Run as Portainer Stack)
+
+[Postgres](https://www.postgresql.org/docs/13/index.html) is a great open source SQL database solution. [pgAdmin](https://www.pgadmin.org/) is a great open source database dashboard that allows administration and monitoring of databases.
+
 ## Monitor (Run as Portainer Stack)
 
 A great stack of services to enable seeing stats on the Docker host, as well as the containers running on it. Adapted from https://github.com/stefanprodan/dockprom.
