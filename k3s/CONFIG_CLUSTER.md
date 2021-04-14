@@ -12,6 +12,8 @@ Using [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/#install-script) 
 2. Verify master node is running: `sudo k3s kubectl get nodes`
 3. Get nodetoken to add worker nodes: `sudo cat /var/lib/rancher/k3s/server/node-token`
 4. (Optional) Add Portainer Agent to enable cluster management: https://documentation.portainer.io/v2.0/endpoints/kubernetes/
+    * With Nodeport: `curl -L https://downloads.portainer.io/portainer-agent-k8s-nodeport.yaml -o portainer-agent-k8s.yaml; sudo k3s kubectl apply -f portainer-agent-k8s.yaml`
+    * Verify the pod: `sudo k3s kubectl get pods --namespace=portainer`
 
 ## Add Worker Nodes
 
