@@ -33,6 +33,8 @@ spec:
             - --entrypoints.web.Address=:80
             - --entrypoints.websecure.Address=:443
             - --providers.kubernetescrd
+            - --entrypoints.web.http.redirections.entryPoint.to=websecure
+            - --entrypoints.web.http.redirections.entryPoint.scheme=https
             - --certificatesresolvers.tlsresolver.acme.tlschallenge
             - --certificatesresolvers.tlsresolver.acme.email=<your_email>
             - --certificatesresolvers.tlsresolver.acme.storage=acme.json
