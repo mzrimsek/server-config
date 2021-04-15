@@ -45,3 +45,20 @@ spec:
               containerPort: 443
             - name: admin
               containerPort: 8080
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-admin
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`<proxy_url>`)
+    kind: Rule
+    services:
+    - name: traefik
+      port: 8080
+  tls:
+    certResolver: tlsresolver
