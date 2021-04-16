@@ -6,11 +6,9 @@ To achieve a similar set up you must have [Docker](https://docs.docker.com/get-d
 
 [Portainer](https://www.portainer.io/) is highly recommended as an easy-to-use interface to manage your containers. By and large, each `docker-compose.yml` is deployed as a stack to take advantage of environment variable substitution and to allow control of the configurations through the Portainer interface. 
 
-Which projects are run as integrated stacks are noted below. External stacks are run on the host machine using Docker Compose, a .env file, and a script - these are mostly stacks that are vital infrastructure for other containers.
+After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Optionally, allowing ssh access makes orchestrating this all remotely much easier.
 
-After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Script and docker-compose setup included.
-
-Optionally, allowing ssh access makes orchestrating this all remotely much easier. Script included.
+As a side note, many of these setups also include Kubernetes configurations. If that is of interest, there is a corresponding folder that details how a cluster can be created. Due to Portainer's ability to manage Kubernetes clusters, it's likely still useful to have Portainer up and running, if only to add the cluster as an agent endpoint.
 
 ## Portainer
 
