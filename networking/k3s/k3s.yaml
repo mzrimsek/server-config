@@ -35,7 +35,6 @@ metadata:
   name: traefik
   labels:
     app: traefik
-
 spec:
   replicas: 1
   selector:
@@ -75,6 +74,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-admin
+  namespace: default
 spec:
   entryPoints:
     - websecure
