@@ -12,7 +12,7 @@ After getting Portainer running, getting the networking stack running next is pr
 
 Optionally, allowing ssh access makes orchestrating this all remotely much easier. Script included.
 
-## Portainer (Run as External Stack)
+## Portainer
 
 A fantastic interface for managing docker containers. For setting up, I feel it makes the most sense to utilize docker-compose outside of Portainer itself, unlike the other setups...otherwise you're using Portainer to set up Portainer which just feels weird. It may make sense to exclude the labels from the Portainer container for initial setup, as the setup included assumes Traefik has been configured. If there are multiple devices running Docker on your network, it may make sense to manage them all from the same Portainer instance. [Exposing the Docker daemons](https://stackoverflow.com/questions/40591356/enable-docker-remote-api-raspberry-pi-raspbian/40609248#40609248) on the devices not running Portainer will allow them to be added as endpoints alongside the local Docker instance.
 
@@ -20,15 +20,27 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 * Environment variables: A `.env` file is required with the necessary environment variables filled in for the `start_portainer.sh` script to operate correctly.
 
-## Networking (Run as External Stack)
+## Networking
 
 Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
+
+### Using Docker Compose
 
 * Configuration: Mount the `traefik.yml` file as a volume to `/traefik.yml`. Organizing these configuration files into a folder is recommended but not necessary.
 
 * TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to `/letsencrypt`. In the `traefik.yml` file, `acme.json` is specified as the file to be created in this directory to contain all certification information.
 
-## Jenkins (Run as External Stack)
+* Environment variables: A `.env` file is required with the necessary environment variables filled in for the `start_stack.sh` script to operate correctly.
+
+### Using Kubernetes
+
+Note: Will only work if the cluster doesn't have Traefik deployed in it already. Results in a 2.x install of Traefik deployed in the cluster.
+
+1. Apply `customResourceDefinitions.yaml`
+2. Replace `<your_email>` and `<proxy_url>` in `k3s.yaml`
+3. Apply `k3s.yaml`
+
+## Jenkins
 
 A great tool for building pipelines. This setup differs from the others in that it has a local Dockerfile to build the image on the host rather than pulling from a registry. This is to facilitate not only allowing Jenkins to run Docker commands, but also to give it the permissions it needs to allow that to happen. 
 
@@ -49,26 +61,26 @@ Steps to prep `jenkins` user (all commands run on host machine):
   * Grab the host jenkins user id: `id -u jenkins`
   * Grab the host docker group id: `getent group | grep docker`
 
-## Postgres (Run as Portainer Stack)
+## Postgres
 
 [Postgres](https://www.postgresql.org/docs/13/index.html) is a great open source SQL database solution. [pgAdmin](https://www.pgadmin.org/) is a great open source database dashboard that allows administration and monitoring of databases.
 
 * DB Data: Must have a directory to persist the database information, mounted as a volume to `/data/postgres` in the Postgres container
 * Admin Data: Must have a directory to persist the admin panel information, mounted as a volume to `/root/.pgadmin` in the pgAdmin container
 
-## Monitor (Run as Portainer Stack)
+## Monitor
 
 A great stack of services to enable seeing stats on the Docker host, as well as the containers running on it. Adapted from https://github.com/stefanprodan/dockprom.
 
 The necessary files for each dashboard have been included.
 
-## Home Assistant (Run as Portainer Stack)
+## Home Assistant
 
 Set up a local [Home Assistant](https://www.home-assistant.io/) instance to control smart devices on the network.
 
 * Configuration: Must have a directory to persist integration and device configuration, mounted as a volume to `/config`
 
-## Dashboard (Run as Portainer Stack)
+## Dashboard
 
 Set up a nice dashboard with [Homer](https://github.com/bastienwirtz/homer) to access hosted services and frequently accessed sites all in a convenient, centralized location.
 
@@ -76,7 +88,7 @@ Set up a nice dashboard with [Homer](https://github.com/bastienwirtz/homer) to a
   * Must have a directory to persist assets, mounted as a volume to `/www/assets`
   * For ease of use, mount your `config.yml` to `/www/assets/config.yml`
 
-## Games (Run as Portainer Stacks)
+## Games
 
 Set up various game servers.
 
