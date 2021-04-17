@@ -16,7 +16,7 @@ services:
       - "traefik.http.routers.web_homeassistant.entrypoints=websecure"
       - "traefik.http.routers.web_homeassistant.tls.certresolver=tlsresolver"
       - "traefik.http.services.web_homeassistant.loadbalancer.server.port=8123"
-    restart: always
+    restart: unless-stopped
 
 networks:
   public:
