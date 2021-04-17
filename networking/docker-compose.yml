@@ -9,17 +9,28 @@ services:
     container_name: traefik
     image: traefik:latest
     ports:
-      - 80:80
-      - 443:443
+      - 8000:8000
+      - 4443:4443
+      - 8888:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/networking/traefik.yml:/traefik.yml
-      - /opt/networking/letsencrypt:/letsencrypt
     networks:
       - public
+    command:
+      - "--api.insecure"
+      - "--accesslog"
+      - "--entrypoints.web.Address=:8000"
+      - "--entrypoints.websecure.Address=:4443"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
+      - "--certificatesresolvers.tlsresolver.acme.email=${TLS_EMAIL}"
+      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_DASH_PROXY_URL}`)"
+      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_PROXY_URL}`)"
       - "traefik.http.routers.traefik_frontend.entrypoints=websecure"
       - "traefik.http.routers.traefik_frontend.tls.certresolver=tlsresolver"
       - "traefik.http.services.traefik_frontend.loadbalancer.server.port=8080"

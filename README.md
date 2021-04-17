@@ -24,10 +24,6 @@ Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Do
 
 ### Using Docker Compose
 
-* Configuration: Mount the `traefik.yml` file as a volume to `/traefik.yml`. Organizing these configuration files into a folder is recommended but not necessary.
-
-* TLS: Must have a directory to host Let's Encrypt certificate information, mounted as a volume to `/letsencrypt`. In the `traefik.yml` file, `acme.json` is specified as the file to be created in this directory to contain all certification information.
-
 * Environment variables: A `.env` file is required with the necessary environment variables filled in for the `start_stack.sh` script to operate correctly.
 
 ### Using Kubernetes
