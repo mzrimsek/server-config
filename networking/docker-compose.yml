@@ -9,8 +9,10 @@ services:
     container_name: traefik
     image: traefik:latest
     ports:
-      - 8000:8000
-      - 4443:4443
+      - 80:80
+      #- 8000:8000
+      - 443:443
+      #- 4443:4443
       - 8888:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -19,8 +21,10 @@ services:
     command:
       - "--api.insecure"
       - "--accesslog"
-      - "--entrypoints.web.Address=:8000"
-      - "--entrypoints.websecure.Address=:4443"
+      - "--entrypoints.web.Address=:80"
+      #- "--entrypoints.web.Address=:8000"
+      - "--entrypoints.websecure.Address=:443"
+      #- "--entrypoints.websecure.Address=:4443"
       - "--providers.docker.exposedByDefault=false"
       - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
