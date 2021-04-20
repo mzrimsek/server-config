@@ -21,6 +21,7 @@ subsets:
       - ip: <service_host>
     ports:
       - port: <service_port>
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
