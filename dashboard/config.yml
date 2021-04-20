@@ -80,7 +80,7 @@ services:
         icon: "fas fa-key"
         subtitle: "View Reverse Proxied Docker Services"
         tag: "network"
-        url: "https://proxy.zrimsek.com/"
+        url: "https://traefik.zrimsek.com/"
         target: "_blank"
 
   - name: "Applications"
