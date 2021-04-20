@@ -1,0 +1,40 @@
+# Use this to use a cluster-hosted Traefik install to reverse proxy
+# to services that live external to the cluster
+# e.g. the database backing the cluster
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: <service_name>
+spec:
+  ports:
+    - protocol: TCP
+      port: <service_port>
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: <service_name>
+subsets:
+  - addresses:
+      - ip: <service_host>
+    ports:
+      - port: <service_port>
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: <service_name>
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`<proxy_url>`)
+      kind: Rule
+      services:
+        - name: <service_name>
+          port: <service_port>
+  tls:
+    certResolver: tlsresolver
