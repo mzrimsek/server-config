@@ -1,4 +1,4 @@
-# Use this to use a cluster-hosted Traefik install to reverse proxy
+# use a cluster-hosted Traefik install to reverse proxy
 # to services that live external to the cluster
 # e.g. the database backing the cluster
 
