@@ -1,6 +1,7 @@
 # use a cluster-hosted Traefik install to reverse proxy
 # to services that live external to the cluster
 # e.g. the database backing the cluster
+# https://stackoverflow.com/a/64463307/5704008
 
 apiVersion: v1
 kind: Service
