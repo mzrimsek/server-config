@@ -58,7 +58,7 @@ spec:
             - --entrypoints.web.http.redirections.entryPoint.to=websecure
             - --entrypoints.web.http.redirections.entryPoint.scheme=https
             - --certificatesresolvers.tlsresolver.acme.tlschallenge
-            - --certificatesresolvers.tlsresolver.acme.email=<your_email>
+            - --certificatesresolvers.tlsresolver.acme.email=${EMAIL}
             - --certificatesresolvers.tlsresolver.acme.storage=acme.json
           ports:
             - name: web
@@ -79,7 +79,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<proxy_url>`)
+    - match: Host(`${PROXY_URL}`)
       kind: Rule
       services:
         - name: traefik

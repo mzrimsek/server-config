@@ -31,7 +31,7 @@ Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Do
 Note: Will only work if the cluster doesn't have Traefik deployed in it already. Results in a 2.x install of Traefik deployed in the cluster.
 
 1. Apply `customResourceDefinitions.yaml`
-2. Replace `<your_email>` and `<proxy_url>` in `k3s.yaml`
+2. Replace `${EMAIL}` and `${PROXY_URL}` in `k3s.yaml`
 3. Apply `k3s.yaml`
 
 ## Jenkins
