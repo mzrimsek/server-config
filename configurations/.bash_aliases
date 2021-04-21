@@ -13,4 +13,10 @@ k3sk() {
 	sudo k3s kubectl $@
 }
 
+k3sra() {
+	env-replace $@ | k3sk apply -f -
+}
+
 alias own="sudo chown -R $(id -u)"
+
+
