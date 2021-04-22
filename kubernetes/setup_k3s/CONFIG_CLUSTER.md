@@ -15,6 +15,7 @@ Using [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/#install-script) 
     * Only need to do this if not deploying Portainer directly into the cluster to manage it
     * With Nodeport: `curl -L https://downloads.portainer.io/portainer-agent-k8s-nodeport.yaml -o portainer-agent-k8s.yaml; sudo k3s kubectl apply -f portainer-agent-k8s.yaml`
     * Verify the pod: `sudo k3s kubectl get pods --namespace=portainer`
+5. (Optional) Install Helm to take advantage of premade Kubernetes packages: https://helm.sh/docs/intro/install/
 
 ## Add Worker Nodes
 
