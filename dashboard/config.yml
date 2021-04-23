@@ -82,6 +82,12 @@ services:
         tag: "network"
         url: "https://traefik.zrimsek.com/"
         target: "_blank"
+      - name: "unRAID"
+        icon: "fas fa-hdd"
+        subtitle: "View NAS Health and Utilization"
+        tag: "infrastructure"
+        url: "https://data.zrimsek.com/"
+        target: "_blank"
 
   - name: "Applications"
     icon: "fab fa-chrome"
