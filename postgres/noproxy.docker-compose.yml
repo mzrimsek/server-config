@@ -7,13 +7,10 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: /data/postgres
     volumes:
-       - /opt/postgres/db_data:/data/postgres
+       - /opt/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    networks:
-      - postgres
     restart: unless-stopped
   
   pgadmin:
@@ -26,11 +23,5 @@ services:
     ports:
       - 5050:80
     volumes:
-       - /opt/postgres/pgadmin_data:/root/.pgadmin
-    networks:
-      - postgres
+       - /opt/postgres/pgadmin_data:/var/lib/pgadmin
     restart: unless-stopped
-
-networks:
-  postgres:
-    driver: bridge
