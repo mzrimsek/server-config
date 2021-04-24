@@ -19,7 +19,7 @@
     ```
     3. `curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -`
     4. Add Docker repos
-    ```
+    ``` bash
     echo "deb [arch=armhf] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
       $(lsb_release -cs) stable" | \
       sudo tee /etc/apt/sources.list.d/docker.list
@@ -46,7 +46,7 @@
 7. Use systemd for container cgroup management: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
     1. `sudo mkdir /etc/docker`
     2. Add configuration
-    ```
+    ``` bash
     cat <<EOF | sudo tee /etc/docker/daemon.json
     {
       "exec-opts": ["native.cgroupdriver=systemd"],

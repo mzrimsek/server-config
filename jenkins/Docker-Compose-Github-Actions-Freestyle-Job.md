@@ -57,7 +57,7 @@ The assumption is the repository that is used in the Jenkins job has at least on
 * Check "Add timestamps to the Console Output"
 * Add a build step of type "Execute shell" and paste the following
 
-```
+``` bash
 cat <<EOT >> .env
 
 # add any environment variable declarations here

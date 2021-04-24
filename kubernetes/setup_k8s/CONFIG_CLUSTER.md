@@ -2,7 +2,7 @@
 2. `sudo kubeadm init`
 3. Copy generated command and run it on nodes to join them to the cluster
 4. Copy config
-```
+``` bash
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
