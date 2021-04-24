@@ -33,7 +33,7 @@ There are a few things here:
 
 1. Set up a NAS with a file system accessible to the cluster
 2. Install `nfs-common` on all nodes of the cluster
-3. Apply the [provided tweaked deployment](./nfsVolumeProvisioner.yaml) to create the nfs provisioner and connect it to the NFS
+3. Apply the [provided tweaked deployment](../nfsVolumeProvisioner.yaml) to create the nfs provisioner and connect it to the NFS
 4. Create a test pod - a file called "SUCCESS" should appear in the mount point when the pod creates
 ``` yaml
 kind: PersistentVolumeClaim
