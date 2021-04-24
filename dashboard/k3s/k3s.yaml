@@ -1,0 +1,69 @@
+# Services
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-dashboard
+spec:
+  selector:
+    app: service-dashboard
+  ports:
+    - protocol: TCP
+      name: frontend
+      port: 8080
+
+# Deployments
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: service-dashboard
+  labels:
+    app: service-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-dashboard
+  template:
+    metadata:
+      labels:
+        app: service-dashboard
+    spec:
+      containers:
+        - name: homer
+          image: b4bz/homer:latest
+          ports:
+            - name: frontend
+              containerPort: 8080
+          volumeMounts:
+            - name: storage
+              mountPath: /www/assets/config.yml
+              subPath: ./dashboard/config.yml
+            - name: storage
+              mountPath: /www/assets
+              subPath: ./dashboard/assets
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: shared-data
+
+# Routes
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: service-dashboard
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${TRAEFIK_PROXY_URL}`)"
+      kind: Rule
+      services:
+        - name: resume
+          namespace: default
+          port: 8080
+  tls:
+    certResolver: tlsresolver
