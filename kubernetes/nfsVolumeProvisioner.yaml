@@ -1,8 +1,3 @@
-# k3s doesn't have a nfs storage class out of the box so one has to be configured
-# v1.20 has a breaking change with the current version - must use a different image
-# https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner/issues/25#issuecomment-818762464
-# Ensure nfs-common package is installed on all nodes
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:

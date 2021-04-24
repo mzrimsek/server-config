@@ -21,3 +21,54 @@ Using [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/#install-script) 
 
 1. Join cluster: `curl -sfL https://get.k3s.io | K3S_URL=<master_node_ip>:6443 K3S_TOKEN=<nodetoken> sh -`
 2. Verify the node joined on the master. May have to give it a minute for everything to initialize and it join.
+
+## Enable NFS Provisioner to Interact with a NAS
+
+There are a few things here:
+
+1. k3s does not come with an nfs StorageClass out of the box
+2. [v1.20 of k3s breaks the default image](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner/issues/25#issuecomment-818762464) of the nfs provider being used, so a different image is required
+
+### Steps
+
+1. Set up a NAS with a file system accessible to the cluster
+2. Install `nfs-common` on all nodes of the cluster
+3. Apply the [provided tweaked deployment](./nfsVolumeProvisioner.yaml) to create the nfs provisioner and connect it to the NFS
+4. Create a test pod - a file called "SUCCESS" should appear in the mount point when the pod creates
+``` yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim
+spec:
+  storageClassName: managed-nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: gcr.io/google_containers/busybox:1.24
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/SUCCESS && exit 0 || exit 1"
+    volumeMounts:
+      - name: nfs-pvc
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs-pvc
+      persistentVolumeClaim:
+        claimName: test-claim
+```
+5. Delete the test pod - the "SUCCESS" file should delete itself
