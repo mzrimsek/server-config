@@ -17,6 +17,10 @@ k3sra() {
 	env-replace $@ | k3sk apply -f -
 }
 
+k3srd() {
+	env-replace $@ | k3sk delete -f -
+}
+
 alias own="sudo chown -R $(id -u)"
 
 
