@@ -1,4 +1,20 @@
+# Persistent Volume Claims
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: service-dashboard
+  annotations:
+    nfs.io/storage-path: service-dashboard
+spec:
+  storageClassName: managed-nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: ${VOLUME_SIZE}
+
 # Services
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -37,16 +53,16 @@ spec:
             - name: frontend
               containerPort: 8080
           volumeMounts:
-            - name: storage
+            - name: data
               mountPath: /www/assets/config.yml
-              subPath: ./dashboard/config.yml
-            - name: storage
+              subPath: config.yml
+            - name: data
               mountPath: /www/assets
-              subPath: ./dashboard/assets
+              subPath: ./assets
       volumes:
-        - name: storage
+        - name: data
           persistentVolumeClaim:
-            claimName: shared-data
+            claimName: service-dashboard
 
 # Routes
 ---
