@@ -6,7 +6,7 @@ To achieve a similar set up you must have [Docker](https://docs.docker.com/get-d
 
 [Portainer](https://www.portainer.io/) is highly recommended as an easy-to-use interface to manage your containers. By and large, each `docker-compose.yml` is deployed as a stack to take advantage of environment variable substitution and to allow control of the configurations through the Portainer interface. 
 
-After getting Portainer running, getting the networking stack running next is probably the most sensible route to go. Optionally, allowing ssh access makes orchestrating this all remotely much easier. Many of the included `docker-compose.yml` files assume the networking stack is set up and have additional configurations with that mind. If the networking stack won't be used, there are also alternative `noproxy.docker-compose.yml` files included that don't have the extra configuration.
+After getting Portainer running, getting Traefik running next is probably the most sensible route to go. Optionally, allowing ssh access makes orchestrating this all remotely much easier. Many of the included `docker-compose.yml` files assume the networking stack is set up and have additional configurations with that mind. If the networking stack won't be used, there are also alternative `noproxy.docker-compose.yml` files included that don't have the extra configuration.
 
 As a side note, many of these setups also include Kubernetes configurations. If that is of interest, there is a corresponding folder that details how a cluster can be created. Due to Portainer's ability to manage Kubernetes clusters, it's likely still useful to have Portainer up and running, if only to add the cluster as an agent endpoint.
 
@@ -18,9 +18,9 @@ A fantastic interface for managing docker containers. For setting up, I feel it 
 
 * Environment variables: A `.env` file is required with the necessary environment variables filled in for the `start_portainer.sh` script to operate correctly.
 
-## Networking
+## Traefik
 
-Set up [Traefik](https://doc.traefik.io/traefik/) to reverse proxy traffic to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
+[Traefik](https://doc.traefik.io/traefik/) is a microservice focused reverse proxy that allows routing network to Docker containers running various services. This stack creates the network that public traffic is routed through - any containers that need traffic routed to them must be on this network. Make sure to add DNS A entries to point subdomains at the correct IP address so Traefik can correctly route the traffic to each container as desired.
 
 ### Using Docker Compose
 
