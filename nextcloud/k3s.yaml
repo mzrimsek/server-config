@@ -1,0 +1,131 @@
+# Persistent Volume Claims
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nextcloud-shared-storage
+  annotations:
+    nfs.io/storage-path: nextcloud-shared-storage
+spec:
+  storageClassName: managed-nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: ${VOLUME_SIZE}
+
+# Services
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-db
+  labels:
+    app: nextcloud
+spec:
+  selector:
+    pod-label: nextcloud-db
+  ports:
+    - protocol: TCP
+      port: 3306
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-server
+  labels:
+    app: nextcloud
+spec:
+  selector:
+    pod-label: nextcloud-server
+  ports:
+    - protocol: TCP
+      port: 80
+
+# Deployments
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-db
+  labels:
+    app: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod-label: nextcloud-db
+  template:
+    metadata:
+      labels:
+        pod-label: nextcloud-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          env:
+            - name: MYSQL_DATABASE
+              value: nextcloud
+            - name: MYSQL_ROOT_PASSWORD
+              value: ${MYSQL_ROOT_PASSWORD}
+            - name: MYSQL_USER
+              value: ${MYSQL_USER}
+            - name: MYSQL_PASSWORD
+              value: ${MYSQL_PASSWORD}
+          volumeMounts:
+            - name: db-storage
+              mountPath: /var/lib/mysql
+              subPath: mysql-data
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-shared-storage
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-server
+  labels:
+    app: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod-label: nextcloud-server
+  template:
+    metadata:
+      labels:
+        pod-label: nextcloud-server
+    spec:
+      containers:
+        - name: nextcloud
+          image: nextcloud:stable
+          volumeMounts:
+            - name: server-storage
+              mountPath: /var/www/html
+              subPath: server-data
+      volumes:
+        - name: server-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-shared-storage
+
+# Routes
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${TRAEFIK_PROXY_URL}`)
+      kind: Rule
+      services:
+        - name: nextcloud-server
+          namespace: default
+          port: 80
+  tls:
+    certResolver: tlsresolver
