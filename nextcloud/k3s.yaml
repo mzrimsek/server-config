@@ -6,7 +6,7 @@ metadata:
   annotations:
     nfs.io/storage-path: nextcloud-shared-storage
 spec:
-  storageClassName: managed-nfs-storage
+  storageClassName: unmanaged-nfs-storage
   accessModes:
     - ReadWriteMany
   resources:
