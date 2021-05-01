@@ -1,8 +1,6 @@
-# Docker Compose Github Actions Freestyle Job
+# Docker Compose Push Freestyle Job
 
-A general outline of how to set up a Jenkins Freestyle job that utilizes Docker Compose to update containers after being triggered by a Github Actions build completing successfully. The use case here is to have GitHub Actions build a Docker image and push it to a registry, which Jenkins then pulls to recreate the project stack with.
-
-The assumption is the repository that is used in the Jenkins job has at least one GitHub Actions workflow associated with it that will run based on some defined trigger.
+A general outline of how to set up a Jenkins Freestyle job that utilizes Docker Compose to update containers after being triggered by a pushing to the `main` branch of a repository. The use case here is to have Jenkins build Docker images in a project stack if necessary, then recreate it.
 
 ## Required Plugins:
 
@@ -34,7 +32,7 @@ The assumption is the repository that is used in the Jenkins job has at least on
   * Payload URL: <JENKINS_URL>/generic-webhook-trigger/invoke?token=<TOKEN>
   * Content type: application/json
   * Enable SSL verification
-  * Select individual events - Check only "Check suites"
+  * Select "Just the push event"
   * Check "Active"
 
 ### Configure the Build Trigger (in Jenkins)
@@ -44,15 +42,14 @@ The assumption is the repository that is used in the Jenkins job has at least on
 
 | Variable   | Expression               |
 | ---------- | ------------------------ |
-| status     | $.check_suite.status     |
-| conclusion | $.check_suite.conclusion |
+| branch     | $.ref                    |
 
 * Enter the generated token from above in the "Token" field
 * Fill in the "Cause" field to describe the action that is triggering the job
 * Check "Print contributed variables"
 * Configure "Optional filter"
-  * Expression: ^completed success$
-  * Text: $status $conclusion
+  * Expression: ^refs/heads/main$
+  * Text: $branch
 
 ## Building Environment
 
@@ -68,5 +65,5 @@ VARIABLE=value
 EOT
 
 docker-compose pull
-docker-compose --env-file .env up -d --force-recreate
+docker-compose --env-file .env up -d --force-recreate --build
 ```
