@@ -1,0 +1,47 @@
+# to be run on each master node in the cluster
+
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    scheduler.alpha.kubernetes.io/critical-pod: ""
+  labels:
+    app.kubernetes.io/name: kubelived
+    app.kubernetes.io/instance: kubelived
+  name: kube-keepalived
+  namespace: kube-system
+spec:
+  containers:
+  - name: keepalived
+    image: bsctl/keepalived:0.2.0
+    imagePullPolicy: Always
+    args: # override options in the Dockerfile
+    - --vrrp
+    - --log-detail
+    - --dump-conf
+    - --use-file=/etc/keepalived/keepalived.conf
+    livenessProbe:
+      exec:
+        command: ["pidof", "keepalived"]
+      initialDelaySeconds: 10
+    securityContext:
+      privileged: true
+      capabilities:
+        add:
+        - NET_ADMIN
+    resources:
+    volumeMounts:
+    - mountPath: /etc/localtime
+      name: host-localtime
+    - mountPath: /etc/keepalived/keepalived.conf
+      name: config
+  hostNetwork: true
+  priorityClassName: system-node-critical
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/localtime
+    name: host-localtime
+  - hostPath:
+      path: /etc/keepalived/keepalived.conf
+    name: config
