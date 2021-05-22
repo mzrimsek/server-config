@@ -1,0 +1,1 @@
+[Operator Quickstart](https://www.rabbitmq.com/kubernetes/operator/quickstart-operator.html)
