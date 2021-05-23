@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  server:
+    image: beardedio/terraria:vanilla-latest
+    container_name: terraria
+    ports:
+      - 7777:7777
+    restart: unless-stopped
+    environment:
+      - world=${WORLD_NAME}.wld
+    volumes:
+      - /opt/terraria:/config
+    tty: true
+    stdin_open: true

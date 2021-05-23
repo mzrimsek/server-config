@@ -103,3 +103,10 @@ This setup allows for potentially running several Minecraft server instances (ea
 * Config: Must have a directory to persist server config, mounted as a volume to `/config`
 
 * World Data: Must have a directory to persist world data, mounted as volume to `/opt/valheim`
+
+### Terraria
+
+* Config: Must have a directory to persist server config, mounted as a volume to `/config`
+  * If using the same image, follow the instructions on the [DockerHub](https://hub.docker.com/r/beardedio/terraria) page to create the world prior to starting the container.
+  * Directory should have the world file, banlist file, and serverconfig file
+  * Update `serverconfig.txt` to set the password if desired - uncomment the line and update with your password
