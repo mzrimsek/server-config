@@ -17,10 +17,10 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-c
   chmod +x /usr/local/bin/docker-compose && \
   ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # install kubectl
-RUN sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
-  echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
-  sudo apt-get update && \
-  sudo apt-get install -y kubectl
+RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
+  echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list && \
+  apt-get update && \
+  apt-get install -y kubectl
 
 RUN usermod -u $HOST_UID jenkins
 RUN groupmod -g $HOST_GID docker
