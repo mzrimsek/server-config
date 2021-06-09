@@ -51,9 +51,12 @@ A general outline of how to set up a Jenkins Freestyle job that utilizes Docker 
   * Expression: ^refs/heads/main$
   * Text: $branch
 
-## Building Environment
+## Build Environment
 
 * Check "Add timestamps to the Console Output"
+
+## Build
+
 * Add a build step of type "Execute shell" and paste the following
 
 ``` bash
