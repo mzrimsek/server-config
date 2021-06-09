@@ -75,3 +75,5 @@ Another thing worth noting is I first attempted to get the kubectl context worki
 ``` bash
 kubectl rollout restart deployment/<deployment_name>
 ```
+
+* Check "Execute each line"
