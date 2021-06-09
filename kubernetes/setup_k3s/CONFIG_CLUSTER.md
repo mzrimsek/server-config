@@ -72,3 +72,5 @@ spec:
         claimName: test-claim
 ```
 5. Delete the test pod - the "SUCCESS" file should delete itself
+
+Note: It seems this can be kind of finicky. Just leaving the test pod seems to make things work a little more consistently. If things get wonky and stop working, remove the test pod deployment, delete the folder created for the namespace the test pod was deployed in and then redeploy it to recreate.
