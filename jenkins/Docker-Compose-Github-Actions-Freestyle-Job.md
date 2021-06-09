@@ -54,9 +54,12 @@ The assumption is the repository that is used in the Jenkins job has at least on
   * Expression: ^completed success$
   * Text: $status $conclusion
 
-## Building Environment
+## Build Environment
 
 * Check "Add timestamps to the Console Output"
+
+## Build
+
 * Add a build step of type "Execute shell" and paste the following
 
 ``` bash

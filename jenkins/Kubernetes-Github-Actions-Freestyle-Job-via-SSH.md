@@ -1,4 +1,4 @@
-# Kubernetes Github Actions Freestyle Job
+# Kubernetes Github Actions Freestyle Job via SSH
 
 A general outline of how to set up a Jenkins Freestyle job that utilizes Kubernetes to update containers after being triggered by a Github Actions build completing successfully. The use case here is to have GitHub Actions build a Docker image and push it to a registry, which Jenkins then pulls to recreate the project stack with.
 
@@ -6,10 +6,19 @@ The assumption is the repository that is used in the Jenkins job has at least on
 
 The deployment should likely have the image pull policy on any containers that have their image updates set to "Always". Initial deployments are manual. All subsequent deploys should trigger a rolling update to the deployment.
 
+Another thing worth noting is I first attempted to get the kubectl context working with a remote k3s instance and was unsuccessful. Automating the process of SSHing into a master node and running the command seems to work well enough.
+
 ## Required Plugins:
 
 * [Generic Webhook Trigger Plugin](https://plugins.jenkins.io/generic-webhook-trigger/)
 * [Timestamper](https://plugins.jenkins.io/timestamper/)
+
+### Prereqs to Job
+
+1. Add SSH credentials for the remote host
+  * Manage Jenkins > Manage Credentials > Add Credentials > Username with password OR SSH Username with private key
+2. Configure the SSH Remote Host
+  * Manage Jenkins > Configure System > SSH remote hosts > Add info for the remote host using the credentials set up in the previous step
 
 ## General
 
@@ -56,10 +65,12 @@ The deployment should likely have the image pull policy on any containers that h
   * Expression: ^completed success$
   * Text: $status $conclusion
 
-## Building Environment
+## Build Environment
 
 * Check "Add timestamps to the Console Output"
-* Add a build step of type "Execute shell" and paste the following
+
+## Build
+* Add a build step of type "Execute shell script on remote host using ssh", select your remote SSH host, and paste the following
 
 ``` bash
 kubectl rollout restart deployment/<deployment_name>
