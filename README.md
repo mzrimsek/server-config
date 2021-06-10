@@ -64,7 +64,7 @@ Steps to prep `jenkins` user (all commands run on host machine):
 
 ## RabbitMQ
 
-[RabbitMQ]() is a great open source MQTT server to asynchronously communicate data between applications without tightly coupling them to each other.
+[RabbitMQ](https://www.rabbitmq.com/) is a great open source MQTT server to asynchronously communicate data between applications without tightly coupling them to each other.
 
 * Data: Must have a directory to persist the message data, mounted as a volume to `var/lib/rabbitmq`
 * Log: Must have a directory to persist the log information, mounted as a volume to `var/log/rabbitmq`
