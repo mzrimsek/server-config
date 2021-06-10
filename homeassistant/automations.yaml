@@ -18,14 +18,26 @@
       target:
         entity_id: light.cabinet_lamp
 
-# works with any CSS3 color https://www.w3schools.com/colors/colors_names.asp
-- alias: Set Office Light Color
+# payload must be a valid CSS3 color name: https://www.w3schools.com/colors/colors_names.asp
+- alias: Set Office Light Color by Name
   trigger:
     - platform: mqtt
-      topic: "lights/office/color"
+      topic: "lights/office/color/name"
   action:
     - service: light.turn_on
       target:
         entity_id: light.cabinet_lamp
       data:
         color_name: "{{ trigger.payload }}"
+
+# payload must be in the format of [255,255,255]
+- alias: Set Office Light Color by RGB
+  trigger:
+    - platform: mqtt
+      topic: "lights/office/color/rgb"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.cabinet_lamp
+      data:
+        rgb_color: "{{ trigger.payload }}"
