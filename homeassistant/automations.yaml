@@ -1,0 +1,19 @@
+- alias: Turn Office Lights Off
+  trigger:
+    - platform: mqtt
+      topic: "lights/office"
+      payload: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.cabinet_lamp
+
+- alias: Turn Office Lights On
+  trigger:
+    - platform: mqtt
+      topic: "lights/office"
+      payload: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.cabinet_lamp
