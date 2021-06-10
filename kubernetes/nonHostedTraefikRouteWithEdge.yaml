@@ -1,0 +1,81 @@
+# use a cluster-hosted Traefik install to reverse proxy
+# to services that live external to the cluster
+# e.g. the database backing the cluster
+# https://stackoverflow.com/a/64463307/5704008
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${SERVICE_NAME}
+spec:
+  ports:
+    - protocol: TCP
+      port: ${SERVICE_PORT}
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: ${SERVICE_NAME}
+subsets:
+  - addresses:
+      - ip: ${SERVICE_HOST}
+    ports:
+      - port: ${SERVICE_PORT}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ${SERVICE_NAME}
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${PROXY_URL}`)
+      kind: Rule
+      services:
+        - name: ${SERVICE_NAME}
+          port: ${SERVICE_PORT}
+  tls:
+    certResolver: tlsresolver
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${SERVICE_NAME}-edge
+spec:
+  ports:
+    - protocol: TCP
+      port: ${EDGE_PORT}
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: ${SERVICE_NAME}-edge
+subsets:
+  - addresses:
+      - ip: ${SERVICE_HOST}
+    ports:
+      - port: ${EDGE_PORT}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ${SERVICE_NAME}-edge
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${PROXY_URL}`) && Path(`/edge`)
+      kind: Rule
+      services:
+        - name: ${SERVICE_NAME}-edge
+          port: ${EDGE_PORT}
+  tls:
+    certResolver: tlsresolver
