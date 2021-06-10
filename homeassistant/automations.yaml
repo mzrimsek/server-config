@@ -27,4 +27,4 @@
       target:
         entity_id: light.cabinet_lamp
       data:
-        color_name: "{{ value_json.color }}"
+        color_name: "{{ trigger.payload }}"
