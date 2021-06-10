@@ -18,6 +18,7 @@
       target:
         entity_id: light.cabinet_lamp
 
+# works with any CSS3 color https://www.w3schools.com/colors/colors_names.asp
 - alias: Set Office Light Color
   trigger:
     - platform: mqtt
