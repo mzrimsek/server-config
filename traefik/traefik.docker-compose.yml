@@ -28,4 +28,10 @@ services:
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik_frontend.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.traefik_frontend.entrypoints=websecure"
+      - "traefik.http.routers.traefik_frontend.tls.certresolver=tlsresolver"
+      - "traefik.http.services.traefik_frontend.loadbalancer.server.port=8080"
     restart: unless-stopped

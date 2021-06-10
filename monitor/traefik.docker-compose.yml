@@ -1,5 +1,10 @@
 version: '3'
 
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
+
 volumes:
     prometheus_data: {}
     grafana_data: {}
@@ -20,6 +25,8 @@ services:
       - '--web.enable-lifecycle'
     expose:
       - 9090
+    networks:
+      - public
     restart: unless-stopped
 
   nodeexporter:
@@ -36,6 +43,8 @@ services:
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     expose:
       - 9100
+    networks:
+      - public
     restart: unless-stopped
 
   cadvisor:
@@ -49,13 +58,13 @@ services:
       - /cgroup:/cgroup:ro
     expose:
       - 8080
+    networks:
+      - public
     restart: unless-stopped
 
   grafana:
     image: grafana/grafana:7.5.2
     container_name: docker_metrics_graphs
-    ports:
-      - 8020:3000
     volumes:
       - grafana_data:/var/lib/grafana
       - /opt/monitor/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
@@ -64,4 +73,15 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      
+      # grafana
+      - "traefik.http.routers.monitor_grafana.service=monitor_grafana"
+      - "traefik.http.routers.monitor_grafana.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.monitor_grafana.entrypoints=websecure"
+      - "traefik.http.routers.monitor_grafana.tls.certresolver=tlsresolver"
+      - "traefik.http.services.monitor_grafana.loadbalancer.server.port=3000"
     restart: unless-stopped

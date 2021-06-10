@@ -10,30 +10,10 @@ services:
           # host docker group id
           HOST_GID: ${HOST_GID}
     container_name: jenkins
+    ports:
+      - 8000:8080
+      - 50000:50000
     volumes:
       - /opt/jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - public
-    labels:
-      - "traefik.enable=true"
-
-      # frontend
-      - "traefik.http.routers.jenkins_frontend.service=jenkins_frontend"
-      - "traefik.http.routers.jenkins_frontend.rule=Host(`${TRAEFIK_PROXY_URL}`)"
-      - "traefik.http.routers.jenkins_frontend.entrypoints=websecure"
-      - "traefik.http.routers.jenkins_frontend.tls.certresolver=tlsresolver"
-      - "traefik.http.services.jenkins_frontend.loadbalancer.server.port=8080"
-
-      # agent
-      - "traefik.http.routers.jenkins_agent.service=jenkins_agent"
-      - "traefik.http.routers.jenkins_agent.rule=Host(`${TRAEFIK_PROXY_URL}`) && Path(`/agent`)"
-      - "traefik.http.routers.jenkins_agent.entrypoints=websecure"
-      - "traefik.http.routers.jenkins_agent.tls.certresolver=tlsresolver"
-      - "traefik.http.services.jenkins_agent.loadbalancer.server.port=50000"
     restart: unless-stopped
-
-networks:
-  public:
-    external:
-      name: ${TRAEFIK_PUBLIC_NETWORK}

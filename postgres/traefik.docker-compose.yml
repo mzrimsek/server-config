@@ -11,6 +11,8 @@ services:
        - /opt/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - postgres
     restart: unless-stopped
   
   pgadmin:
@@ -20,8 +22,23 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
-    ports:
-      - 5050:80
     volumes:
        - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+      - postgres
+      - public
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.postgres_pgadmin.service=postgres_pgadmin"
+      - "traefik.http.routers.postgres_pgadmin.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.postgres_pgadmin.entrypoints=websecure"
+      - "traefik.http.routers.postgres_pgadmin.tls.certresolver=tlsresolver"
+      - "traefik.http.services.postgres_pgadmin.loadbalancer.server.port=80"
     restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
