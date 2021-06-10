@@ -62,6 +62,13 @@ Steps to prep `jenkins` user (all commands run on host machine):
 * DB Data: Must have a directory to persist the database information, mounted as a volume to `/var/lib/postgresql/data` in the Postgres container
 * Admin Data: Must have a directory to persist the admin panel information, mounted as a volume to `/var/lib/pgadmin` in the pgAdmin container
 
+## RabbitMQ
+
+[RabbitMQ]() is a great open source MQTT server to asynchronously communicate data between applications without tightly coupling them to each other.
+
+* Data: Must have a directory to persist the message data, mounted as a volume to `var/lib/rabbitmq`
+* Log: Must have a directory to persist the log information, mounted as a volume to `var/log/rabbitmq`
+
 ## Monitor
 
 A great stack of services to enable seeing stats on the Docker host, as well as the containers running on it. Adapted from https://github.com/stefanprodan/dockprom.
