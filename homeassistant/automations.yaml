@@ -18,7 +18,7 @@
       target:
         entity_id: group.office_lights
 
-# payload must be a valid CSS3 color name: https://www.w3schools.com/colors/colors_names.asp
+# payload must be a valid CSS3 color name: https://www.w3.org/wiki/CSS/Properties/color/keywords
 - alias: Set Office Light Color by Name
   trigger:
     - platform: mqtt
