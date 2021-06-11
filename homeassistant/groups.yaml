@@ -1,7 +1,6 @@
-light:
-  - platform: group
-    name: Office Lights
-    entities:
-      - light.cabinet_lamp
-      - light.go_lamp
-      - light.desk_lightstrip
+office_lights:
+  name: Office Lights
+  entities:
+    - light.cabinet_lamp
+    - light.go_lamp
+    - light.desk_lightstrip
