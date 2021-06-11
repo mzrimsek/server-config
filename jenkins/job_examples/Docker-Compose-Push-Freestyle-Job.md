@@ -60,6 +60,7 @@ A general outline of how to set up a Jenkins Freestyle job that utilizes Docker 
 * Add a build step of type "Execute shell" and paste the following
 
 ``` bash
+rm .env
 cat <<EOT >> .env
 
 # add any environment variable declarations here
