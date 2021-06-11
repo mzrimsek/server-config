@@ -6,7 +6,7 @@
   action:
     - service: light.turn_off
       target:
-        entity_id: light.cabinet_lamp
+        entity_id: light.office_lights
 
 - alias: Turn Office Lights On
   trigger:
@@ -16,7 +16,7 @@
   action:
     - service: light.turn_on
       target:
-        entity_id: light.cabinet_lamp
+        entity_id: light.office_lights
 
 # payload must be a valid CSS3 color name: https://www.w3schools.com/colors/colors_names.asp
 - alias: Set Office Light Color by Name
@@ -26,7 +26,7 @@
   action:
     - service: light.turn_on
       target:
-        entity_id: light.cabinet_lamp
+        entity_id: light.office_lights
       data:
         color_name: "{{ trigger.payload }}"
 
@@ -38,6 +38,6 @@
   action:
     - service: light.turn_on
       target:
-        entity_id: light.cabinet_lamp
+        entity_id: light.office_lights
       data:
         rgb_color: "{{ trigger.payload }}"
