@@ -17,6 +17,8 @@
     - service: light.turn_on
       target:
         entity_id: group.office_lights
+      data:
+        color_name: "white"
 
 # payload must be a valid CSS3 color name: https://www.w3.org/wiki/CSS/Properties/color/keywords
 - alias: Set Office Light Color by Name
