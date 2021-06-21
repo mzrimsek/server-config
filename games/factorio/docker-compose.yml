@@ -1,11 +1,11 @@
-version: '3'
- 
+version: "3"
+
 services:
   factorio:
     container_name: factorio
     image: factoriotools/factorio
     ports:
-     - "34197:34197/udp"
+      - "34197:34197/udp"
     volumes:
-     - /opt/factorio:/factorio
+      - /opt/factorio:/factorio
     restart: unless-stopped

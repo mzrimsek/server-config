@@ -17,7 +17,7 @@
 
 Gets to the control plane commands quicker while allowing to pass whatever arguments you normally would
 
-``` bash
+```bash
 k3sk() {
 	sudo k3s kubectl $@
 }
@@ -27,7 +27,7 @@ k3sk() {
 
 This uses a [small command line tool](https://github.com/mzrimsek/env-replace) I wrote in conjunction with the previous alias. Essentially allows for easy environment variable substitution when applying changes to the cluster.
 
-``` bash
+```bash
 k3sra() {
 	env-replace $@ | k3sk apply -f -
 }
