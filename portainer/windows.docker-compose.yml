@@ -1,0 +1,17 @@
+version: "3"
+
+volumes:
+  portainer_data: {}
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    volumes:
+      - type: npipe
+        source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+      - portainer_data:C:\data
+    ports:
+      - 9000:9000
+    restart: unless-stopped
