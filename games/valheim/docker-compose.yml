@@ -1,21 +1,21 @@
-version: '3'
+version: "3"
 
 services:
-    server:
-        image: lloesche/valheim-server
-        container_name: valheim
-        volumes:
-            - /opt/valheim/config:/config
-            - /opt/valheim/data:/opt/valheim
-        ports:
-            - 2456-2458:2456-2458/udp
-        environment:
-            - SERVER_NAME=${SERVER_NAME}
-            - SERVER_PASS=${SERVER_PASSWORD}
-            # backup every day at 5am
-            - BACKUPS_CRON=0 5 * * *
-            # check for updates every day at 6am
-            - UPDATE_CRON=0 6 * * *
-            # do not do periodic restarts
-            - RESTART_CRON=""
-        restart: always
+  server:
+    image: lloesche/valheim-server
+    container_name: valheim
+    volumes:
+      - /opt/valheim/config:/config
+      - /opt/valheim/data:/opt/valheim
+    ports:
+      - 2456-2458:2456-2458/udp
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+      - SERVER_PASS=${SERVER_PASSWORD}
+      # backup every day at 5am
+      - BACKUPS_CRON=0 5 * * *
+      # check for updates every day at 6am
+      - UPDATE_CRON=0 6 * * *
+      # do not do periodic restarts
+      - RESTART_CRON=""
+    restart: always

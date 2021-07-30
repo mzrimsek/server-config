@@ -1,23 +1,23 @@
-version: '3'
+version: "3"
 
 services:
   server:
     container_name: minecraft
     image: itzg/minecraft-server
     volumes:
-    - /opt/minecraft/data:/data
-    - /opt/minecraft/modpacks:/modpacks
+      - /opt/minecraft/data:/data
+      - /opt/minecraft/modpacks:/modpacks
     environment:
       TYPE: CURSEFORGE
       CF_SERVER_MOD: /modpacks/${MODPACK}
-      
+
       EULA: "true"
       DIFFICULTY: normal
-      
+
       INIT_MEMORY: 1G
       MAX_MEMORY: 8G
     restart: unless-stopped
-    
+
   router:
     container_name: mc_router
     image: itzg/mc-router

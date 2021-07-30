@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   postgres:
@@ -8,20 +8,20 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-       - /opt/postgres/db_data:/var/lib/postgresql/data
+      - /opt/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
-  
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
       - 5050:80
     volumes:
-       - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+      - /opt/postgres/pgadmin_data:/var/lib/pgadmin
     restart: unless-stopped

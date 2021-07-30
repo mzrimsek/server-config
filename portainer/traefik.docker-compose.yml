@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   portainer:
@@ -13,14 +13,14 @@ services:
       - 9000:9000
     labels:
       - "traefik.enable=true"
-      
+
       # frontend
       - "traefik.http.routers.portainer_frontend.service=portainer_frontend"
       - "traefik.http.routers.portainer_frontend.rule=Host(`${TRAEFIK_PROXY_URL}`)"
       - "traefik.http.routers.portainer_frontend.entrypoints=websecure"
       - "traefik.http.routers.portainer_frontend.tls.certresolver=tlsresolver"
       - "traefik.http.services.portainer_frontend.loadbalancer.server.port=9000"
-      
+
       # edge
       - "traefik.http.routers.portainer_edge.service=portainer_edge"
       - "traefik.http.routers.portainer_edge.rule=Host(`${TRAEFIK_PROXY_URL}`) && Path(`/edge`)"

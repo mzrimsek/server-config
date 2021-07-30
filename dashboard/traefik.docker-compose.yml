@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   homer:
@@ -16,7 +16,7 @@ services:
       - "traefik.http.routers.homer.tls.certresolver=tlsresolver"
       - "traefik.http.services.homer.loadbalancer.server.port=8080"
     restart: unless-stopped
-    
+
 networks:
   public:
     external:
