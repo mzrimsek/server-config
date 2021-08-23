@@ -63,7 +63,7 @@ The assumption is the repository that is used in the Jenkins job has at least on
 - Add a build step of type "Execute shell" and paste the following
 
 ```bash
-rm .env
+rm -f .env
 cat <<EOT >> .env
 
 # add any environment variable declarations here
