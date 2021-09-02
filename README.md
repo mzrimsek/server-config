@@ -22,6 +22,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Monitoring](./monitor)
 - [Home Assistant](./homeassistant)
 - [Dashboard](./dashboard)
+- [Vikunja](./vikunja)
 - [Games](./games)
   - Factorio
   - Minecraft
