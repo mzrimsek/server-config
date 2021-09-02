@@ -28,3 +28,10 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Minecraft
   - Valheim
   - Terraria
+
+## Notes
+
+Setting up an app in Docker that is proxied by Traefik in the cluster (yes this is kind of a weird hybrid set up for a service but we are self-hosting stuff here) requires two steps.
+
+1. Set up the Docker container on a host machine accessible by the cluster
+2. Use the provided `nonHostedTraefikRoute.yaml` k3s deployment to create a service that routes traffic to the container
