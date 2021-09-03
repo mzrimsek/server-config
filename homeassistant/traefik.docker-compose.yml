@@ -5,7 +5,7 @@ services:
     image: homeassistant/home-assistant:stable
     container_name: home_assistant
     volumes:
-      - /opt/homeassistant:/config
+      - /media/share/homeassistant:/config
     environment:
       - TZ=America/New_York
     networks:

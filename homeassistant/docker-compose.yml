@@ -7,7 +7,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - /opt/homeassistant:/config
+      - /media/share/homeassistant:/config
     environment:
       - TZ=America/New_York
     restart: unless-stopped
