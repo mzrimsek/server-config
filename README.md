@@ -23,6 +23,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Home Assistant](./homeassistant)
 - [Dashboard](./dashboard)
 - [Vikunja](./vikunja)
+- [Trilium](./trilium)
 - [Games](./games)
   - Factorio
   - Minecraft

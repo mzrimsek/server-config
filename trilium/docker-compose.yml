@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  trilium:
+    container_name: trilium
+    image: zadam/trilium
+    environment:
+      - TRILIUM_DATA_DIR=/data
+    ports:
+      - 5600:8080
+    volumes:
+      - /opt/trilium:/data
+    restart: unless-stopped
