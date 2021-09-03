@@ -7,6 +7,6 @@ services:
     ports:
       - 8010:8080
     volumes:
-      - /opt/homer/assets:/www/assets
-      - /opt/homer/config.yml:/www/assets/config.yml
+      - /media/share/homer/assets:/www/assets
+      - /media/share/homer/config.yml:/www/assets/config.yml
     restart: unless-stopped
