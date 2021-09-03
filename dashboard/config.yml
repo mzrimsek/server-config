@@ -43,8 +43,8 @@ links:
     target: "_blank"
 
 services:
-  - name: "Services"
-    icon: "fas fa-cloud"
+  - name: "Home Services"
+    icon: "fas fa-home"
     items:
       - name: "Home Assistant"
         icon: "fas fa-home"
@@ -65,6 +65,9 @@ services:
         url: "https://notes.zrimsek.com/"
         target: "_blank"
 
+  - name: "Management Services"
+    icon: "fas fa-cloud"
+    items:
       - name: "Portainer"
         icon: "fab fa-docker"
         subtitle: "Manage Containers and Clusters"
