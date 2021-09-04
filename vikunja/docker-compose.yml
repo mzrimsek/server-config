@@ -1,32 +1,17 @@
 version: '3'
 
 services:
-  db:
-    container_name: vikunja_db
-    image: mariadb:10
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
-    volumes:
-      - /opt/vikunja/db_data:/var/lib/mysql
-    restart: unless-stopped
-
   api:
     container_name: vikunja_api
     image: vikunja/api
     environment:
-      VIKUNJA_DATABASE_HOST: db
+      VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
       VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      VIKUNJA_DATABASE_TYPE: mysql
+      VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: ${DATABASE_USER}
       VIKUNJA_DATABASE_DATABASE: ${DATABASE_NAME}
     volumes: 
-      - /opt/vikunja/files:/app/vikunja/files
-    depends_on:
-      - db
+      - /media/share/vikunja/files:/app/vikunja/files
     restart: unless-stopped
 
   frontend:
@@ -40,7 +25,7 @@ services:
     ports:
       - 5500:80
     volumes:
-      -  /opt/vikunja/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      -  /media/share/vikunja/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - api
       - frontend
