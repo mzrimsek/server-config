@@ -9,5 +9,5 @@ services:
     ports:
       - 5600:8080
     volumes:
-      - /media/share/trilium:/data
+      - /opt/trilium:/data
     restart: unless-stopped
