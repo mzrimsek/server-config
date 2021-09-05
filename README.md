@@ -12,18 +12,19 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 
 ## Stacks
 
-- [Portainer](./portainer)
-- [Traefik](./traefik)
-- [Jenkins](./jenkins)
-- [Postgres](./postgres)
-- [MQTT](./mqtt)
+- [Portainer](./portainer) - Docker Container and Kubernetes Cluster Management and Orchestration
+- [Traefik](./traefik) - Container-focused Reverse Proxy
+- [Jenkins](./jenkins) - Customizable Build Server
+- [Postgres](./postgres) - SQL based Database
+- [MQTT](./mqtt) - MQTT Servers for Cross-Server Communication
   - RabbitMQ
   - Mosquitto
-- [Monitoring](./monitor)
-- [Home Assistant](./homeassistant)
-- [Dashboard](./dashboard)
-- [Vikunja](./vikunja)
-- [Trilium](./trilium)
+- [Monitoring](./monitor) - Grafana-bases System Resource Monitoring
+- [Home Assistant](./homeassistant) - Home Automation Platform
+- [Dashboard](./dashboard) - Simple and Customizable Dashboard for your Services
+- [Vikunja](./vikunja) - Task Management Platform
+- [Trilium](./trilium) - OneNote-like Wiki and Notes Platform
+- [Firefly III](./fireflyiii) - Budgeting and Transaction Tracking
 - [Games](./games)
   - Factorio
   - Minecraft

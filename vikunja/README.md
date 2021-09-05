@@ -1,6 +1,6 @@
 # Vikunja
 
-[Vikunja](https://vikunja.io/) is a handy to-do and task managing application.
+[Vikunja](https://vikunja.io/) is a handy to-do and task managing application. This setup assumes a [Postgres](../Postgres) database has been setup to persist data.
 
 - Files: Must have a directory to mount as a volume to the api container at `/app/vikunja/files`
 
