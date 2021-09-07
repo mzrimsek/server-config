@@ -8,7 +8,7 @@ services:
       - 1883:1883
       - 8883:8883
     volumes:
-      - /media/share/mosquitto/data:/mosquitto/data
-      - /media/share/mosquitto/log:/mosquitto/log
-      - /media/share/mosquitto/config:/mosquitto/config
+      - /opt/mosquitto/data:/mosquitto/data
+      - /opt/mosquitto/log:/mosquitto/log
+      - /opt/mosquitto/config:/mosquitto/config
     restart: unless-stopped
