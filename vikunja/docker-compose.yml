@@ -3,7 +3,7 @@ version: '3'
 services:
   api:
     container_name: vikunja_api
-    image: vikunja/api
+    image: vikunja/api:latest
     environment:
       VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
       VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -16,7 +16,7 @@ services:
 
   frontend:
     container_name: vikunja_frontend
-    image: vikunja/frontend
+    image: vikunja/frontend:latest
     restart: unless-stopped
 
   proxy:
