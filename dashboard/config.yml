@@ -80,7 +80,7 @@ services:
         tag: "infrastructure"
         url: "https://ci.zrimsek.com/"
         target: "_blank"
-      - name: "unRAID"
+      - name: "Unraid"
         icon: "fas fa-hdd"
         subtitle: "View NAS Health and Utilization"
         tag: "infrastructure"
