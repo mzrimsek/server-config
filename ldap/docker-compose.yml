@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  openldap:
+    container_name: openldap
+    hostname: openldap
+    image: osixia/openldap:1.5.0
+    environment:
+      - LDAP_ORGANISATION=${LDAP_ORGANISATION}
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_ADMIN_PASSWORD=${LDAP_PASSWORD}
+      - LDAP_CONFIG_PASSWORD=${LDAP_PASSWORD}
+    ports:
+      - 389:389
+      - 636:636
+    volumes:
+      - /opt/openldap/ldap_data:/var/lib/ldap
+      - /opt/openldap/ldap_config:/etc/ldap/slapd.d
+    restart: unless-stopped
+
+  ldap_account_manager:
+    container_name: ldap_account_manager
+    image: ldapaccountmanager/lam:stable
+    environment:
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_SERVER=openldap:389
+      - LAM_PASSSWORD=${LAM_PASSWORD}
+      - LAM_LANG=en_US
+    ports:
+      - 8080:80
+    volumes:
+      - /opt/openldap/lam_config:/var/lib/ldap-account-manager/config
+    restart: unless-stopped
