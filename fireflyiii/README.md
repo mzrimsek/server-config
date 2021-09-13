@@ -12,9 +12,23 @@ The `APP_URL` environment variable needs to be set to the url your installation 
 
 Some features like recurring transactions require a cron job running to trigger the creation of these transactions. This setup includes a container to run a cron job that will hit the Firefly III API and create these transations daily. The setup takes a few steps though
 
-1. Create the stack with the `APP_TOKEN` environment variable set to nothing
+1. Create the stack with the `COMMAND_LINE_TOKEN` environment variable set to nothing
 2. Create account and login to app
 3. Navigate to Options > Profile > Command line token
-4. Copy token and set `APP_TOKEN` environment variable with this value
+4. Copy token and set `COMMAND_LINE_TOKEN` environment variable with this value
 5. Restart the stack
 
+## Importing From YNAB
+
+Similar to the recurring transactions this will require having a working Firefly III container to get the necessary data to setup the importer.
+
+1. Create the stack with the `ACCESS_TOKEN` and `YNAB_TOKEN` environment variables set to nothing
+2. Create account and login to app
+3. Navigate to Options > O-Auth > Personal Access Tokens
+4. Create new token
+5. Copy token and set `ACCESS_TOKEN` environment variable with this value
+6. Log into YNAB
+7. Navigate to Account Settings > Developer Settings > Prsonal Access Tokens
+8. Create a new token
+9. Copy token and set `YNAB_TOKEN` environment variable with this value
+5. Restart the stack
