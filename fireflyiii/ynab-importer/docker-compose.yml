@@ -1,0 +1,10 @@
+  ynab_importer:
+    container_name: ynab_importer
+    image: fireflyiii/ynab-importer:latest
+    environment:
+      - FIREFLY_III_ACCESS_TOKEN=${ACCESS_TOKEN}
+      - FIREFLY_III_URL=${APP_URL}
+      - YNAB_API_CODE=${YNAB_TOKEN}
+    ports:
+      - 8081:8080
+    restart: unless-stopped

@@ -22,13 +22,12 @@ Some features like recurring transactions require a cron job running to trigger 
 
 Similar to the recurring transactions this will require having a working Firefly III container to get the necessary data to setup the importer.
 
-1. Create the stack with the `ACCESS_TOKEN` and `YNAB_TOKEN` environment variables set to nothing
-2. Create account and login to app
-3. Navigate to Options > O-Auth > Personal Access Tokens
-4. Create new token
-5. Copy token and set `ACCESS_TOKEN` environment variable with this value
-6. Log into YNAB
-7. Navigate to Account Settings > Developer Settings > Prsonal Access Tokens
-8. Create a new token
-9. Copy token and set `YNAB_TOKEN` environment variable with this value
-5. Restart the stack
+1. Create account and login to app
+2. Navigate to Options > O-Auth > Personal Access Tokens
+3. Create new token
+4. Copy token and set `ACCESS_TOKEN` environment variable with this value
+5. Log into YNAB
+6. Navigate to Account Settings > Developer Settings > Prsonal Access Tokens
+7. Create a new token
+8. Copy token and set `YNAB_TOKEN` environment variable with this value
+9. Start YNAB importer stack
