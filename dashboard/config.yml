@@ -102,7 +102,7 @@ services:
         target: "_blank"
       - name: "Grafana"
         icon: "fas fa-chart-area"
-        subtitle: "Host and Container Resource Reporting"
+        subtitle: "View Data Visualizations and Reporting"
         tag: "data"
         url: "https://stats.zrimsek.com/"
         target: "_blank"
