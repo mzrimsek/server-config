@@ -14,6 +14,7 @@ services:
       DB_DATABASE: ${DATABASE_NAME}
       DB_USERNAME: ${DATABASE_USER}
       DB_PASSWORD: ${DATABASE_PASSWORD}
+      TZ: "America/New_York"
     volumes:
       - /opt/fireflyiii:/var/www/html/storage/upload
     ports:
