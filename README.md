@@ -25,6 +25,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Vikunja](./vikunja) - Task Management Platform
 - [Trilium](./trilium) - OneNote-like Wiki and Notes Platform
 - [Firefly III](./fireflyiii) - Budgeting and Transaction Tracking
+- [Muse](./muse) - A Discord music bot
 - [Games](./games)
   - Factorio
   - Minecraft

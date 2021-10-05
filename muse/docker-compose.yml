@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  muse:
+    container_name: muse_bot
+    image: codetheweb/muse
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - YOUTUBE_API_KEY=${YOUTUBE_TOKEN}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+    volumes:
+      - /opt/musebot:/data
+    restart: always
