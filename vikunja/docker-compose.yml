@@ -10,6 +10,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: ${DATABASE_USER}
       VIKUNJA_DATABASE_DATABASE: ${DATABASE_NAME}
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: "false"
     volumes: 
       - /opt/vikunja/files:/app/vikunja/files
     restart: unless-stopped
