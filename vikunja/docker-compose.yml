@@ -16,6 +16,7 @@ services:
       VIKUNJA_MAILER_PORT: ${MAILER_PORT}
       VIKUNJA_MAILER_USERNAME: ${MAILER_USERNAME}
       VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
+      VIKUNJA_SERVICE_TIMEZONE: America/New_York
     volumes: 
       - /opt/vikunja/files:/app/vikunja/files
     restart: unless-stopped
