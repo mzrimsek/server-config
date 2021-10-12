@@ -71,6 +71,12 @@ services:
         tag: "home"
         url: "https://home.zrimsek.com/"
         target: "_blank"
+      - name: "File Sharing"
+        icon: "fas fa-file"
+        subtitle: "Quickly and Easily Share Files"
+        tag: "files"
+        url: "https://fileshare.zrimsek.com/"
+        target: "_blank"
 
   - name: "Management Services"
     icon: "fas fa-cloud"
@@ -150,7 +156,7 @@ services:
       - name: "Google Drive"
         icon: "fab fa-google-drive"
         subtitle: "Manage and Share Files"
-        tag: "home"
+        tag: "files"
         url: "https://drive.google.com/drive/u/0/"
         target: "_blank"
 
