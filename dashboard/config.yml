@@ -72,7 +72,7 @@ services:
         url: "https://home.zrimsek.com/"
         target: "_blank"
       - name: "File Sharing"
-        icon: "fas fa-file"
+        icon: "fas fa-file-export"
         subtitle: "Quickly and Easily Share Files"
         tag: "files"
         url: "https://fileshare.zrimsek.com/"
