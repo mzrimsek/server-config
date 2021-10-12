@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    container_name: fileshelter
+    image: epoupon/fileshelter
+    user: 1000:1000
+    ports:
+      - 5091:5091
+    volumes:
+      - /opt/fileshare:/var/fileshelter
+    restart: unless-stopped
