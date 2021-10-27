@@ -1,0 +1,59 @@
+{
+  "groups": [
+    {
+      "name": "Monitoring",
+      "items": [
+        {
+          "name": "Track My Playtime",
+          "url": "https://trackmyplaytime.com/app/tracker"
+        },
+        {
+          "name": "Mint",
+          "url": "https://mint.intuit.com/overview.event"
+        },
+        {
+          "name": "MyFitnessPal",
+          "url": "https://www.myfitnesspal.com"
+        }
+      ]
+    },
+    {
+      "name": "Productivity",
+      "items": [
+        {
+          "name": "Gmail",
+          "url": "https://mail.google.com/mail/u/0/"
+        },
+        {
+          "name": "Google Calendar",
+          "url": "https://calendar.google.com/calendar/u/0/"
+        },
+        {
+          "name": "Google Drive",
+          "url": "https://drive.google.com/drive/u/0/"
+        }
+      ]
+    },
+    {
+      "name": "Development",
+      "items": [
+        {
+          "name": "Github",
+          "url": "https://github.com/mzrimsek"
+        },
+        {
+          "name": "Firebase",
+          "url": "https://console.firebase.google.com/u/0/"
+        },
+        {
+          "name": "Google Play Console",
+          "url": "https://play.google.com/console/u/0/developers"
+        },
+        {
+          "name": "Google Domains DNS",
+          "url": "https://domains.google.com/registrar/zrimsek.com/dns"
+        }
+      ]
+    }
+  ]
+}

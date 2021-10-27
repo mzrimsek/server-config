@@ -1,0 +1,80 @@
+{
+  "categories": [
+    {
+      "name": "Home",
+      "items": [
+        {
+          "name": "Budget",
+          "displayURL": "budget.zrimsek.com",
+          "url": "https://budget.zrimsek.com",
+          "icon": "account_balance_wallet"
+        },
+        {
+          "name": "Tasks",
+          "displayURL": "tasks.zrimsek.com",
+          "url": "https://tasks.zrimsek.com",
+          "icon": "task"
+        },
+        {
+          "name": "Notes",
+          "displayURL": "notes.zrimsek.com",
+          "url": "https://notes.zrimsek.com",
+          "icon": "note"
+        },
+        {
+          "name": "Home Assistant",
+          "displayURL": "home.zrimsek.com",
+          "url": "https://home.zrimsek.com",
+          "icon": "home"
+        },
+        {
+          "name": "File Sharing",
+          "displayURL": "fileshare.zrimsek.com",
+          "url": "https://fileshare.zrimsek.com",
+          "icon": "share"
+        }
+      ]
+    },
+    {
+      "name": "Management",
+      "items": [
+        {
+          "name": "Portainer",
+          "displayURL": "docker.zrimsek.com",
+          "url": "https://docker.zrimsek.com",
+          "icon": "grid_view"
+        },
+        {
+          "name": "Jenkins",
+          "displayURL": "ci.zrimsek.com",
+          "url": "https://ci.zrimsek.com",
+          "icon": "build"
+        },
+        {
+          "name": "Network Storage",
+          "displayURL": "data.zrimsek.com",
+          "url": "https://data.zrimsek.com",
+          "icon": "storage"
+        },
+        {
+          "name": "Database Management",
+          "displayURL": "db.zrimsek.com",
+          "url": "https://db.zrimsek.com",
+          "icon": "dns"
+        },
+        {
+          "name": "Reporting Dashboards",
+          "displayURL": "stats.zrimsek.com",
+          "url": "https://stats.zrimsek.com",
+          "icon": "leaderboard"
+        },
+        {
+          "name": "Network Proxy Dashboard",
+          "displayURL": "traefik.zrimsek.com",
+          "url": "https://traefik.zrimsek.com",
+          "icon": "traffic"
+        }
+      ]
+    }
+  ]
+}

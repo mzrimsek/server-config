@@ -1,0 +1,11 @@
+{
+	"themes": [
+		{
+			"label": "Dark",
+			"value": "0",
+			"mainColor": "3F51B5",
+			"accentColor": "F50057",
+			"backgroundColor": "303030"
+		}
+	]
+}

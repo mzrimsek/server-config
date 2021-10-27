@@ -2,11 +2,10 @@ version: "3"
 
 services:
   homer:
-    image: b4bz/homer:latest
-    container_name: homer
+    image: phntxx/dashboard:latest
+    container_name: dashboard
     ports:
       - 8010:8080
     volumes:
-      - /opt/homer/assets:/www/assets
-      - /opt/homer/config.yml:/www/assets/config.yml
+      - /opt/dashboard:/app/data
     restart: unless-stopped
