@@ -1,7 +1,7 @@
 {
   "groups": [
     {
-      "name": "Entertainment",
+      "name": "Video",
       "items": [
         {
           "name": "Twitch",
@@ -30,6 +30,19 @@
       ]
     },
     {
+      "name": "Audio",
+      "items": [
+        {
+          "name": "YouTube Music",
+          "url": "https://music.youtube.com/"
+        },
+        {
+          "name": "Google Podcasts",
+          "url": "https://podcasts.google.com/"
+        }
+      ]
+    },
+    {
       "name": "Monitoring",
       "items": [
         {
@@ -37,12 +50,16 @@
           "url": "https://trackmyplaytime.com/app/tracker"
         },
         {
+          "name": "MyFitnessPal",
+          "url": "https://www.myfitnesspal.com"
+        },
+        {
           "name": "Mint",
           "url": "https://mint.intuit.com/overview.event"
         },
         {
-          "name": "MyFitnessPal",
-          "url": "https://www.myfitnesspal.com"
+          "name": "Goodreads",
+          "url": "https://www.goodreads.com/"
         }
       ]
     },
