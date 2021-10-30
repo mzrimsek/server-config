@@ -1,44 +1,23 @@
 {
   "groups": [
     {
-      "name": "Video",
+      "name": "Development",
       "items": [
         {
-          "name": "Twitch",
-          "url": "https://www.twitch.tv/"
+          "name": "Github",
+          "url": "https://github.com/mzrimsek"
         },
         {
-          "name": "YouTube",
-          "url": "https://www.youtube.com/"
+          "name": "Firebase",
+          "url": "https://console.firebase.google.com/u/0/"
         },
         {
-          "name": "Hulu",
-          "url": "https://www.hulu.com/hub/home"
+          "name": "Google Play Console",
+          "url": "https://play.google.com/console/u/0/developers"
         },
         {
-          "name": "Disney+",
-          "url": "https://www.disneyplus.com/home"
-        },
-        {
-          "name": "HBO Max",
-          "url": "https://play.hbomax.com/"
-        },
-        {
-          "name": "Netflix",
-          "url": "https://www.netflix.com/browse"
-        }
-      ]
-    },
-    {
-      "name": "Audio",
-      "items": [
-        {
-          "name": "YouTube Music",
-          "url": "https://music.youtube.com/"
-        },
-        {
-          "name": "Google Podcasts",
-          "url": "https://podcasts.google.com/"
+          "name": "Google Domains DNS",
+          "url": "https://domains.google.com/registrar/zrimsek.com/dns"
         }
       ]
     },
@@ -81,23 +60,44 @@
       ]
     },
     {
-      "name": "Development",
+      "name": "Video",
       "items": [
         {
-          "name": "Github",
-          "url": "https://github.com/mzrimsek"
+          "name": "Twitch",
+          "url": "https://www.twitch.tv/"
         },
         {
-          "name": "Firebase",
-          "url": "https://console.firebase.google.com/u/0/"
+          "name": "YouTube",
+          "url": "https://www.youtube.com/"
         },
         {
-          "name": "Google Play Console",
-          "url": "https://play.google.com/console/u/0/developers"
+          "name": "Hulu",
+          "url": "https://www.hulu.com/hub/home"
         },
         {
-          "name": "Google Domains DNS",
-          "url": "https://domains.google.com/registrar/zrimsek.com/dns"
+          "name": "Disney+",
+          "url": "https://www.disneyplus.com/home"
+        },
+        {
+          "name": "HBO Max",
+          "url": "https://play.hbomax.com/"
+        },
+        {
+          "name": "Netflix",
+          "url": "https://www.netflix.com/browse"
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "items": [
+        {
+          "name": "YouTube Music",
+          "url": "https://music.youtube.com/"
+        },
+        {
+          "name": "Google Podcasts",
+          "url": "https://podcasts.google.com/"
         }
       ]
     }

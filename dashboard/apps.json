@@ -76,5 +76,13 @@
         }
       ]
     }
+  ],
+  "apps": [
+    {
+      "name": "Resume Site",
+      "displayURL": "www.zrimsek.com",
+      "url": "https://www.zrimsek.com/",
+      "icon": "person"
+    }
   ]
 }
