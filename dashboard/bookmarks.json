@@ -1,6 +1,35 @@
 {
   "groups": [
     {
+      "name": "Entertainment",
+      "items": [
+        {
+          "name": "Twitch",
+          "url": "https://www.twitch.tv/"
+        },
+        {
+          "name": "YouTube",
+          "url": "https://www.youtube.com/"
+        },
+        {
+          "name": "Hulu",
+          "url": "https://www.hulu.com/hub/home"
+        },
+        {
+          "name": "Disney+",
+          "url": "https://www.disneyplus.com/home"
+        },
+        {
+          "name": "HBO Max",
+          "url": "https://play.hbomax.com/"
+        },
+        {
+          "name": "Netflix",
+          "url": "https://www.netflix.com/browse"
+        }
+      ]
+    },
+    {
       "name": "Monitoring",
       "items": [
         {
