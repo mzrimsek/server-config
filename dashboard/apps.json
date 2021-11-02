@@ -63,6 +63,12 @@
           "icon": "dns"
         },
         {
+          "name": "Download Management",
+          "displayURL": "download.zrimsek.com",
+          "url": "https://download.zrimsek.com",
+          "icon": "download"
+        },
+        {
           "name": "Reporting Dashboards",
           "displayURL": "stats.zrimsek.com",
           "url": "https://stats.zrimsek.com",
