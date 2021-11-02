@@ -11,7 +11,6 @@ services:
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
       - USER=${USERNAME}
       - PASS=${PASSWORD}
-      - WHITELIST=${IP_WHITELIST}
     volumes:
       - ${CONFIG_DIR}:/config
       - ${DOWNLOAD_DIR}:/downloads
