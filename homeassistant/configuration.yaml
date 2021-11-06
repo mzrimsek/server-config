@@ -1,0 +1,23 @@
+default_config:
+
+browser:
+
+sensor:
+  - platform: google_wifi
+  - platform: moon
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+  - platform: uptime
+  - platform: version
+    
+tts:
+  - platform: google_translate
+    language: "en"
