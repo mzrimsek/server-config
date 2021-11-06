@@ -10,4 +10,5 @@ services:
       - /opt/homeassistant:/config
     environment:
       - TZ=America/New_York
+    network_mode: host # allows home assistant to detect devices on the network
     restart: unless-stopped
