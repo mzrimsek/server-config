@@ -1,16 +1,29 @@
 version: "3"
 
 services:
-  server:
-    container_name: minecraft
+  server1:
+    container_name: minecraft_curse
     image: itzg/minecraft-server
     volumes:
       - /opt/minecraft/data:/data
       - /opt/minecraft/modpacks:/modpacks
     environment:
       TYPE: CURSEFORGE
-      CF_SERVER_MOD: /modpacks/${MODPACK}
+      CF_SERVER_MOD: /modpacks/${SERVER_1_MODPACK}
 
+      EULA: "true"
+      DIFFICULTY: normal
+
+      INIT_MEMORY: 1G
+      MAX_MEMORY: 8G
+    restart: unless-stopped
+
+  server2:
+    container_name: minecraft_vanilla
+    image: itzg/minecraft-server
+    volumes:
+      - /opt/minecraft-vanilla/data:/data
+    environment:
       EULA: "true"
       DIFFICULTY: normal
 
@@ -23,5 +36,5 @@ services:
     image: itzg/mc-router
     ports:
       - 25565:25565
-    command: --mapping=${SERVER_PROXY_URL}=server:25565
+    command: --mapping=${SERVER_1_PROXY_URL}=server1:25565,${SERVER_2_PROXY_URL}=server2:25565
     restart: unless-stopped
