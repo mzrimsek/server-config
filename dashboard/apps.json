@@ -89,6 +89,12 @@
       "displayURL": "www.zrimsek.com",
       "url": "https://www.zrimsek.com/",
       "icon": "person"
+    },
+    {
+      "name": "OctoPrint",
+      "displayURL": "octopi.local",
+      "url": "http://octopi.local/",
+      "icon": "print"
     }
   ]
 }

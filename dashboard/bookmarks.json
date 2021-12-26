@@ -22,6 +22,15 @@
       ]
     },
     {
+      "name": "Printing",
+      "items": [
+        {
+          "name": "Thingiverse",
+          "url": "https://www.thingiverse.com/"
+        }
+      ]
+    },
+    {
       "name": "Monitoring",
       "items": [
         {
