@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   the-forest-dedicated-server:
-    container_name: the-forest-dedicated-server
+    container_name: the_forest
     image: jammsen/the-forest-dedicated-server:latest
     restart: always
     ports:
