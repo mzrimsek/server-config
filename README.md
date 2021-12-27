@@ -32,6 +32,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Valheim
   - Terraria
   - Project Zomboid
+  - The Forest
 
 ## Notes
 
