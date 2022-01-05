@@ -25,6 +25,10 @@
       "name": "Printing",
       "items": [
         {
+          "name": "Tinkercad",
+          "url": "https://www.tinkercad.com/"
+        },
+        {
           "name": "Thingiverse",
           "url": "https://www.thingiverse.com/"
         },
