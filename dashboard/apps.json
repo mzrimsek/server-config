@@ -26,12 +26,6 @@
           "displayURL": "home.zrimsek.com",
           "url": "https://home.zrimsek.com",
           "icon": "home"
-        },
-        {
-          "name": "File Sharing",
-          "displayURL": "fileshare.zrimsek.com",
-          "url": "https://fileshare.zrimsek.com",
-          "icon": "share"
         }
       ]
     },
