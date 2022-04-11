@@ -21,3 +21,10 @@ sensor:
 tts:
   - platform: google_translate
     language: "en"
+
+http:
+  base_url: https://home.zrimsek.com
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
