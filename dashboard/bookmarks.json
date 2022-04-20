@@ -5,19 +5,23 @@
       "items": [
         {
           "name": "Github",
-          "url": "https://github.com/mzrimsek"
+          "url": "https://github.com/mzrimsek",
+          "newTab": true
         },
         {
           "name": "Firebase",
-          "url": "https://console.firebase.google.com/u/0/"
+          "url": "https://console.firebase.google.com/u/0/",
+          "newTab": true
         },
         {
           "name": "Google Play Console",
-          "url": "https://play.google.com/console/u/0/developers"
+          "url": "https://play.google.com/console/u/0/developers",
+          "newTab": true
         },
         {
           "name": "Google Domains DNS",
-          "url": "https://domains.google.com/registrar/zrimsek.com/dns"
+          "url": "https://domains.google.com/registrar/zrimsek.com/dns",
+          "newTab": true
         }
       ]
     },
@@ -26,15 +30,18 @@
       "items": [
         {
           "name": "Tinkercad",
-          "url": "https://www.tinkercad.com/"
+          "url": "https://www.tinkercad.com/",
+          "newTab": true
         },
         {
           "name": "Thingiverse",
-          "url": "https://www.thingiverse.com/"
+          "url": "https://www.thingiverse.com/",
+          "newTab": true
         },
         {
           "name": "Thangs",
-          "url": "https://thangs.com/"
+          "url": "https://thangs.com/",
+          "newTab": true
         }
       ]
     },
@@ -43,19 +50,23 @@
       "items": [
         {
           "name": "Track My Playtime",
-          "url": "https://trackmyplaytime.com/app/tracker"
+          "url": "https://trackmyplaytime.com/app/tracker",
+          "newTab": true
         },
         {
           "name": "MyFitnessPal",
-          "url": "https://www.myfitnesspal.com"
+          "url": "https://www.myfitnesspal.com",
+          "newTab": true
         },
         {
           "name": "Mint",
-          "url": "https://mint.intuit.com/overview.event"
+          "url": "https://mint.intuit.com/overview.event",
+          "newTab": true
         },
         {
           "name": "Goodreads",
-          "url": "https://www.goodreads.com/"
+          "url": "https://www.goodreads.com/",
+          "newTab": true
         }
       ]
     },
@@ -64,15 +75,18 @@
       "items": [
         {
           "name": "Gmail",
-          "url": "https://mail.google.com/mail/u/0/"
+          "url": "https://mail.google.com/mail/u/0/",
+          "newTab": true
         },
         {
           "name": "Google Calendar",
-          "url": "https://calendar.google.com/calendar/u/0/"
+          "url": "https://calendar.google.com/calendar/u/0/",
+          "newTab": true
         },
         {
           "name": "Google Drive",
-          "url": "https://drive.google.com/drive/u/0/"
+          "url": "https://drive.google.com/drive/u/0/",
+          "newTab": true
         }
       ]
     },
@@ -81,27 +95,33 @@
       "items": [
         {
           "name": "Twitch",
-          "url": "https://www.twitch.tv/"
+          "url": "https://www.twitch.tv/",
+          "newTab": true
         },
         {
           "name": "YouTube",
-          "url": "https://www.youtube.com/"
+          "url": "https://www.youtube.com/",
+          "newTab": true
         },
         {
           "name": "Hulu",
-          "url": "https://www.hulu.com/hub/home"
+          "url": "https://www.hulu.com/hub/home",
+          "newTab": true
         },
         {
           "name": "Disney+",
-          "url": "https://www.disneyplus.com/home"
+          "url": "https://www.disneyplus.com/home",
+          "newTab": true
         },
         {
           "name": "HBO Max",
-          "url": "https://play.hbomax.com/"
+          "url": "https://play.hbomax.com/",
+          "newTab": true
         },
         {
           "name": "Netflix",
-          "url": "https://www.netflix.com/browse"
+          "url": "https://www.netflix.com/browse",
+          "newTab": true
         }
       ]
     },
@@ -110,11 +130,13 @@
       "items": [
         {
           "name": "YouTube Music",
-          "url": "https://music.youtube.com/"
+          "url": "https://music.youtube.com/",
+          "newTab": true
         },
         {
           "name": "Google Podcasts",
-          "url": "https://podcasts.google.com/"
+          "url": "https://podcasts.google.com/",
+          "newTab": true
         }
       ]
     }
