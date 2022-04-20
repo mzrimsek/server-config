@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  app:
+    container_name: fireflyiii
+    image: fireflyiii/core:latest
+    environment: 
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      TRUSTED_PROXIES: '**'
+      DB_HOST: ${DATABASE_HOST}
+      DB_PORT: 5432
+      DB_CONNECTION: pgsql
+      DB_DATABASE: ${DATABASE_NAME}
+      DB_USERNAME: ${DATABASE_USER}
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      TZ: "America/New_York"
+    volumes:
+      - /opt/fireflyiii:/var/www/html/storage/upload
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.fireflyiii.service=fireflyiii"
+      - "traefik.http.routers.fireflyiii.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.fireflyiii.entrypoints=websecure"
+      - "traefik.http.routers.fireflyiii.tls.certresolver=tlsresolver"
+      - "traefik.http.services.fireflyiii.loadbalancer.server.port=8080"
+    restart: unless-stopped
+
+  cron:
+    container_name: fireflyiii_cron
+    image: alpine
+    command: sh -c "echo \"0 3 * * * wget -qO- ${APP_URL}/api/v1/cron/${COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
+    networks:
+      - public
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
