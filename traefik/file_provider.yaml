@@ -1,0 +1,16 @@
+http:
+  routers:
+    ${SERVICE_NAME}:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`${TRAEFIK_PROXY_URL}`)"
+      tls:
+        certResolver:
+          - "tlsresolver"
+      service: ${SERVICE_NAME}
+
+  services:
+    ${SERVICE_NAME}:
+      loadBalancer:
+        servers:
+          - url: "${SERVICE_URL}"
