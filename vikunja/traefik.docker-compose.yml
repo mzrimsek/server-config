@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  api:
+    container_name: vikunja_api
+    image: vikunja/api:latest
+    environment:
+      VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
+      VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: ${DATABASE_USER}
+      VIKUNJA_DATABASE_DATABASE: ${DATABASE_NAME}
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: 0
+      VIKUNJA_MAILER_ENABLED: 1
+      VIKUNJA_MAILER_HOST: ${MAILER_HOST}
+      VIKUNJA_MAILER_PORT: ${MAILER_PORT}
+      VIKUNJA_MAILER_USERNAME: ${MAILER_USERNAME}
+      VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
+      VIKUNJA_SERVICE_TIMEZONE: America/New_York
+      VIKUNJA_SERVICE_FRONTENDURL: ${APP_URL}
+    volumes: 
+      - /opt/vikunja/files:/app/vikunja/files
+    networks:
+      - vikunja
+    restart: unless-stopped
+
+  frontend:
+    container_name: vikunja_frontend
+    image: vikunja/frontend:latest
+    networks:
+      - vikunja
+    restart: unless-stopped
+
+  proxy:
+    container_name: vikunja
+    image: nginx
+    volumes:
+      -  /opt/vikunja/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - vikunja
+      - public
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.vikunja.service=vikunja"
+      - "traefik.http.routers.vikunja.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.vikunja.entrypoints=websecure"
+      - "traefik.http.routers.vikunja.tls.certresolver=tlsresolver"
+      - "traefik.http.services.vikunja.loadbalancer.server.port=80"
+    restart: unless-stopped
+
+networks:
+  vikunja:
+    driver: bridge
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
