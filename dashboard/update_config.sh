@@ -9,4 +9,7 @@ sudo wget https://raw.githubusercontent.com/mzrimsek/server-config/main/dashboar
 sudo rm themes.json
 sudo wget https://raw.githubusercontent.com/mzrimsek/server-config/main/dashboard/themes.json
 
+sudo rm greeter.json
+sudo wget https://raw.githubusercontent.com/phntxx/dashboard/master/data/greeter.json
+
 sudo docker container restart dashboard
