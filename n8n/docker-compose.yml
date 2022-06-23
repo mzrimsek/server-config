@@ -3,6 +3,7 @@ version: "3"
 services:
   n8n:
     image: n8nio/n8n
+    container_name: n8n
     environment:
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=${DATABASE_HOST}
