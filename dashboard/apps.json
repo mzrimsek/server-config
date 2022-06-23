@@ -86,6 +86,18 @@
           "newTab": true
         }
       ]
+    },
+    {
+      "name": "Services",
+      "items": [
+        {
+          "name": "Cross Service Automation",
+          "displayURL": "automation.zrimsek.com",
+          "url": "https://automation.zrimsek.com",
+          "icon": "all_inclusive",
+          "newTab": true
+        }
+      ]
     }
   ],
   "apps": [
