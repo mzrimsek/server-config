@@ -37,11 +37,6 @@
           "name": "Thingiverse",
           "url": "https://www.thingiverse.com/",
           "newTab": true
-        },
-        {
-          "name": "Thangs",
-          "url": "https://thangs.com/",
-          "newTab": true
         }
       ]
     },
@@ -59,13 +54,13 @@
           "newTab": true
         },
         {
-          "name": "Mint",
-          "url": "https://mint.intuit.com/overview.event",
+          "name": "Goodreads",
+          "url": "https://www.goodreads.com/",
           "newTab": true
         },
         {
-          "name": "Goodreads",
-          "url": "https://www.goodreads.com/",
+          "name": "Ring",
+          "url": "https://account.ring.com/",
           "newTab": true
         }
       ]
@@ -104,11 +99,6 @@
           "newTab": true
         },
         {
-          "name": "Hulu",
-          "url": "https://www.hulu.com/hub/home",
-          "newTab": true
-        },
-        {
           "name": "Disney+",
           "url": "https://www.disneyplus.com/home",
           "newTab": true
@@ -116,6 +106,11 @@
         {
           "name": "HBO Max",
           "url": "https://play.hbomax.com/",
+          "newTab": true
+        },
+        {
+          "name": "Hulu",
+          "url": "https://www.hulu.com/hub/home",
           "newTab": true
         },
         {

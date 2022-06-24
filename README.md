@@ -26,6 +26,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Trilium](./trilium) - OneNote-like Wiki and Notes Platform
 - [Firefly III](./fireflyiii) - Budgeting and Transaction Tracking
 - [Muse](./muse) - A Discord music bot
+- [n8n](./n8n) - An automation platform similar to IFTTT
 - [Games](./games)
   - Factorio
   - Minecraft
