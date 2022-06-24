@@ -44,13 +44,6 @@
           "newTab": true
         },
         {
-          "name": "Jenkins",
-          "displayURL": "ci.zrimsek.com",
-          "url": "https://ci.zrimsek.com",
-          "icon": "build",
-          "newTab": true
-        },
-        {
           "name": "Network Storage",
           "displayURL": "data.zrimsek.com",
           "url": "https://data.zrimsek.com",
@@ -58,17 +51,17 @@
           "newTab": true
         },
         {
-          "name": "Database Management",
-          "displayURL": "db.zrimsek.com",
-          "url": "https://db.zrimsek.com",
-          "icon": "dns",
-          "newTab": true
-        },
-        {
           "name": "Download Management",
           "displayURL": "download.zrimsek.com",
           "url": "https://download.zrimsek.com",
           "icon": "download",
+          "newTab": true
+        },
+        {
+          "name": "Database Management",
+          "displayURL": "db.zrimsek.com",
+          "url": "https://db.zrimsek.com",
+          "icon": "dns",
           "newTab": true
         },
         {
@@ -83,6 +76,13 @@
           "displayURL": "traefik.zrimsek.com",
           "url": "https://traefik.zrimsek.com",
           "icon": "traffic",
+          "newTab": true
+        },
+        {
+          "name": "Jenkins",
+          "displayURL": "ci.zrimsek.com",
+          "url": "https://ci.zrimsek.com",
+          "icon": "build",
           "newTab": true
         },
         {
