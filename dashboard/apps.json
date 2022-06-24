@@ -84,12 +84,7 @@
           "url": "https://traefik.zrimsek.com",
           "icon": "traffic",
           "newTab": true
-        }
-      ]
-    },
-    {
-      "name": "Services",
-      "items": [
+        },
         {
           "name": "Automation Workflows",
           "displayURL": "automation.zrimsek.com",
