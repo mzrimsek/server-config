@@ -31,9 +31,8 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      - public
-      - backend:
-          - ipv4_address: '172.31.0.100'
+      backend:
+        ipv4_address: '172.31.0.100'
     labels:
       - "traefik.enable=true"
       
@@ -60,6 +59,3 @@ networks:
     ipam:
       config:
         - subnet: 172.31.0.0/16
-  public:
-    external:
-      name: ${TRAEFIK_PUBLIC_NETWORK}
