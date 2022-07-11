@@ -71,7 +71,7 @@
       "name": "Reporting",
       "items": [
           {
-            "name": "Service Resource",
+            "name": "Service Resources",
             "displayURL": "stats.zrimsek.com",
             "url": "https://stats.zrimsek.com",
             "icon": "leaderboard",
