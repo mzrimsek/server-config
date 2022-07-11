@@ -47,7 +47,21 @@
           "name": "Network Storage",
           "displayURL": "data.zrimsek.com",
           "url": "https://data.zrimsek.com",
+          "icon": "folder_shared",
+          "newTab": true
+        },
+        {
+          "name": "Database Management",
+          "displayURL": "db.zrimsek.com",
+          "url": "https://db.zrimsek.com",
           "icon": "storage",
+          "newTab": true
+        },
+        {
+          "name": "Network Adblock Management",
+          "displayURL": "ablock.zrimsek.com",
+          "url": "https://ablock.zrimsek.com",
+          "icon": "ads_click",
           "newTab": true
         },
         {
@@ -55,13 +69,6 @@
           "displayURL": "download.zrimsek.com",
           "url": "https://download.zrimsek.com",
           "icon": "download",
-          "newTab": true
-        },
-        {
-          "name": "Database Management",
-          "displayURL": "db.zrimsek.com",
-          "url": "https://db.zrimsek.com",
-          "icon": "dns",
           "newTab": true
         },
         {
