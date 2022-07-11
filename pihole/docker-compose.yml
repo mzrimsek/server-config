@@ -1,23 +1,54 @@
 version: "3"
 
-# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
-      - "3560:80/tcp"
+      - ${HOST_PORT:-10805}:80
+    dns:
+      - 127.0.0.1
+      - 9.9.9.9
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD: '${PASSWORD}'
+      VIRTUAL_HOST: '${SERVICE_URL}'
+      PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
+      DNSSEC: 'true'
+      ServerIP: ${HOST_IP}
+      DNSMASQ_LISTENING: all
+      DHCP_ACTIVE: 'true'
+      DHCP_START: 192.168.0.100
+      DHCP_END: 192.168.0.199
+      DHCP_ROUTER: 192.168.0.1
+      DHCP_LEASETIME: 6
+      WEBTHEME: default-dark
+      PIHOLE_DOMAIN: public
     volumes:
       - '/opt/pihole/etc:/etc/pihole'
       - '/opt/pihole/dnsmasq.d:/etc/dnsmasq.d'
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
-      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+      - NET_ADMIN
+    networks:
+      backend:
+        ipv4_address: '172.31.0.100'
+    depends_on:
+      - dhcphelper
     restart: unless-stopped
+
+  dhcphelper:
+    image: noamokman/dhcp-helper
+    container_name: dhcp-helper
+    restart: unless-stopped
+    network_mode: "host"
+    command: -s 172.31.0.100
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
