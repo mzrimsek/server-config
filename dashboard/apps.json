@@ -37,7 +37,7 @@
       "name": "Management",
       "items": [
         {
-          "name": "Portainer",
+          "name": "Docker Containers",
           "displayURL": "docker.zrimsek.com",
           "url": "https://docker.zrimsek.com",
           "icon": "grid_view",
@@ -51,40 +51,46 @@
           "newTab": true
         },
         {
-          "name": "Database Management",
+          "name": "Databases",
           "displayURL": "db.zrimsek.com",
           "url": "https://db.zrimsek.com",
           "icon": "storage",
           "newTab": true
         },
+        
         {
-          "name": "Network Adblock Management",
-          "displayURL": "adblock.zrimsek.com",
-          "url": "https://adblock.zrimsek.com",
-          "icon": "cloud_off",
-          "newTab": true
-        },
-        {
-          "name": "Download Management",
+          "name": "Downloads",
           "displayURL": "download.zrimsek.com",
           "url": "https://download.zrimsek.com",
           "icon": "download",
           "newTab": true
-        },
-        {
-          "name": "Reporting Dashboards",
-          "displayURL": "stats.zrimsek.com",
-          "url": "https://stats.zrimsek.com",
-          "icon": "leaderboard",
-          "newTab": true
-        },
-        {
-          "name": "Network Proxy Dashboard",
-          "displayURL": "traefik.zrimsek.com",
-          "url": "https://traefik.zrimsek.com",
-          "icon": "traffic",
-          "newTab": true
         }
+      ]
+    },
+    {
+      "name": "Reporting",
+      "items": [
+          {
+            "name": "Service Resource",
+            "displayURL": "stats.zrimsek.com",
+            "url": "https://stats.zrimsek.com",
+            "icon": "leaderboard",
+            "newTab": true
+          },
+          {
+            "name": "Network Proxy Status",
+            "displayURL": "traefik.zrimsek.com",
+            "url": "https://traefik.zrimsek.com",
+            "icon": "traffic",
+            "newTab": true
+          },
+          {
+            "name": "Network Adblock",
+            "displayURL": "adblock.zrimsek.com",
+            "url": "https://adblock.zrimsek.com",
+            "icon": "cloud_off",
+            "newTab": true
+          }
       ]
     },
     {
