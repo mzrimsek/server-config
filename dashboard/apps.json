@@ -59,9 +59,9 @@
         },
         {
           "name": "Network Adblock Management",
-          "displayURL": "ablock.zrimsek.com",
-          "url": "https://ablock.zrimsek.com",
-          "icon": "ads_click",
+          "displayURL": "adblock.zrimsek.com",
+          "url": "https://adblock.zrimsek.com",
+          "icon": "cloud_off",
           "newTab": true
         },
         {
