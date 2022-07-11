@@ -84,7 +84,12 @@
           "url": "https://traefik.zrimsek.com",
           "icon": "traffic",
           "newTab": true
-        },
+        }
+      ]
+    },
+    {
+      "name": "Automation",
+      "items": [
         {
           "name": "Jenkins",
           "displayURL": "ci.zrimsek.com",
