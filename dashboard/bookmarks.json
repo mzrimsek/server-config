@@ -77,6 +77,11 @@
           "name": "Google Drive",
           "url": "https://drive.google.com/drive/u/0/",
           "newTab": true
+        },
+        {
+          "name": "Google Remote Desktop",
+          "url": "https://remotedesktop.google.com/access/",
+          "newTab": true
         }
       ]
     },
