@@ -35,6 +35,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Terraria
   - Project Zomboid
   - The Forest
+  - Skyrim Together Reborn
 
 ## Notes
 
