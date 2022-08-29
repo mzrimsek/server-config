@@ -1,22 +1,20 @@
 - alias: Turn Office Lights Off
   trigger:
     - platform: mqtt
-      topic: "lights/office"
-      payload: "off"
+      topic: "home/office/lights/off"
   action:
     - service: light.turn_off
       target:
-        entity_id: group.office_lights
+        entity_id: light.office
 
 - alias: Turn Office Lights On
   trigger:
     - platform: mqtt
-      topic: "lights/office"
-      payload: "on"
+      topic: "home/office/lights/on"
   action:
     - service: light.turn_on
       target:
-        entity_id: group.office_lights
+        entity_id: light.office
       data:
         color_name: "white"
 
@@ -24,11 +22,11 @@
 - alias: Set Office Light Color by Name
   trigger:
     - platform: mqtt
-      topic: "lights/office/color/name"
+      topic: "home/office/lights/color/name"
   action:
     - service: light.turn_on
       target:
-        entity_id: group.office_lights
+        entity_id: light.office
       data:
         color_name: "{{ trigger.payload }}"
 
@@ -36,10 +34,10 @@
 - alias: Set Office Light Color by RGB
   trigger:
     - platform: mqtt
-      topic: "lights/office/color/rgb"
+      topic: "home/office/lights/color/rgb"
   action:
     - service: light.turn_on
       target:
-        entity_id: group.office_lights
+        entity_id: light.office
       data:
         rgb_color: "{{ trigger.payload }}"
