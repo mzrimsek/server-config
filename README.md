@@ -39,7 +39,9 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 
 ## Notes
 
-Setting up an app in Docker that is proxied by Traefik in the cluster (yes this is kind of a weird hybrid set up for a service but we are self-hosting stuff here) requires two steps.
+*Eventually, to simplify maintenance after playing with the cluster, I moved back to just hosting everything in Docker on my server or NAS based on the type of service it was (more critical stuff stayed on the NAS because it has data redundancy and it's less likely to get rebooted over the server)*
+
+Setting up an app in Docker that is proxied by Traefik in the cluster (yes this is kind of a weird hybrid set up for a service but we are self-hosting stuff here) requires two steps. 
 
 1. Set up the Docker container on a host machine accessible by the cluster
 2. Use the provided `nonHostedTraefikRoute.yaml` k3s deployment to create a service that routes traffic to the container
