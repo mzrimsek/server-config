@@ -11,6 +11,13 @@
           "newTab": true
         },
         {
+          "name": "Home Assistant",
+          "displayURL": "home.zrimsek.com",
+          "url": "https://home.zrimsek.com",
+          "icon": "home",
+          "newTab": true
+        },
+        {
           "name": "Tasks",
           "displayURL": "tasks.zrimsek.com",
           "url": "https://tasks.zrimsek.com",
@@ -22,13 +29,6 @@
           "displayURL": "notes.zrimsek.com",
           "url": "https://notes.zrimsek.com",
           "icon": "note",
-          "newTab": true
-        },
-        {
-          "name": "Home Assistant",
-          "displayURL": "home.zrimsek.com",
-          "url": "https://home.zrimsek.com",
-          "icon": "home",
           "newTab": true
         }
       ]
