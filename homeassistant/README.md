@@ -12,3 +12,5 @@ Relevant configuration files:
 * automation.yaml
 * configuration.yaml
   * Make sure to update $PROXY_URL or remove it if you are not running behind a reverse proxy
+
+[HACS](https://hacs.xyz/docs/setup/prerequisites) is full of great community integrations
