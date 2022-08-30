@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=${DATABASE_HOST}
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${DATABASE_NAME}
+      - DB_POSTGRESDB_USER=${DATABASE_USER}
+      - DB_POSTGRESDB_PASSWORD=${DATABASE_PASSWORD}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${USERNAME}
+      - N8N_BASIC_AUTH_PASSWORD=${PASSWORD}
+      - TZ=America/New_York
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.n8n.entrypoints=websecure"
+      - "traefik.http.routers.n8n.tls.certresolver=tlsresolver"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+    volumes:
+      - /opt/n8n:/home/node/.n8n
+    restart: unless-stopped
+    
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
+    

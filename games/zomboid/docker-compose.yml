@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  project-zomboid:
+    image: afey/zomboid
+    container_name: zomboid
+    restart: unless-stopped
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+      - SERVER_PASSWORD=${SERVER_PASS}
+      - RCON_PASSWORD=${RCON_PASSWORD}
+    ports:
+      - "8766:8766/udp"
+      - "8767:8767/udp"
+      - "16261:16261/udp"
+      - "16262-16272:16262-16272"
+      - "27015:27015"
+    volumes:
+      - /opt/zomboid/data:/server-data

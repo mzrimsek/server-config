@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  skyrimreborn01:
+    container_name: skyrimreborn01
+    image: tiltedphoques/st-reborn-server:latest
+    ports:
+      - "10578:10578/udp"
+    volumes:
+     - /opt/skyrimtogether/config:/home/server/config
+     - /opt/skyrimtogether/logs:/home/server/logs
+     - /opt/skyrimtogether/data:/home/server/Data
+    restart: unless-stopped

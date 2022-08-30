@@ -2,12 +2,15 @@ version: "3"
 
 services:
   web:
-    image: homeassistant/home-assistant:stable
+    image: ghcr.io/home-assistant/home-assistant:stable
     container_name: home_assistant
     ports:
       - 8123:8123
     volumes:
       - /opt/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - TZ=America/New_York
+    network_mode: host # allows home assistant to detect devices on the network
+    privileged: true
     restart: unless-stopped

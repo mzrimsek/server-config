@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  longvinter:
+    container_name: longvinter
+    image: longvinter-linux-server
+    build: .
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - "${GAME_PORT:-7777}:${GAME_PORT:-7777}/tcp"
+      - "${GAME_PORT:-7777}:${GAME_PORT:-7777}/udp"
+      - "${QUERY_PORT:-27016}:${QUERY_PORT:-27016}/tcp"
+      - "${QUERY_PORT:-27016}:${QUERY_PORT:-27016}/udp"
+    environment:
+      CFG_SERVER_NAME: "${SERVER_NAME}:-Longvinter Docker"
+      CFG_MAX_PLAYERS: "${MAX_PLAYERS:-32}"
+      CFG_SERVER_MOTD: "Welcome to Longvinter Island!"
+      CFG_PASSWORD: "${SERVER_PASSWORD}"
+      CFG_COMMUNITY_WEBSITE: "www.longvinter.com"
+      CFG_ADMIN_STEAM_ID: "${ADMIN_STEAM_ID}"
+      CFG_ENABLE_PVP: "${ENABLE_PVP:-true}"
+      CFG_TENT_DECAY: "${ENABLE_TENT_DECAY:-true}"
+      CFG_MAX_TENTS: "${MAX_TENTS:-2}"
+      CFG_GAME_PORT: "${GAME_PORT:-7777}"
+      CFG_QUERY_PORT: "${QUERY_PORT:-27016}"
+    volumes:
+      - /opt/longvinter:/data
+    restart: unless-stopped

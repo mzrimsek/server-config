@@ -1,0 +1,134 @@
+{
+  "groups": [
+    {
+      "name": "Development",
+      "items": [
+        {
+          "name": "Github",
+          "url": "https://github.com/mzrimsek",
+          "newTab": true
+        },
+        {
+          "name": "Firebase",
+          "url": "https://console.firebase.google.com/u/0/",
+          "newTab": true
+        },
+        {
+          "name": "Google Play Console",
+          "url": "https://play.google.com/console/u/0/developers",
+          "newTab": true
+        },
+        {
+          "name": "Google Domains DNS",
+          "url": "https://domains.google.com/registrar/zrimsek.com/dns",
+          "newTab": true
+        }
+      ]
+    },
+    {
+      "name": "Printing",
+      "items": [
+        {
+          "name": "Tinkercad",
+          "url": "https://www.tinkercad.com/",
+          "newTab": true
+        },
+        {
+          "name": "Thingiverse",
+          "url": "https://www.thingiverse.com/",
+          "newTab": true
+        }
+      ]
+    },
+    {
+      "name": "Monitoring",
+      "items": [
+        {
+          "name": "Track My Playtime",
+          "url": "https://trackmyplaytime.com/app/tracker",
+          "newTab": true
+        },
+        {
+          "name": "Ring",
+          "url": "https://account.ring.com/",
+          "newTab": true
+        }
+      ]
+    },
+    {
+      "name": "Productivity",
+      "items": [
+        {
+          "name": "Gmail",
+          "url": "https://mail.google.com/mail/u/0/",
+          "newTab": true
+        },
+        {
+          "name": "Google Calendar",
+          "url": "https://calendar.google.com/calendar/u/0/",
+          "newTab": true
+        },
+        {
+          "name": "Google Drive",
+          "url": "https://drive.google.com/drive/u/0/",
+          "newTab": true
+        },
+        {
+          "name": "Google Remote Desktop",
+          "url": "https://remotedesktop.google.com/access/",
+          "newTab": true
+        }
+      ]
+    },
+    {
+      "name": "Video",
+      "items": [
+        {
+          "name": "Twitch",
+          "url": "https://www.twitch.tv/",
+          "newTab": true
+        },
+        {
+          "name": "YouTube",
+          "url": "https://www.youtube.com/",
+          "newTab": true
+        },
+        {
+          "name": "Disney+",
+          "url": "https://www.disneyplus.com/home",
+          "newTab": true
+        },
+        {
+          "name": "HBO Max",
+          "url": "https://play.hbomax.com/",
+          "newTab": true
+        },
+        {
+          "name": "Hulu",
+          "url": "https://www.hulu.com/hub/home",
+          "newTab": true
+        },
+        {
+          "name": "Netflix",
+          "url": "https://www.netflix.com/browse",
+          "newTab": true
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "items": [
+        {
+          "name": "YouTube Music",
+          "url": "https://music.youtube.com/",
+          "newTab": true
+        },
+        {
+          "name": "Google Podcasts",
+          "url": "https://podcasts.google.com/",
+          "newTab": true
+        }
+      ]
+    }
+  ]
+}

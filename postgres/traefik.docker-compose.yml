@@ -24,6 +24,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
        - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+    networks:
       - postgres
       - public
     labels:

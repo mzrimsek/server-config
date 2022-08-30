@@ -1,0 +1,18 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Reverse proxy
+http:
+  server_host: 0.0.0.0
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - $PROXY_HOST
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

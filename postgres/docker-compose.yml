@@ -1,18 +1,19 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
     container_name: postgres_db
-    image: postgres
+    image: postgres:13.5
+    command: postgres -c 'max_connections=1000'
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - /opt/postgres/db_data:/var/lib/postgresql/data
+       - /opt/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
-
+  
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -23,5 +24,6 @@ services:
     ports:
       - 5050:80
     volumes:
-      - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+       - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+       - /opt/postgres/backup:/backup
     restart: unless-stopped

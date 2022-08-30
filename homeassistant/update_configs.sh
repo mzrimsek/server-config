@@ -5,3 +5,6 @@ sudo wget https://raw.githubusercontent.com/mzrimsek/server-config/main/homeassi
 
 sudo rm groups.yaml
 sudo wget https://raw.githubusercontent.com/mzrimsek/server-config/main/homeassistant/groups.yaml
+
+sudo rm configuration.yaml
+sudo wget https://raw.githubusercontent.com/mzrimsek/server-config/main/homeassistant/configuration.yaml
