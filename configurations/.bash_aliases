@@ -23,4 +23,7 @@ k3srd() {
 
 alias own="sudo chown -R $(id -u)"
 
+f2bc() {
+	sudo fail2ban-client $@
+}
 
