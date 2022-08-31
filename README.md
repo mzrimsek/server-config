@@ -28,6 +28,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Muse](./muse) - A Discord music bot
 - [n8n](./n8n) - An automation platform similar to 
 - [PiHole](./pihole) - Network-wide Adblocking and DNS Management
+- [Jellyfin](./jellyfin) - Media organization and viewing
 - [Games](./games)
   - Factorio
   - Minecraft

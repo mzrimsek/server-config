@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - /opt/jellyfin/config:/config
+      - /opt/jellyfin/cache:/cache
+      - media:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=${APP_URL}
+    network_mode: "host"
+    restart: "unless-stopped"
+
+volumes:
+  media:
+    name: remote_media
+    driver: local
+    driver_opts:
+      type: cifs
+      device: ${TARGET_SHARE}
+      o: addr=${SHARE_HOSTNAME},username=${SHARE_USER},password=${SHARE_PASS},file_mode=0777,dir_mode=0777

@@ -30,6 +30,13 @@
           "url": "https://notes.zrimsek.com",
           "icon": "note",
           "newTab": true
+        },
+        {
+          "name": "Media",
+          "displayURL": "media.zrimsek.com",
+          "url": "https://media.zrimsek.com",
+          "icon": "play_arrow",
+          "newTab": true
         }
       ]
     },
