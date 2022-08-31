@@ -2,6 +2,17 @@
 # Loads default set of integrations. Do not remove.
 default_config:
 
+# Loads cards installed with HACS
+lovelace:
+  mode: yaml
+  resources:
+    - url: /hacsfiles/lovelace-mushroom/mushroom.js
+      type: module
+    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+      type: module
+    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+      type: module
+
 # Text to speech
 tts:
   - platform: google_translate
