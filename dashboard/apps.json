@@ -5,36 +5,36 @@
       "items": [
         {
           "name": "Budget",
-          "displayURL": "budget.zrimsek.com",
-          "url": "https://budget.zrimsek.com",
+          "displayURL": "money.zrimsek.com",
+          "url": "https://money.zrimsek.com",
           "icon": "account_balance_wallet",
           "newTab": true
         },
         {
           "name": "Home Assistant",
-          "displayURL": "home.zrimsek.com",
-          "url": "https://home.zrimsek.com",
+          "displayURL": "ha.zrimsek.com",
+          "url": "https://ha.zrimsek.com",
           "icon": "home",
           "newTab": true
         },
         {
           "name": "Tasks",
-          "displayURL": "tasks.zrimsek.com",
-          "url": "https://tasks.zrimsek.com",
+          "displayURL": "todo.zrimsek.com",
+          "url": "https://todo.zrimsek.com",
           "icon": "task",
           "newTab": true
         },
         {
           "name": "Notes",
-          "displayURL": "notes.zrimsek.com",
-          "url": "https://notes.zrimsek.com",
+          "displayURL": "wiki.zrimsek.com",
+          "url": "https://wiki.zrimsek.com",
           "icon": "note",
           "newTab": true
         },
         {
-          "name": "Media",
-          "displayURL": "media.zrimsek.com",
-          "url": "https://media.zrimsek.com",
+          "name": "Media Library",
+          "displayURL": "watch.zrimsek.com",
+          "url": "https://watch.zrimsek.com",
           "icon": "play_arrow",
           "newTab": true
         }
@@ -45,8 +45,8 @@
       "items": [
         {
           "name": "Docker Containers",
-          "displayURL": "docker.zrimsek.com",
-          "url": "https://docker.zrimsek.com",
+          "displayURL": "dock.zrimsek.com",
+          "url": "https://dock.zrimsek.com",
           "icon": "grid_view",
           "newTab": true
         },
@@ -93,8 +93,8 @@
           },
           {
             "name": "Network Adblock",
-            "displayURL": "adblock.zrimsek.com",
-            "url": "https://adblock.zrimsek.com",
+            "displayURL": "pihole.zrimsek.com",
+            "url": "https://pihole.zrimsek.com",
             "icon": "cloud_off",
             "newTab": true
           }
