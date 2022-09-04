@@ -125,7 +125,7 @@
           "name": "TV Show Management",
           "displayURL": "sonarr.local",
           "url": "http://sonarr.local",
-          "icon": "tv_gen",
+          "icon": "tv",
           "newTab": true
         },
         {
