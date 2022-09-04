@@ -14,7 +14,6 @@ services:
     volumes:
       - ${CONFIG_DIR}:/config
       - ${DOWNLOAD_DIR}:/downloads
-      - ${WATCH_DIR}:/watch
     ports:
       - ${HOST_PORT}:9091
       - 51413:51413
