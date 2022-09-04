@@ -43,6 +43,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
+      - ${DOWNLOAD_DIR}:/downloads
     ports:
       - 10201:8989
     restart: unless-stopped
@@ -57,6 +58,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
+      - ${DOWNLOAD_DIR}:/downloads
     ports:
       - 10202:7878
     restart: unless-stopped
@@ -71,6 +73,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
+      - ${DOWNLOAD_DIR}:/downloads
     ports:
       - 10203:8686
     restart: unless-stopped
@@ -85,6 +88,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
+      - ${DOWNLOAD_DIR}:/downloads
     ports:
       - 10204:8787
     restart: unless-stopped
