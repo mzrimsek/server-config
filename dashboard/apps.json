@@ -148,7 +148,7 @@
           "url": "https://prowlarr.local",
           "icon": "list",
           "newTab": true
-        },
+        }
       ]
     }
   ],
