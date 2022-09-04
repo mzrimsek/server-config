@@ -11,7 +11,7 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=${APP_URL}
     network_mode: "host"
-    restart: "unless-stopped"
+    restart: unless-stopped
 
 volumes:
   media:

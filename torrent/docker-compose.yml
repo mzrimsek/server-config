@@ -5,17 +5,86 @@ services:
     image: lscr.io/linuxserver/transmission
     container_name: transmission
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=America/New_York
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
-      - USER=${USERNAME}
-      - PASS=${PASSWORD}
+      - USER=${TRANSMISSION_USERNAME}
+      - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - ${CONFIG_DIR}:/config
+      - ${CONFIG_DIR}/transmission:/config
       - ${DOWNLOAD_DIR}:/downloads
     ports:
       - ${HOST_PORT}:9091
       - 51413:51413
       - 51413:51413/udp
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/prowlarr:/config
+    ports:
+      - 10200:9696
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/sonarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 10201:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/radarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 10202:7878
+    restart: unless-stopped
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/lidarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 10203:8686
+    restart: unless-stopped
+
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/readarr:/config
+      - ${MEDIA_DIR}:/data
+    ports:
+      - 10204:8787
     restart: unless-stopped
