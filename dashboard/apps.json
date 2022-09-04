@@ -118,35 +118,35 @@
           "name": "Indexer Management",
           "displayURL": "prowlarr.local",
           "url": "http://prowlarr.local",
-          "icon": "download",
+          "icon": "list",
           "newTab": true
         },
         {
           "name": "TV Show Management",
           "displayURL": "sonarr.local",
           "url": "http://sonarr.local",
-          "icon": "download",
+          "icon": "tv_gen",
           "newTab": true
         },
         {
           "name": "Movie Management",
           "displayURL": "radarr.local",
           "url": "http://radarr.local",
-          "icon": "download",
+          "icon": "movie",
           "newTab": true
         },
         {
           "name": "Music Management",
           "displayURL": "lidarr.local",
           "url": "http://lidarr.local",
-          "icon": "download",
+          "icon": "music_note",
           "newTab": true
         },
         {
           "name": "Book Management",
           "displayURL": "Readarr.local",
           "url": "http://readarr.local",
-          "icon": "download",
+          "icon": "menu_book",
           "newTab": true
         }
       ]
