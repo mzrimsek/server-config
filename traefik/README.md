@@ -5,6 +5,7 @@
 ### Using Docker Compose
 
 - Environment variables: A `.env` file is required with the necessary environment variables filled in for the `start_stack.sh` script to operate correctly.
+- Copy dynamic_conf.yaml` to your directory that will be mounted at `/config` on the container
 
 ### Using Kubernetes
 
