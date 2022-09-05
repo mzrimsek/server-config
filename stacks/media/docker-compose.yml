@@ -14,7 +14,7 @@ services:
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
       - ${CONFIG_DIR}/transmission:/config
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - ${HOST_PORT}:9091
       - 51413:51413
@@ -59,7 +59,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 10201:8989
     restart: unless-stopped
@@ -75,7 +75,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 10202:7878
     restart: unless-stopped
@@ -91,7 +91,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 10203:8686
     restart: unless-stopped
@@ -107,7 +107,40 @@ services:
     volumes:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 10204:8787
     restart: unless-stopped
+
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/calibre:/config
+      - ${MEDIA_DIR}/books/uploads:/uploads
+      - ${MEDIA_DIR}/books/library:/Calibre_Library
+    ports:
+      - 10205:8080 # library
+      - 10206:8081 # ereader
+    restart: unless-stopped
+
+  # calibre library interface
+  calibre-web:
+    image: ghcr.io/linuxserver/calibre-web
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    volumes:
+      - ${CONFIG_DIR}/calibre-web:/config
+      - ${MEDIA_DIR}/books/library:/books
+    restart: unless-stopped
+    depends_on:
+      - calibre
+    ports:
+      - 10207:8083
