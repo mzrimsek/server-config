@@ -110,42 +110,42 @@
         {
           "name": "TV Show Management",
           "displayURL": "sonarr.local",
-          "url": "https://sonarr.local",
+          "url": "https://sonarr.zrimsek.local",
           "icon": "tv",
           "newTab": true
         },
         {
           "name": "Movie Management",
           "displayURL": "radarr.local",
-          "url": "https://radarr.local",
+          "url": "https://radarr.zrimsek.local",
           "icon": "movie",
           "newTab": true
         },
         {
           "name": "Music Management",
           "displayURL": "lidarr.local",
-          "url": "https://lidarr.local",
+          "url": "https://lidarr.zrimsek.local",
           "icon": "music_note",
           "newTab": true
         },
         {
           "name": "Book Management",
           "displayURL": "Readarr.local",
-          "url": "https://readarr.local",
+          "url": "https://readarr.zrimsek.local",
           "icon": "menu_book",
           "newTab": true
         },
         {
           "name": "Downloads",
           "displayURL": "download.local",
-          "url": "https://download.local",
+          "url": "https://download.zrimsek.local",
           "icon": "download",
           "newTab": true
         },
         {
           "name": "Indexer Management",
           "displayURL": "prowlarr.local",
-          "url": "https://prowlarr.local",
+          "url": "https://prowlarr.zrimsek.local",
           "icon": "list",
           "newTab": true
         }

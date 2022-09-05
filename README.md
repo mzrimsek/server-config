@@ -29,6 +29,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [n8n](./n8n) - An automation platform similar to 
 - [PiHole](./pihole) - Network-wide Adblocking and DNS Management
 - [Jellyfin](./jellyfin) - Media organization and viewing
+- [Transmission](./torrent) - Torrenting download client
 - [Games](./games)
   - Factorio
   - Minecraft
@@ -37,6 +38,12 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Project Zomboid
   - The Forest
   - Skyrim Together Reborn
+
+### More complicated stacks
+
+These are more fully designed solutions rather than a service with a container or two.
+
+- [Media](./stacks/media) - An automated media requisition and organization solution
 
 ## Notes
 
