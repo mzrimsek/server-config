@@ -70,6 +70,13 @@
       "name": "Reporting",
       "items": [
         {
+          "name": "Service Resources",
+          "displayURL": "stats.zrimsek.com",
+          "url": "https://stats.zrimsek.com",
+          "icon": "leaderboard",
+          "newTab": true
+        },
+        {
           "name": "Network Proxy Status",
           "displayURL": "traefik.zrimsek.com",
           "url": "https://traefik.zrimsek.com",
