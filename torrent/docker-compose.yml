@@ -5,8 +5,8 @@ services:
     image: lscr.io/linuxserver/transmission
     container_name: transmission
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
       - TZ=America/New_York
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
       - USER=${TRANSMISSION_USERNAME}
