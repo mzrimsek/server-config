@@ -37,4 +37,6 @@ Generally it's:
 5. Get API key from security settings
 6. Add media management app in prowlarr
 7. Repeat 2-6 with all media management apps
-8. Sync indexers to apps in prowlarr 
+8. Sync indexers to apps in prowlarr
+
+You also need to get the PUID and PGID of the user that will be running the containers and make sure it has access to the files mounted to the container. This is to ensure the containers all have the necessary permissions they need to manipulate the files when they are organized into the respective libraries.
