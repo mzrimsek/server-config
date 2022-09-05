@@ -128,7 +128,7 @@ services:
       - 10206:8081 # ereader
     restart: unless-stopped
 
-  # calibre library interface
+  # calibre library web interface
   calibre-web:
     image: ghcr.io/linuxserver/calibre-web
     container_name: calibre-web
