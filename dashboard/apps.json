@@ -37,6 +37,13 @@
           "url": "https://watch.zrimsek.com",
           "icon": "play_arrow",
           "newTab": true
+        },
+        {
+          "name": "Book Library",
+          "displayURL": "read.zrimsek.com",
+          "url": "https://read.zrimsek.com",
+          "icon": "book",
+          "newTab": true
         }
       ]
     },
