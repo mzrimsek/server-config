@@ -1,0 +1,16 @@
+http:
+  routers:
+    ${SERVICE_NAME}:
+      rule: "Host(`${SERVICE_NAME}.${DOMAIN}.local`)"
+      service: ${SERVICE_NAME}
+      tls:
+        domains:
+          - main: "${DOMAIN}.local"
+            sans:
+              - "*.${DOMAIN}.local"
+  
+  services:
+    ${SERVICE_NAME}:
+      loadBalancer:
+        servers:
+          - url: "${SERVICE_URL}"

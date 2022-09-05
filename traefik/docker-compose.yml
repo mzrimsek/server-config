@@ -15,6 +15,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/traefik/providers:/config
+      - /opt/traefik/certs:/etc/certs
     networks:
       - public
     command:
