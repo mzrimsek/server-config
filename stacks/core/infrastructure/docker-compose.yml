@@ -37,6 +37,7 @@ services:
       - "--api.insecure" # FIX THIS
       - "--log=true"
       - "--log.level=info"
+      - "--accesslog=true"
       - "--providers.file.directory=/config"
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
