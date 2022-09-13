@@ -18,8 +18,8 @@ services:
       - 443:443/udp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/traefik/providers:/config
-      - /opt/traefik/certs:/etc/certs
+      - ${CONFIG_DIR}/traefik/providers:/config
+      - ${CONFIG_DIR}/traefik/certs:/etc/certs
     networks:
       - public
     command:
@@ -33,7 +33,7 @@ services:
       - --log.level=info
       - --providers.file.directory=/config
       - --certificatesresolvers.tlsresolver.acme.tlschallenge
-      - --certificatesresolvers.tlsresolver.acme.email=${TLS_EMAIL}
+      - --certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}
       - --certificatesresolvers.tlsresolver.acme.storage=acme.json
     labels:
       # Dashboard
