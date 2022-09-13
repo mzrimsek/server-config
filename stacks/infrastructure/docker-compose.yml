@@ -1,0 +1,343 @@
+version: "3"
+
+services:
+  
+  ## NETWORKING
+
+  # reverse proxy
+  traefik:
+    container_name: traefik
+    image: traefik:latest
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+      - 443:443/udp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CONFIG_DIR}/traefik/providers:/config
+      - ${CONFIG_DIR}/traefik/certs:/etc/certs
+    command:
+      - --entrypoints.web.address=:80/tcp
+      - --entrypoints.websecure.address=:443/tcp
+      - --entrypoints.wireguard.address=:443/udp
+      - --providers.docker
+      - --providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - --api
+      - --log=true
+      - --log.level=info
+      - --providers.file.directory=/config
+      - --certificatesresolvers.tlsresolver.acme.tlschallenge
+      - --certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}
+      - --certificatesresolvers.tlsresolver.acme.storage=acme.json
+    labels:
+      # Dashboard
+      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.tls.certresolver=tlsresolver
+      - traefik.http.routers.traefik.entrypoints=websecure
+      - traefik.http.routers.traefik.middlewares=authdashboard
+      - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER}
+      
+      # Global redirect to https
+      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
+      
+      # redirect middleware
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=websecure
+      - traefik.docker.network=public
+    restart: unless-stopped
+
+  # vpn tunnel
+  wireguard:
+    container_name: wireguard
+    build:
+      context: wireguard
+      dockerfile: ${CONFIG_DIR}/wireguard/build/Dockerfile
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/wireguard/periodic:/etc/periodic
+      - ${CONFIG_DIR}/wireguard/config:/etc/wireguard
+      - ${CONFIG_DIR}/wireguard/bird:/etc/bird
+    sysctls:
+     - net.ipv4.conf.all.src_valid_mark=1
+     - net.ipv4.ip_forward=1
+     - net.ipv4.tcp_congestion_control=bbr
+    labels:
+     - traefik.enabled=true
+     - traefik.udp.routers.wireguard.entrypoints=wireguard
+     - traefik.udp.services.wireguard.loadbalancer.server.port=51820
+    depends_on:
+     - traefik
+    restart: unless-stopped
+  
+  # nordvpn client
+  vpn:
+    image: ghcr.io/bubuntux/nordvpn
+    container_name: nordvpn
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - USER=${NORDVPN_USER}
+      - PASS=${NORDVPN_PASS}
+      - CONNECT=United_States
+      - TECHNOLOGY=NordLynx
+      - WHITELIST=showrss.info,rarbg.to,yts.mx
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1  # Recomended if using ipv4 only
+
+  ## PIHOLE
+
+  # pihole
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - 9900:80
+    dns:
+      - 127.0.0.1
+      - 9.9.9.9
+    environment:
+      TZ: 'America/New_York'
+      WEBPASSWORD: '${PIHOLE_PASSWORD}'
+      VIRTUAL_HOST: '${PIHOLE_SERVICE_URL}'
+      PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
+      DNSSEC: 'true'
+      ServerIP: ${HOST_IP}
+      DNSMASQ_LISTENING: all
+      DHCP_ACTIVE: 'true'
+      DHCP_START: 192.168.0.100
+      DHCP_END: 192.168.0.199
+      DHCP_ROUTER: 192.168.0.1
+      DHCP_LEASETIME: 6
+      WEBTHEME: default-dark
+      PIHOLE_DOMAIN: public
+    volumes:
+      - ${CONFIG_DIR}/pihole/etc:/etc/pihole
+      - ${CONFIG_DIR}/pihole/dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    networks:
+      backend:
+        ipv4_address: '172.31.0.100'
+    depends_on:
+      - dhcphelper
+    restart: unless-stopped
+
+  # optional if using pihole as DHCP server
+  dhcphelper:
+    image: noamokman/dhcp-helper
+    container_name: dhcp-helper
+    restart: unless-stopped
+    network_mode: "host"
+    command: -s 172.31.0.100
+    cap_add:
+      - NET_ADMIN
+
+  ## DATABASE
+
+  # database
+  postgres:
+    container_name: postgres_db
+    image: postgres:13.5
+    command: postgres -c 'max_connections=1000'
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+       - ${CONFIG_DIR}/postgres/db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+  
+  # database interface
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+    ports:
+      - 10000:80
+    volumes:
+       - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
+       - ${CONFIG_DIR}/postgres/backup:/backup
+    restart: unless-stopped
+
+  ## NOTES MANAGEMENT
+
+  # knowledgebase
+  trilium:
+    container_name: trilium
+    image: zadam/trilium
+    environment:
+      - TRILIUM_DATA_DIR=/data
+    ports:
+      - 10100:8080
+    volumes:
+      - ${CONFIG_DIR}/trilium:/data
+    restart: unless-stopped
+
+  ## MEDIA MANAGEMENT
+
+  #indexer management
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/prowlarr:/config
+    ports:
+      - 10200:9696
+    restart: unless-stopped
+
+  # tv show management
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/sonarr:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 10201:8989
+    restart: unless-stopped
+
+  # movie management
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/radarr:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 10202:7878
+    restart: unless-stopped
+
+  # music management
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/lidarr:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 10203:8686
+    restart: unless-stopped
+
+  # book management
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/readarr:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 10204:8787
+    restart: unless-stopped
+
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/calibre:/config
+      - ${MEDIA_DIR}/books/uploads:/uploads
+      - ${MEDIA_DIR}/books/library:/Calibre_Library
+    ports:
+      - 10205:8080 # library
+      - 10206:8081 # ereader
+    restart: unless-stopped
+
+  # calibre library web interface
+  calibre-web:
+    image: ghcr.io/linuxserver/calibre-web
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/calibre-web:/config
+      - ${MEDIA_DIR}/books/library:/books
+    restart: unless-stopped
+    depends_on:
+      - calibre
+    ports:
+      - 10207:8083
+
+  ## GENERAL CLIENTS
+  
+  # download client
+  transmission:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+      - USER=${TRANSMISSION_USERNAME}
+      - PASS=${TRANSMISSION_PASSWORD}
+    volumes:
+      - ${CONFIG_DIR}/transmission:/config
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 10300:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+
+  # mqtt client
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+      - 1883:1883
+      - 8883:8883
+    volumes:
+      - ${CONFIG_DIR}/mosquitto/data:/mosquitto/data
+      - ${CONFIG_DIR}/mosquitto/log:/mosquitto/log
+      - ${CONFIG_DIR}/mosquitto/config:/mosquitto/config
+    restart: unless-stopped
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
