@@ -29,20 +29,18 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CONFIG_DIR}/traefik/providers:/config
       - ${CONFIG_DIR}/traefik/certs:/etc/certs
-    # networks:
-    #   - public
     command:
-      - --entrypoints.web.address=:80/tcp
-      - --entrypoints.websecure.address=:443/tcp
-      - --providers.docker
-      - --providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
-      - --api.insecure=true
-      - --log=true
-      - --log.level=info
-      - --providers.file.directory=/config
-      - --certificatesresolvers.tlsresolver.acme.tlschallenge
-      - --certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}
-      - --certificatesresolvers.tlsresolver.acme.storage=acme.json
+      - "--entrypoints.web.address=:80/tcp"
+      - "--entrypoints.websecure.address=:443/tcp"
+      - "--providers.docker"
+      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - "--api.insecure=true"
+      - "--log=true"
+      - "--log.level=info"
+      - "--providers.file.directory=/config"
+      - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
+      - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
+      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
     labels:
       # Dashboard
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
@@ -77,7 +75,7 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1  # Recomended if using ipv4 only
 
-  # pihole
+  # dns and network adblock
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
@@ -88,7 +86,7 @@ services:
       - 127.0.0.1
       - 9.9.9.9
     environment:
-      TZ: 'America/New_York'
+      TZ: ${TIMEZONE}
       WEBPASSWORD: '${PIHOLE_PASSWORD}'
       VIRTUAL_HOST: '${PIHOLE_URL}'
       PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
@@ -102,7 +100,7 @@ services:
       - ${CONFIG_DIR}/pihole/dnsmasq.d:/etc/dnsmasq.d
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host(`https://${PIHOLE_URL}`)"
+      - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_URL}`)"
       - "traefik.http.routers.pihole.entrypoints=websecure"
       - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"
@@ -179,9 +177,9 @@ services:
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)
-      - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
     network_mode: container:vpn
     depends_on:
       - vpn
@@ -200,9 +198,9 @@ services:
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
     network_mode: container:vpn
     depends_on:
       - vpn
@@ -221,9 +219,9 @@ services:
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)
-      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
     network_mode: container:vpn
     depends_on:
       - vpn
@@ -242,9 +240,9 @@ services:
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)
-      - traefik.http.services.lidarr.loadbalancer.server.port=8686
+      - "traefik.enable=true"
+      - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
     network_mode: container:vpn
     depends_on:
       - vpn
@@ -263,9 +261,9 @@ services:
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)
-      - traefik.http.services.readarr.loadbalancer.server.port=8787
+      - "traefik.enable=true"
+      - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
+      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
     network_mode: container:vpn
     depends_on:
       - vpn
@@ -332,13 +330,10 @@ services:
     volumes:
       - ${CONFIG_DIR}/transmission:/config
       - ${DOWNLOADS_DIR}:/downloads
-    ports:
-      - 51413:51413
-      - 51413:51413/udp
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.transmission.rule=Host(`${TRANSMISSION_URL}`)
-      - traefik.http.services.transmission.loadbalancer.server.port=9091
+      - "traefik.enable=true"
+      - "traefik.http.routers.transmission.rule=Host(`${TRANSMISSION_URL}`)"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     network_mode: container:vpn
     depends_on:
       - vpn
