@@ -4,7 +4,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 
 Only service not included is Portainer which is installed via unRaid's community apps (easier to get an interface to run the stack with this way)
 
-Goal here
+Goal here is to have all the more background type stuff in one place on a server that is more likely to be up
 
 - Traefik
 - Pihole
