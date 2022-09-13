@@ -8,7 +8,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
@@ -41,7 +41,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
     ports:
@@ -55,7 +55,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
@@ -71,7 +71,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
@@ -87,7 +87,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
@@ -103,7 +103,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
@@ -118,7 +118,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/calibre:/config
       - ${MEDIA_DIR}/books/uploads:/uploads
@@ -135,7 +135,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=America/New_York
+      - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/calibre-web:/config
       - ${MEDIA_DIR}/books/library:/books

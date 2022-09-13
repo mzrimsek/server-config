@@ -53,3 +53,33 @@ services:
       - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=websecure
       - traefik.docker.network=public
     restart: unless-stopped
+
+  wireguard:
+    container_name: wireguard
+    build:
+      context: wireguard
+      dockerfile: ${CONFIG_DIR}/wireguard/build/Dockerfile
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/wireguard/periodic:/etc/periodic
+      - ${CONFIG_DIR}/wireguard/config:/etc/wireguard
+      - ${CONFIG_DIR}/wireguard/bird:/etc/bird
+    networks:
+      - public
+    sysctls:
+     - net.ipv4.conf.all.src_valid_mark=1
+     - net.ipv4.ip_forward=1
+     - net.ipv4.tcp_congestion_control=bbr
+    labels:
+     - traefik.enabled=true
+     - traefik.udp.routers.wireguard.entrypoints=wireguard
+     - traefik.udp.services.wireguard.loadbalancer.server.port=51820
+    depends_on:
+     - traefik
+    restart: unless-stopped
