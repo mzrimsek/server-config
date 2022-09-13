@@ -5,29 +5,29 @@
       "items": [
         {
           "name": "Budget",
-          "displayURL": "money.zrimsek.com",
-          "url": "https://money.zrimsek.com",
+          "displayURL": "budget.zrimsek.com",
+          "url": "https://budget.zrimsek.com",
           "icon": "account_balance_wallet",
           "newTab": true
         },
         {
           "name": "Home Assistant",
-          "displayURL": "ha.zrimsek.com",
-          "url": "https://ha.zrimsek.com",
+          "displayURL": "home.zrimsek.com",
+          "url": "https://home.zrimsek.com",
           "icon": "home",
           "newTab": true
         },
         {
           "name": "Tasks",
-          "displayURL": "todo.zrimsek.com",
-          "url": "https://todo.zrimsek.com",
+          "displayURL": "tasks.zrimsek.com",
+          "url": "https://tasks.zrimsek.com",
           "icon": "task",
           "newTab": true
         },
         {
           "name": "Notes",
-          "displayURL": "wiki.zrimsek.com",
-          "url": "https://wiki.zrimsek.com",
+          "displayURL": "notes.zrimsek.com",
+          "url": "https://notes.zrimsek.com",
           "icon": "note",
           "newTab": true
         },
@@ -52,8 +52,8 @@
       "items": [
         {
           "name": "Docker Containers",
-          "displayURL": "dock.zrimsek.com",
-          "url": "https://dock.zrimsek.com",
+          "displayURL": "docker.zrimsek.com",
+          "url": "https://docker.zrimsek.com",
           "icon": "grid_view",
           "newTab": true
         },
