@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  # media player
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - ${CONFIG_DIR}/jellyfin/config:/config
+      - ${CONFIG_DIR}/jellyfin/cache:/cache
+      - ${MEDIA_DIR}:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=${APP_URL}
+    network_mode: "host"
+    restart: unless-stopped
+
   # download client
   transmission:
     image: lscr.io/linuxserver/transmission
@@ -16,23 +29,11 @@ services:
       - ${CONFIG_DIR}/transmission:/config
       - ${DOWNLOADS_DIR}:/downloads
     ports:
-      - ${HOST_PORT}:9091
+      - ${TRANSMISSION_UI_PORT}:9091
       - 51413:51413
       - 51413:51413/udp
     restart: unless-stopped
 
-  # media player
-  jellyfin:
-    image: jellyfin/jellyfin
-    container_name: jellyfin
-    volumes:
-      - ${CONFIG_DIR}/jellyfin/config:/config
-      - ${CONFIG_DIR}/jellyfin/cache:/cache
-      - ${MEDIA_DIR}:/media
-    environment:
-      - JELLYFIN_PublishedServerUrl=${APP_URL}
-    network_mode: "host"
-    restart: unless-stopped
 
   #indexer management
   prowlarr:
