@@ -1,0 +1,55 @@
+version: "3"
+
+networks:
+  public:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:latest
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+      - 443:443/udp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/traefik/providers:/config
+      - /opt/traefik/certs:/etc/certs
+    networks:
+      - public
+    command:
+      - --entrypoints.web.address=:80/tcp
+      - --entrypoints.websecure.address=:443/tcp
+      - --entrypoints.wireguard.address=:443/udp
+      - --providers.docker
+      - --providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - --api
+      - --log=true
+      - --log.level=info
+      - --providers.file.directory=/config
+      - --certificatesresolvers.tlsresolver.acme.tlschallenge
+      - --certificatesresolvers.tlsresolver.acme.email=${TLS_EMAIL}
+      - --certificatesresolvers.tlsresolver.acme.storage=acme.json
+    labels:
+      # Dashboard
+      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_PROXY_URL}`)
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.tls.certresolver=tlsresolver
+      - traefik.http.routers.traefik.entrypoints=websecure
+      - traefik.http.routers.traefik.middlewares=authdashboard
+      - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER}
+      
+      # Global redirect to https
+      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
+      
+      # redirect middleware
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=websecure
+      - traefik.docker.network=public
+    restart: unless-stopped
