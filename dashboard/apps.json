@@ -91,6 +91,13 @@
           "newTab": true
         },
         {
+          "name": "Additional Network Proxy Status",
+          "displayURL": "traefik2.zrimsek.com",
+          "url": "https://traefik2.zrimsek.com",
+          "icon": "traffic",
+          "newTab": true
+        },
+        {
           "name": "Network Adblock",
           "displayURL": "pihole.zrimsek.com",
           "url": "https://pihole.zrimsek.com",
