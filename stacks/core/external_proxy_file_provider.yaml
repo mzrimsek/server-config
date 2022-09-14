@@ -1,0 +1,18 @@
+tcp:
+  routers:
+   ${SERVICE}:
+      entryPoints:
+        - "websecure"
+        - "web"
+      rule: "HostSNI(`${SERVICE_ROUTE}`)"
+      service: external-proxy
+      tls:
+        passthrough: true
+
+    # add more services here that should be handled by the external proxy
+
+  services:
+    external-proxy:
+      loadBalancer:
+        servers:
+          - address: "${EXTERNAL_PROXY_IP}:${EXTERNAL_PROXY_PORT}"
