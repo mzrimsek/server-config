@@ -1,0 +1,144 @@
+version: "3"
+
+volumes:
+  remote_media:
+    name: remote_media
+    driver: local
+    driver_opts:
+      type: cifs
+      device: ${TARGET_SHARE}
+      o: addr=${SHARE_HOSTNAME},username=${SHARE_USER},password=${SHARE_PASS},file_mode=0777,dir_mode=0777
+
+services:
+  # reverse proxy
+  traefik:
+    container_name: traefik
+    image: traefik:latest
+    ports:
+      - 80:80/tcp # web
+      - 443:443/tcp # websecure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CONFIG_DIR}/traefik/providers:/config
+      - ${CONFIG_DIR}/traefik/certs:/etc/certs
+    command:
+      - "--entrypoints.web.address=:80/tcp"
+      - "--entrypoints.websecure.address=:443/tcp"
+      - "--providers.docker"
+      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - "--api.insecure" # FIX THIS
+      - "--log=true"
+      - "--log.level=info"
+      - "--accesslog=true"
+      - "--providers.file.directory=/config"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
+      - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
+      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
+    labels:
+      # Dashboard
+      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.tls.certresolver=tlsresolver
+      - traefik.http.routers.traefik.entrypoints=websecure
+      # - traefik.http.routers.traefik.middlewares=authdashboard # FIX THIS
+      # - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER} # FIX THIS
+    restart: unless-stopped
+
+  service-dashboard:
+    image: phntxx/dashboard:latest
+    container_name: service-dashboard
+    volumes:
+      - ${CONFIG_DIR}/dashboard:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.service-dashboard.rule=Host(`${SERVICE_DASHBOARD_URL}`)"
+      - "traefik.http.routers.service-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.service-dashboard.tls.certresolver=tlsresolver"
+      - "traefik.http.services.service-dashboard.loadbalancer.server.port=8080"
+    restart: unless-stopped
+
+  # budgeting
+  fireflyiii:
+    container_name: fireflyiii
+    image: fireflyiii/core:latest
+    environment: 
+      APP_KEY: ${FIREFLY_APP_KEY}
+      TRUSTED_PROXIES: '**'
+      DB_HOST: ${DATABASE_HOST}
+      DB_PORT: 5432
+      DB_CONNECTION: pgsql
+      DB_DATABASE: fireflyiii
+      DB_USERNAME: ${DATABASE_USER}
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      TZ: ${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/fireflyiii:/var/www/html/storage/upload
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fireflyiii.rule=Host(`${FIREFLY_URL}`)"
+      - "traefik.http.routers.fireflyiii.entrypoints=websecure"
+      - "traefik.http.routers.fireflyiii.tls.certresolver=tlsresolver"
+      - "traefik.http.services.fireflyiii.loadbalancer.server.port=8080"
+    restart: unless-stopped
+
+  # budgeting automation
+  fireflyiii_cron:
+    container_name: fireflyiii_cron
+    image: alpine
+    command: sh -c "echo \"0 3 * * * wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
+    restart: unless-stopped
+
+  # tasks backend
+  vikunja_api:
+    container_name: vikunja_api
+    image: vikunja/api:latest
+    environment:
+      VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
+      VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: ${DATABASE_USER}
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: 0
+      VIKUNJA_MAILER_ENABLED: 1
+      VIKUNJA_MAILER_HOST: ${MAILER_HOST}
+      VIKUNJA_MAILER_PORT: ${MAILER_PORT}
+      VIKUNJA_MAILER_USERNAME: ${MAILER_USERNAME}
+      VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
+      VIKUNJA_SERVICE_TIMEZONE: ${TIMEZONE}
+      VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_JWT_SECRET}
+      VIKUNJA_SERVICE_FRONTENDURL: https://${VIKUNJA_URL}
+    volumes: 
+      - ${CONFIG_DIR}/vikunja/files:/app/vikunja/files
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vikunja-api.rule=Host(`${VIKUNJA_URL}`) && PathPrefix(`/api/v1`, `/dav/`, `/.well-known/`)"
+      - "traefik.http.routers.vikunja-api.entrypoints=websecure"
+      - "traefik.http.routers.vikunja-api.tls.certresolver=tlsresolver"
+    restart: unless-stopped
+
+  # tasks frontend
+  vikunja_frontend:
+    container_name: vikunja_frontend
+    image: vikunja/frontend:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vikunja-frontend.rule=Host(`${VIKUNJA_URL}`)"
+      - "traefik.http.routers.vikunja-frontend.entrypoints=websecure"
+      - "traefik.http.routers.vikunja-frontend.tls.certresolver=tlsresolver"
+    restart: unless-stopped
+
+  # media player
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - ${CONFIG_DIR}/jellyfin/config:/config
+      - ${CONFIG_DIR}/jellyfin/cache:/cache
+      - remote_media:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
+    network_mode: "host"
+    restart: unless-stopped

@@ -6,7 +6,6 @@ services:
     image: fireflyiii/core:latest
     environment: 
       APP_KEY: ${APP_KEY}
-      APP_URL: ${APP_URL}
       TRUSTED_PROXIES: '**'
       DB_HOST: ${DATABASE_HOST}
       DB_PORT: 5432
