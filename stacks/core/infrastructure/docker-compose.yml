@@ -293,9 +293,9 @@ services:
   #   depends_on:
   #     - calibre
 
-  # ## GENERAL CLIENTS
+  ## GENERAL CLIENTS
   
-  # # download client
+  # download client
   # transmission:
   #   image: lscr.io/linuxserver/transmission
   #   container_name: transmission
