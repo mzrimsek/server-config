@@ -11,3 +11,5 @@ Represents the services configured on the NAS, mostly revolving around file mani
 ## Main
 
 Represents the services configured on my main server (or at least part of it). These are usually my daily driver services and game servers.
+
+TODO: Add some detailed information for each stack...envs, what they're for, etc.
