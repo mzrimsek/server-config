@@ -51,19 +51,15 @@ services:
   
   # nordvpn client
   vpn:
-    image: ghcr.io/bubuntux/nordvpn
     container_name: nordvpn
+    image: qmcgaw/gluetun
     cap_add:
       - NET_ADMIN
-      - NET_RAW
     environment:
-      - USER=${NORDVPN_USER}
-      - PASS=${NORDVPN_PASS}
-      - CONNECT=United_States
-      - TECHNOLOGY=NordLynx
-      - WHITELIST=showrss.info,rarbg.to,yts.mx
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=1  # Recommended if using ipv4 only
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - OPENVPN_USER=${NORDVPN_USER}
+      - OPENVPN_PASSWORD=${NORDVPN_PASS}
+      - SERVER_REGIONS=United States
 
   # dns and network adblock
   pihole:
