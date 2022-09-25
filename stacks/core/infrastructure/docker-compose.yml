@@ -60,6 +60,7 @@ services:
       - OPENVPN_USER=${NORDVPN_USER}
       - OPENVPN_PASSWORD=${NORDVPN_PASS}
       - SERVER_REGIONS=United States
+    restart: unless-stopped
 
   # dns and network adblock
   pihole:
