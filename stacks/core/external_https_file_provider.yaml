@@ -1,0 +1,19 @@
+# for services that exist outside of the context of Traefik we want to access through the reverse proxy
+# things running in network_mode: host or not running in a container are common examples in my usage
+
+http:
+  routers:
+    ${SERVICE_NAME}:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`${TRAEFIK_PROXY_URL}`)"
+      tls:
+        certResolver:
+          - "tlsresolver"
+      service: ${SERVICE_NAME}
+
+  services:
+    ${SERVICE_NAME}:
+      loadBalancer:
+        servers:
+          - url: "${SERVICE_URL}"

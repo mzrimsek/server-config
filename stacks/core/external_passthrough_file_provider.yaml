@@ -1,3 +1,7 @@
+# for services that live on another machine running Traefik
+# useful to allow organizing like services on a specific machine while still being able to use
+# the power of networking your containers with Traefik labels
+
 tcp:
   routers:
    ${SERVICE}:
