@@ -75,10 +75,11 @@ services:
     environment:
       TZ: ${TIMEZONE}
       WEBPASSWORD: '${PIHOLE_PASSWORD}'
+      WEB_PORT: 8080
       VIRTUAL_HOST: '${PIHOLE_URL}'
       PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
       DNSSEC: 'true'
-      ServerIP: ${HOST_IP}
+      FTLCONF_REPLY_ADDR4: ${HOST_IP}
       DNSMASQ_LISTENING: all
       WEBTHEME: default-dark
       PIHOLE_DOMAIN: public
@@ -90,6 +91,7 @@ services:
       - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_URL}`)"
       - "traefik.http.routers.pihole.entrypoints=websecure"
       - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
+      - "traefik.http.services.pihole.loadbalancer.server.port=8080"
     restart: unless-stopped
 
   ## DATABASE
