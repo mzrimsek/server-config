@@ -70,6 +70,13 @@
           "url": "https://db.zrimsek.com",
           "icon": "storage",
           "newTab": true
+        },
+        {
+          "name": "Downloads",
+          "displayURL": "download.zrimsek.com",
+          "url": "https://download.zrimsek.com",
+          "icon": "download",
+          "newTab": true
         }
       ]
     },
@@ -175,13 +182,6 @@
           "displayURL": "indexers.zrimsek.com",
           "url": "https://indexers.zrimsek.com",
           "icon": "list",
-          "newTab": true
-        },
-        {
-          "name": "Downloads",
-          "displayURL": "download.zrimsek.com",
-          "url": "https://download.zrimsek.com",
-          "icon": "download",
           "newTab": true
         }
       ]
