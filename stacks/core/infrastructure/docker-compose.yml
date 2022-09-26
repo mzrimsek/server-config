@@ -6,7 +6,7 @@ services:
   # reverse proxy
   traefik:
     container_name: traefik
-    image: traefik:latest
+    image: traefik:2.7
     ports:
       # proxy entrypoints
       - 80:80/tcp # web
