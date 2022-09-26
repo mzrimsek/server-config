@@ -22,3 +22,9 @@ Goal here is to have all the more background type stuff in one place on a server
 - Calibre-web
 - Trilium
 - Mosquitto
+
+## Notes
+
+When setting up the services running through the VPN, for container-to-container communication treat them as all running on the same network. All services should be available to each other on localhost with their respective ports.
+
+For the management services I also configured them locally before exposing them. Link all the services together and set up form authentication first thing to make sure nothing sensitive is unprotected.

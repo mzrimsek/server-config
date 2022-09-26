@@ -130,29 +130,29 @@
       "items": [
         {
           "name": "TV Show Management",
-          "displayURL": "sonarr.zrimsek.local",
-          "url": "https://sonarr.zrimsek.local",
+          "displayURL": "tv.zrimsek.com",
+          "url": "https://tv.zrimsek.com",
           "icon": "tv",
           "newTab": true
         },
         {
           "name": "Movie Management",
-          "displayURL": "radarr.zrimsek.local",
-          "url": "https://radarr.zrimsek.local",
+          "displayURL": "movies.zrimsek.com",
+          "url": "https://movies.zrimsek.com",
           "icon": "movie",
           "newTab": true
         },
         {
           "name": "Music Management",
-          "displayURL": "lidarr.zrimsek.local",
-          "url": "https://lidarr.zrimsek.local",
+          "displayURL": "music.zrimsek.com",
+          "url": "https://music.zrimsek.com",
           "icon": "music_note",
           "newTab": true
         },
         {
           "name": "Book Management",
-          "displayURL": "readarr.zrimsek.local",
-          "url": "https://readarr.zrimsek.local",
+          "displayURL": "books.zrimsek.com",
+          "url": "https://books.zrimsek.com",
           "icon": "menu_book",
           "newTab": true
         },
@@ -165,22 +165,22 @@
         },
         {
           "name": "Calibre Web",
-          "displayURL": "library.zrimsek.local",
-          "url": "https://library.zrimsek.local",
+          "displayURL": "library.zrimsek.com",
+          "url": "https://library.zrimsek.com",
           "icon": "auto_stories",
           "newTab": true
         },
         {
           "name": "Indexer Management",
-          "displayURL": "prowlarr.zrimsek.local",
-          "url": "https://prowlarr.zrimsek.local",
+          "displayURL": "indexers.zrimsek.com",
+          "url": "https://indexers.zrimsek.com",
           "icon": "list",
           "newTab": true
         },
         {
           "name": "Downloads",
-          "displayURL": "download.zrimsek.local",
-          "url": "https://download.zrimsek.local",
+          "displayURL": "download.zrimsek.com",
+          "url": "https://download.zrimsek.com",
           "icon": "download",
           "newTab": true
         }
