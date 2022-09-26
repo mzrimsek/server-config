@@ -11,14 +11,6 @@ services:
       # proxy entrypoints
       - 80:80/tcp # web
       - 443:443/tcp # websecure
-
-      # service entrypoints
-      - 9696:9696 # prowlarr
-      - 8989:8989 # sonarr
-      - 7878:7878 # radarr
-      - 8686:8686 # lidarr
-      - 8787:8787 # readarr
-      - 9091:9091 # transmission
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CONFIG_DIR}/traefik/providers:/config
@@ -55,6 +47,46 @@ services:
     image: qmcgaw/gluetun
     cap_add:
       - NET_ADMIN
+    ports:
+      # service entrypoints
+      - 9696:9696 # prowlarr
+      - 8989:8989 # sonarr
+      - 7878:7878 # radarr
+      - 8686:8686 # lidarr
+      - 8787:8787 # readarr
+      - 9091:9091 # transmission
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.tls.certresolver=tlsresolver"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+      
+      - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.tls.certresolver=tlsresolver"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      
+      - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.radarr.tls.certresolver=tlsresolver"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      
+      - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
+      - "traefik.http.routers.lidarr.entrypoints=websecure"
+      - "traefik.http.routers.lidarr.tls.certresolver=tlsresolver"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+      
+      - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
+      - "traefik.http.routers.readarr.entrypoints=websecure"
+      - "traefik.http.routers.readarr.tls.certresolver=tlsresolver"
+      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      
+      - "traefik.http.routers.transmission.rule=Host(`${TRANSMISSION_URL}`)"
+      - "traefik.http.routers.transmission.entrypoints=websecure"
+      - "traefik.http.routers.transmission.tls.certresolver=tlsresolver"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     environment:
       - VPN_SERVICE_PROVIDER=nordvpn
       - OPENVPN_USER=${NORDVPN_USER}
@@ -158,13 +190,10 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
-      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
     network_mode: service:vpn
     depends_on:
       - vpn
+      - transmission
     restart: unless-stopped
 
   # tv show management
@@ -179,13 +208,11 @@ services:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
-      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
     network_mode: service:vpn
     depends_on:
       - vpn
+      - prowlarr
+      - transmission
     restart: unless-stopped
 
   # movie management
@@ -200,13 +227,11 @@ services:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
-      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
     network_mode: service:vpn
     depends_on:
       - vpn
+      - prowlarr
+      - transmission
     restart: unless-stopped
 
   # music management
@@ -221,13 +246,11 @@ services:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
-      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
     network_mode: service:vpn
     depends_on:
       - vpn
+      - prowlarr
+      - transmission
     restart: unless-stopped
 
   # book management
@@ -242,13 +265,11 @@ services:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
-      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
     network_mode: service:vpn
     depends_on:
       - vpn
+      - prowlarr
+      - transmission
     restart: unless-stopped
 
   calibre:
@@ -312,10 +333,6 @@ services:
     volumes:
       - ${CONFIG_DIR}/transmission:/config
       - ${DOWNLOADS_DIR}:/downloads
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.transmission.rule=Host(`${TRANSMISSION_URL}`)"
-      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     network_mode: service:vpn
     depends_on:
       - vpn
