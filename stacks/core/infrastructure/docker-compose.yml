@@ -44,7 +44,7 @@ services:
   # nordvpn client
   vpn:
     container_name: nordvpn
-    image: qmcgaw/gluetun
+    image: qmcgaw/gluetun:v3
     cap_add:
       - NET_ADMIN
     ports:
