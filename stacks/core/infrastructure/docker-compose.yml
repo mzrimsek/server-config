@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
   
   # nordvpn client
-  vpn:
+  nordvpn:
     container_name: nordvpn
     image: qmcgaw/gluetun:v3
     cap_add:
@@ -161,14 +161,14 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     labels:
       - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.routers.prowlarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
     depends_on:
-      - vpn
+      - nordvpn
       - transmission
     restart: unless-stopped
 
@@ -184,14 +184,14 @@ services:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     labels:
       - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.routers.sonarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
     depends_on:
-      - vpn
+      - nordvpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -208,14 +208,14 @@ services:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     labels:
       - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.routers.radarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
     depends_on:
-      - vpn
+      - nordvpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -232,14 +232,14 @@ services:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     labels:
       - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
       - "traefik.http.routers.lidarr.entrypoints=websecure"
       - "traefik.http.routers.lidarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
     depends_on:
-      - vpn
+      - nordvpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -256,14 +256,14 @@ services:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     labels:
       - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
       - "traefik.http.routers.readarr.entrypoints=websecure"
       - "traefik.http.routers.readarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
     depends_on:
-      - vpn
+      - nordvpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -334,9 +334,9 @@ services:
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.routers.transmission.tls.certresolver=tlsresolver"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
-    network_mode: service:vpn
+    network_mode: service:nordvpn
     depends_on:
-      - vpn
+      - nordvpn
     restart: unless-stopped
 
   # mqtt client
