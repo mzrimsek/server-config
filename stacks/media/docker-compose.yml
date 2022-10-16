@@ -10,7 +10,7 @@ services:
       - ${CONFIG_DIR}/jellyfin/cache:/cache
       - ${MEDIA_DIR}:/media
     environment:
-      - JELLYFIN_PublishedServerUrl=${APP_URL}
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_APP_URL}
     network_mode: "host"
     restart: unless-stopped
 
@@ -29,11 +29,10 @@ services:
       - ${CONFIG_DIR}/transmission:/config
       - ${DOWNLOADS_DIR}:/downloads
     ports:
-      - ${TRANSMISSION_UI_PORT}:9091
+      - 9091:9091
       - 51413:51413
       - 51413:51413/udp
     restart: unless-stopped
-
 
   #indexer management
   prowlarr:

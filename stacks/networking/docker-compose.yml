@@ -1,57 +1,91 @@
 version: "3"
 
-networks:
-  public:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.100.0/24
-          gateway: 192.168.100.1
-
 services:
+  
   traefik:
     container_name: traefik
-    image: traefik:latest
+    image: traefik:2.7
     ports:
-      - 80:80/tcp
-      - 443:443/tcp
-      - 443:443/udp
+      # proxy entrypoints
+      - 80:80/tcp # web
+      - 443:443/tcp # websecure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CONFIG_DIR}/traefik/providers:/config
       - ${CONFIG_DIR}/traefik/certs:/etc/certs
-    networks:
-      - public
     command:
-      - --entrypoints.web.address=:80/tcp
-      - --entrypoints.websecure.address=:443/tcp
+      - "--entrypoints.web.address=:80/tcp"
+      - "--entrypoints.websecure.address=:443/tcp"
       - --entrypoints.wireguard.address=:443/udp
-      - --providers.docker
-      - --providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
-      - --api
-      - --log=true
-      - --log.level=info
-      - --providers.file.directory=/config
-      - --certificatesresolvers.tlsresolver.acme.tlschallenge
-      - --certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}
-      - --certificatesresolvers.tlsresolver.acme.storage=acme.json
+      - "--providers.docker"
+      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - "--api.insecure" # FIX THIS
+      - "--log=true"
+      - "--log.level=info"
+      - "--accesslog=true"
+      - "--providers.file.directory=/config"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
+      - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
+      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
     labels:
       # Dashboard
-      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_PROXY_URL}`)
+      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
-      - traefik.http.routers.traefik.middlewares=authdashboard
-      - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER}
-      
-      # Global redirect to https
-      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
-      - traefik.http.routers.http-catchall.entrypoints=web
-      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
-      
-      # redirect middleware
-      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=websecure
-      - traefik.docker.network=public
+      # - traefik.http.routers.traefik.middlewares=authdashboard # FIX THIS
+      # - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER} # FIX THIS
+    restart: unless-stopped
+  
+  # nordvpn client
+  nordvpn:
+    container_name: nordvpn
+    image: qmcgaw/gluetun:v3
+    cap_add:
+      - NET_ADMIN
+    #ports:
+      # service entrypoints for containers that need to communicate over the VPN
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - OPENVPN_USER=${NORDVPN_USER}
+      - OPENVPN_PASSWORD=${NORDVPN_PASS}
+      - SERVER_REGIONS=United States
+    restart: unless-stopped
+
+  # dns and network adblock
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - 18080:8080
+    dns:
+      - 127.0.0.1
+      - 9.9.9.9
+    environment:
+      TZ: ${TIMEZONE}
+      WEBPASSWORD: '${PIHOLE_PASSWORD}'
+      WEB_PORT: 8080
+      VIRTUAL_HOST: '${PIHOLE_URL}'
+      PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
+      DNSSEC: 'true'
+      FTLCONF_REPLY_ADDR4: ${HOST_IP}
+      DNSMASQ_LISTENING: all
+      WEBTHEME: default-dark
+      PIHOLE_DOMAIN: public
+    volumes:
+      - ${CONFIG_DIR}/pihole/etc:/etc/pihole
+      - ${CONFIG_DIR}/pihole/dnsmasq.d:/etc/dnsmasq.d
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_URL}`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
+      - "traefik.http.services.pihole.loadbalancer.server.port=8080"
     restart: unless-stopped
 
   wireguard:
@@ -70,8 +104,6 @@ services:
       - ${CONFIG_DIR}/wireguard/periodic:/etc/periodic
       - ${CONFIG_DIR}/wireguard/config:/etc/wireguard
       - ${CONFIG_DIR}/wireguard/bird:/etc/bird
-    networks:
-      - public
     sysctls:
      - net.ipv4.conf.all.src_valid_mark=1
      - net.ipv4.ip_forward=1

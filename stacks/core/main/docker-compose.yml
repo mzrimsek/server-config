@@ -137,7 +137,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/jellyfin/config:/config
       - ${CONFIG_DIR}/jellyfin/cache:/cache
-      - remote_media:/media
+      - remote_media:/media # optionally mount directory instead of using mounted share
     environment:
       - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
     network_mode: "host"
