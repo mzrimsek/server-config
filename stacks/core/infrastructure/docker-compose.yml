@@ -159,6 +159,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:prowlarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
     network_mode: service:nordvpn
@@ -180,6 +182,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:sonarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
@@ -204,6 +208,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:radarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
@@ -228,6 +234,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:lidarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
@@ -252,6 +260,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:readarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
@@ -300,6 +310,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:calibre-web
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/calibre-web:/config
       - ${MEDIA_DIR}/books/library:/books
