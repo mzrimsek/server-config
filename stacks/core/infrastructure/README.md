@@ -62,6 +62,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | TRANSMISSION_USERNAME    | Transmission client admin user username                                                                                     |
 | TRANSMISSION_PASSWORD    | Transmission client admin user password                                                                                     |
 | TRANSMISSION_URL         | Subdomain to route to download client web interface                                                                         |
+| APP_THEME                | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
 
 ### File Structure
 
