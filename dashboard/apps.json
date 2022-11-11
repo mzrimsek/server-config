@@ -166,7 +166,7 @@
         {
           "name": "Calibre",
           "displayURL": "calibre.zrimsek.local",
-          "url": "https://calibre.zrimsek.local",
+          "url": "http://datascape:8080",
           "icon": "library_books",
           "newTab": true
         },

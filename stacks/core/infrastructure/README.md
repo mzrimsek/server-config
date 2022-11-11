@@ -56,7 +56,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | RADARR_URL               | Subdomain to route to movie torrent management interface                                                                    |
 | LIDARR_URL               | Subdomain to route to music torrent management interface                                                                    |
 | READARR_URL              | Subdomain to route to book and audiobook torrent management interface                                                       |
-| CALIBRE_LIBRARY_URL      | Subdomain to route to Calibre desktop application management interface                                                      |
 | CALIBRE_READER_URL       | Subdomain to route to Calibre web Ereader                                                                                   |
 | CALIBRE_WEB_URL          | Subdomain to route to Calibre web management interface                                                                      |
 | TRANSMISSION_USERNAME    | Transmission client admin user username                                                                                     |
@@ -76,8 +75,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
     /movies
     /music
     /books
-      /uploads
-      /library
     /downloads (DOWNLOADS_DIR)
       /complete
       /pending

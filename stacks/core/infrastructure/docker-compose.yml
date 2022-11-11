@@ -54,6 +54,8 @@ services:
       - 7878:7878 # radarr
       - 8686:8686 # lidarr
       - 8787:8787 # readarr
+      - 8080:8080 # calibre
+      - 8081:8081 # calibre
       - 9091:9091 # transmission
       - 51413:51413 # transmission
       - 51413:51413/udp # transmission
@@ -287,19 +289,16 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/calibre:/config
-      - ${MEDIA_DIR}/books/uploads:/uploads
-      - ${MEDIA_DIR}/books/library:/Calibre_Library
+      - ${MEDIA_DIR}:/data/media
+    network_mode: service:nordvpn
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.calibre-library.rule=Host(`${CALIBRE_LIBRARY_URL}`)"
-      - "traefik.http.routers.calibre-library.entrypoints=websecure"
-      - "traefik.http.routers.calibre-library.tls.certresolver=tlsresolver"
-      - "traefik.http.services.calibre-library.loadbalancer.server.port=8080"
-
       - "traefik.http.routers.calibre-reader.rule=Host(`${CALIBRE_READER_URL}`)"
       - "traefik.http.routers.calibre-reader.entrypoints=websecure"
       - "traefik.http.routers.calibre-reader.tls.certresolver=tlsresolver"
       - "traefik.http.services.calibre-reader.loadbalancer.server.port=8081"
+    depends_on:
+      - nordvpn
     restart: unless-stopped
 
   # calibre library web interface
@@ -314,7 +313,8 @@ services:
       - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/calibre-web:/config
-      - ${MEDIA_DIR}/books/library:/books
+      - ${MEDIA_DIR}/books:/books
+    network_mode: service:nordvpn
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.calibre-web.rule=Host(`${CALIBRE_WEB_URL}`)"
@@ -323,6 +323,7 @@ services:
       - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"
     restart: unless-stopped
     depends_on:
+      - nordvpn
       - calibre
 
   ## GENERAL CLIENTS

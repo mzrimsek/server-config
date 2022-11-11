@@ -54,3 +54,5 @@ Setting up an app in Docker that is proxied by Traefik in the cluster (yes this 
 
 1. Set up the Docker container on a host machine accessible by the cluster
 2. Use the provided `nonHostedTraefikRoute.yaml` k3s deployment to create a service that routes traffic to the container
+
+I use unRAID for my NAS OS and adjusted the web UI port to live on 55080 instead of 80 so Traefik could bind control 80 on that machine
