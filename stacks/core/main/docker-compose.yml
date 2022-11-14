@@ -58,6 +58,7 @@ services:
       - "traefik.http.routers.service-dashboard.entrypoints=websecure"
       - "traefik.http.routers.service-dashboard.tls.certresolver=tlsresolver"
       - "traefik.http.services.service-dashboard.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # budgeting
@@ -82,6 +83,7 @@ services:
       - "traefik.http.routers.fireflyiii.entrypoints=websecure"
       - "traefik.http.routers.fireflyiii.tls.certresolver=tlsresolver"
       - "traefik.http.services.fireflyiii.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # budgeting automation
@@ -117,6 +119,7 @@ services:
       - "traefik.http.routers.vikunja-api.rule=Host(`${VIKUNJA_URL}`) && PathPrefix(`/api/v1`, `/dav/`, `/.well-known/`)"
       - "traefik.http.routers.vikunja-api.entrypoints=websecure"
       - "traefik.http.routers.vikunja-api.tls.certresolver=tlsresolver"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # tasks frontend
@@ -128,6 +131,7 @@ services:
       - "traefik.http.routers.vikunja-frontend.rule=Host(`${VIKUNJA_URL}`)"
       - "traefik.http.routers.vikunja-frontend.entrypoints=websecure"
       - "traefik.http.routers.vikunja-frontend.tls.certresolver=tlsresolver"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # media player
@@ -140,6 +144,8 @@ services:
       - remote_media:/media # optionally mount directory instead of using mounted share
     environment:
       - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8096
     restart: unless-stopped
 
@@ -158,5 +164,21 @@ services:
       - ${CONFIG_DIR}/duplicati/backups:/backups
       - ${BACKUP_ROOT1}:/source/root1
       - ${BACKUP_ROOT2}:/source/root2
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8200
+    restart: unless-stopped
+
+  # automated container updating
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_NOTIFICATION_REPORT=true
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --label-enable true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped

@@ -11,3 +11,11 @@ Represents the services configured on the NAS, mostly revolving around file mani
 ## Main
 
 Represents the services configured on my main server (or at least part of it). These are usually my daily driver services and game servers.
+
+## Notes
+
+Sometimes services are deployed in both stacks because they serve some kind of ubiquitous utility or tool.
+
+- Traefik - Container label based reverse proxy configuration. Makes routing to services much easier to configure.
+- Duplicati - Remote file backup. It's convenient to be able to directly backup files off the machine without it being dependent on another device (main server does not need to go to the NAS to get its backup done)
+- Watchtower - Automated container image updates. Kind of self explanatory - I don't let things like the reverse proxy or VPN client auto update because they are too critical to the underlying architecture.

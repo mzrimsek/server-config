@@ -97,6 +97,7 @@ services:
       - "traefik.http.routers.pihole.entrypoints=websecure"
       - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
       - "traefik.http.services.pihole.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   ## BACKUP
@@ -115,6 +116,8 @@ services:
       - ${CONFIG_DIR}/duplicati:/config
       - ${CONFIG_DIR}/duplicati/backups:/backups
       - ${BACKUP_ROOT}:/source
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8200
     restart: unless-stopped
 
@@ -168,6 +171,7 @@ services:
       - "traefik.http.routers.trilium.entrypoints=websecure"
       - "traefik.http.routers.trilium.tls.certresolver=tlsresolver"
       - "traefik.http.services.trilium.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   ## MEDIA MANAGEMENT
@@ -190,6 +194,7 @@ services:
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.routers.prowlarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
       - transmission
@@ -215,6 +220,7 @@ services:
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.routers.sonarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
       - prowlarr
@@ -241,6 +247,7 @@ services:
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.routers.radarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
       - prowlarr
@@ -267,6 +274,7 @@ services:
       - "traefik.http.routers.lidarr.entrypoints=websecure"
       - "traefik.http.routers.lidarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
       - prowlarr
@@ -293,6 +301,7 @@ services:
       - "traefik.http.routers.readarr.entrypoints=websecure"
       - "traefik.http.routers.readarr.tls.certresolver=tlsresolver"
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
       - prowlarr
@@ -316,6 +325,7 @@ services:
       - "traefik.http.routers.calibre-reader.entrypoints=websecure"
       - "traefik.http.routers.calibre-reader.tls.certresolver=tlsresolver"
       - "traefik.http.services.calibre-reader.loadbalancer.server.port=8081"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn
     restart: unless-stopped
@@ -340,6 +350,7 @@ services:
       - "traefik.http.routers.calibre-web.entrypoints=websecure"
       - "traefik.http.routers.calibre-web.tls.certresolver=tlsresolver"
       - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
     depends_on:
       - nordvpn
@@ -366,6 +377,7 @@ services:
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.routers.transmission.tls.certresolver=tlsresolver"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
+      - "com.centurylinklabs.watchtower.enable=true"
     network_mode: service:nordvpn
     depends_on:
       - nordvpn
@@ -382,4 +394,20 @@ services:
       - ${CONFIG_DIR}/mosquitto/data:/mosquitto/data
       - ${CONFIG_DIR}/mosquitto/log:/mosquitto/log
       - ${CONFIG_DIR}/mosquitto/config:/mosquitto/config
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+  # automated container updating
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_NOTIFICATION_REPORT=true
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --label-enable true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped

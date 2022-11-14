@@ -21,6 +21,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
+- Watchtower - Automated container image updates
 
 ## Setup
 
@@ -30,40 +31,41 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 
 ### Environment
 
-| Variable                 | Description                                                                                                                 |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| CONFIG_DIR               | Root directory where service configuration files will live                                                                  |
-| MEDIA_DIR                | Parent directory for tv, movie, etc. media libraries                                                                        |
-| DOWNLOADS_DIR            | Parent directory for automated file downloads to be organized within                                                        |
-| TIMEZONE                 | Desired [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for containers (for applicable containers) |
-| HOST_IP                  | IP address of machine hosting these containers                                                                              |
-| PUID                     | User Id of the host user that containers should run under (for applicable containers)                                       |
-| PGID                     | Group Id of the host user that containers should run under (for applicable containers)                                      |
-| TRAEFIK_TLS_EMAIL        | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
-| TRAEFIK_DASHBOARD_URL    | Subdomain to route to the Traefik dashboard                                                                                 |
-| TRAEFIK_DASHBOARD_USER   | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
-| NORDVPN_USER             | NordVPN account username / email                                                                                            |
-| NORDVPN_PASS             | NordVPN account password                                                                                                    |
-| PIHOLE_PASSWORD          | Password to access the PiHole admin dashboard                                                                               |
-| PIHOLE_URL               | Subdomain to route to the PiHole admin dashboard                                                                            |
-| POSTGRES_USER            | Name of admin user for database                                                                                             |
-| POSTGRES_PASSWORD        | Password of admin user for database                                                                                         |
-| PGADMIN_DEFAULT_EMAIL    | PgAdmin default user email                                                                                                  |
-| PGADMIN_DEFAULT_PASSWORD | PgAdmin default user password                                                                                               |
-| PGADMIN_URL              | Subdomain to route to PgAdmin database management dashboard                                                                 |
-| TRILIUM_URL              | Subdomain to route to Trilium knowledge-base                                                                                |
-| PROWLARR_URL             | Subdomain to route to torrent indexer management interface                                                                  |
-| SONARR_URL               | Subdomain to route to tv show torrent management interface                                                                  |
-| RADARR_URL               | Subdomain to route to movie torrent management interface                                                                    |
-| LIDARR_URL               | Subdomain to route to music torrent management interface                                                                    |
-| READARR_URL              | Subdomain to route to book and audiobook torrent management interface                                                       |
-| CALIBRE_READER_URL       | Subdomain to route to Calibre web Ereader                                                                                   |
-| CALIBRE_WEB_URL          | Subdomain to route to Calibre web management interface                                                                      |
-| TRANSMISSION_USERNAME    | Transmission client admin user username                                                                                     |
-| TRANSMISSION_PASSWORD    | Transmission client admin user password                                                                                     |
-| TRANSMISSION_URL         | Subdomain to route to download client web interface                                                                         |
-| APP_THEME                | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
-| BACKUP_ROOT              | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
+| Variable                    | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| CONFIG_DIR                  | Root directory where service configuration files will live                                                                  |
+| MEDIA_DIR                   | Parent directory for tv, movie, etc. media libraries                                                                        |
+| DOWNLOADS_DIR               | Parent directory for automated file downloads to be organized within                                                        |
+| TIMEZONE                    | Desired [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for containers (for applicable containers) |
+| HOST_IP                     | IP address of machine hosting these containers                                                                              |
+| PUID                        | User Id of the host user that containers should run under (for applicable containers)                                       |
+| PGID                        | Group Id of the host user that containers should run under (for applicable containers)                                      |
+| TRAEFIK_TLS_EMAIL           | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
+| TRAEFIK_DASHBOARD_URL       | Subdomain to route to the Traefik dashboard                                                                                 |
+| TRAEFIK_DASHBOARD_USER      | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
+| NORDVPN_USER                | NordVPN account username / email                                                                                            |
+| NORDVPN_PASS                | NordVPN account password                                                                                                    |
+| PIHOLE_PASSWORD             | Password to access the PiHole admin dashboard                                                                               |
+| PIHOLE_URL                  | Subdomain to route to the PiHole admin dashboard                                                                            |
+| POSTGRES_USER               | Name of admin user for database                                                                                             |
+| POSTGRES_PASSWORD           | Password of admin user for database                                                                                         |
+| PGADMIN_DEFAULT_EMAIL       | PgAdmin default user email                                                                                                  |
+| PGADMIN_DEFAULT_PASSWORD    | PgAdmin default user password                                                                                               |
+| PGADMIN_URL                 | Subdomain to route to PgAdmin database management dashboard                                                                 |
+| TRILIUM_URL                 | Subdomain to route to Trilium knowledge-base                                                                                |
+| PROWLARR_URL                | Subdomain to route to torrent indexer management interface                                                                  |
+| SONARR_URL                  | Subdomain to route to tv show torrent management interface                                                                  |
+| RADARR_URL                  | Subdomain to route to movie torrent management interface                                                                    |
+| LIDARR_URL                  | Subdomain to route to music torrent management interface                                                                    |
+| READARR_URL                 | Subdomain to route to book and audiobook torrent management interface                                                       |
+| CALIBRE_READER_URL          | Subdomain to route to Calibre web Ereader                                                                                   |
+| CALIBRE_WEB_URL             | Subdomain to route to Calibre web management interface                                                                      |
+| TRANSMISSION_USERNAME       | Transmission client admin user username                                                                                     |
+| TRANSMISSION_PASSWORD       | Transmission client admin user password                                                                                     |
+| TRANSMISSION_URL            | Subdomain to route to download client web interface                                                                         |
+| APP_THEME                   | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
+| BACKUP_ROOT                 | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
+| WATCHTOWER_NOTIFICATION_URL | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification URL to get updates on Watchtower actions   |
 
 ### File Structure
 
@@ -81,9 +83,14 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
       /complete
       /pending
   /config (CONFIG_DIR)
-    /traefik
-      /providers
-      /certs
+    /calibre
+    /calibre-web
+    /duplicati
+    /lidarr
+    /mosquitto
+      /data
+      /log
+      /config
     /pihole
       /etc
       /dnsmasq.d
@@ -91,19 +98,15 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
       /db_data
       /pgadmin_data
       /backup
-    /trilium
     /prowlarr
-    /sonarr
     /radarr
-    /lidarr
     /readarr
-    /calibre
-    /calibre-web
+    /sonarr
+    /traefik
+      /providers
+      /certs
     /transmission
-    /mosquitto
-      /data
-      /log
-      /config
+    /trilium
 ```
 
 ### Notes
