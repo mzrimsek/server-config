@@ -204,7 +204,7 @@
     },
     {
       "name": "Automated Backups",
-      "displayURL": "backup.zrimsek.local",
+      "displayURL": "backup2.zrimsek.local",
       "url": "http://watermelon-pi:8200",
       "icon": "",
       "newTab": true
