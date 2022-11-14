@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  # data backup
+  backup:
+    container_name: duplicati
+    image: lscr.io/linuxserver/duplicati:latest
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-America/New_York}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:duplicati
+      - TP_THEME=organizr
+    volumes:
+      - ${CONFIG_DIR}/duplicati:/config
+      - ${CONFIG_DIR}/duplicati/backups:/backups
+      - ${BACKUP_ROOT}:/source
+    network_mode: "host" # port 8200
+    restart: unless-stopped
