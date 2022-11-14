@@ -1,6 +1,6 @@
 # Dashboard
 
-[This dashboard](https://github.com/phntxx/dashboard) is an easily customizable, themable, and configurable webpage to organize all your services and frequently accessed bookmarks.
+[This dashboard](https://github.com/phntxx/dashboard) is an easily customizable, themable, and configurable webpage to organize all your services and frequently accessed bookmarks. Icons for the configuration are [Material Design icons](https://fonts.google.com/icons)
 
 - Data: Requires a volume to hold configurations, mounted as a volume to `app/data`
 

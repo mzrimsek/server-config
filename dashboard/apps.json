@@ -65,6 +65,20 @@
           "newTab": true
         },
         {
+          "name": "Automated Backups",
+          "displayURL": "backup.zrimsek.local",
+          "url": "https://backup.zrimsek.com",
+          "icon": "backup",
+          "newTab": true
+        },
+        {
+          "name": "Automated Backups",
+          "displayURL": "backup2.zrimsek.local",
+          "url": "https://backup2.zrimsek.com",
+          "icon": "backup",
+          "newTab": true
+        },
+        {
           "name": "Databases",
           "displayURL": "db.zrimsek.com",
           "url": "https://db.zrimsek.com",
@@ -193,20 +207,6 @@
       "displayURL": "octopi.local",
       "url": "http://octopi.local/",
       "icon": "print",
-      "newTab": true
-    },
-    {
-      "name": "Automated Backups",
-      "displayURL": "backup.zrimsek.local",
-      "url": "http://datascape:8200",
-      "icon": "",
-      "newTab": true
-    },
-    {
-      "name": "Automated Backups",
-      "displayURL": "backup2.zrimsek.local",
-      "url": "http://watermelon-pi:8200",
-      "icon": "",
       "newTab": true
     },
     {
