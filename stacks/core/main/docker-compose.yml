@@ -140,5 +140,23 @@ services:
       - remote_media:/media # optionally mount directory instead of using mounted share
     environment:
       - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
-    network_mode: "host"
+    network_mode: "host" # port 8096
+    restart: unless-stopped
+
+  # data backup
+  backup:
+    container_name: duplicati
+    image: lscr.io/linuxserver/duplicati:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:duplicati
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/duplicati:/config
+      - ${CONFIG_DIR}/duplicati/backups:/backups
+      - ${BACKUP_ROOT1}:/source/root1
+      - ${BACKUP_ROOT2}:/source/root2
+    network_mode: "host" # port 8200
     restart: unless-stopped

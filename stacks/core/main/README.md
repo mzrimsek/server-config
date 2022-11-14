@@ -9,6 +9,7 @@ Goal is to have all the main services I use in one convenient place.
 - Vikunja - Tasks and todos
 - Jellyfin - Media server
 - Dashboard - Configurable dashboard to easily access services
+- Duplicati - Remote file backup
 
 ## Setup
 
@@ -26,6 +27,8 @@ Goal is to have all the main services I use in one convenient place.
 | SHARE_PASS                 | Remote media share accessing user password                                                                                  |
 | CONFIG_DIR                 | Root directory where service configuration files will live                                                                  |
 | TIMEZONE                   | Desired [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for containers (for applicable containers) |
+| PUID                       | User Id of the host user that containers should run under (for applicable containers)                                       |
+| PGID                       | Group Id of the host user that containers should run under (for applicable containers)                                      |
 | DATABASE_HOST              | Database connection host machine                                                                                            |
 | DATABASE_USER              | Database connection username                                                                                                |
 | DATABASE_PASSWORD          | Database connection password                                                                                                |
@@ -43,6 +46,9 @@ Goal is to have all the main services I use in one convenient place.
 | VIKUNJA_JWT_SECRET         | Randomly generated key used by Vikunja for encryption                                                                       |
 | VIKUNJA_URL                | Subdomain to route to Vikunja tasks web interface                                                                           |
 | JELLYFIN_URL               | Subdomain to route to Jellyfin media server web interface                                                                   |
+| APP_THEME                  | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
+| BACKUP_ROOT1               | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
+| BACKUP_ROOT2               | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
 
 ### File Structure
 
@@ -66,3 +72,4 @@ Goal is to have all the main services I use in one convenient place.
 ### Notes
 
 - The stack provided mounts the media from a remote share. This could easily be modified to directly mount a directory by changing the media volume mount on the Jellyfin container in the docker compose file.
+- Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)

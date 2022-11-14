@@ -99,6 +99,25 @@ services:
       - "traefik.http.services.pihole.loadbalancer.server.port=8080"
     restart: unless-stopped
 
+  ## BACKUP
+
+  # data backup
+  backup:
+    container_name: duplicati
+    image: lscr.io/linuxserver/duplicati:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:duplicati
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/duplicati:/config
+      - ${CONFIG_DIR}/duplicati/backups:/backups
+      - ${BACKUP_ROOT}:/source
+    network_mode: "host" # port 8200
+    restart: unless-stopped
+
   ## DATABASE
 
   # database

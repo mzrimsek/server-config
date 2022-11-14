@@ -6,7 +6,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 
 - Traefik - Container-first Reverse Proxy
 - Pihole - Local DNS configuration and Network Adblocker
-- NordVPN - VPN container for containers to communicate over
+- Gluetun - VPN container for containers to communicate over
 - Wireguard - (WORK IN PROGRESS)
 - Postgres - SQL Database
 - pgAdmin - Web interface for Postgres database access and management
@@ -20,6 +20,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Calibre-web - Calibre web interface for downloading Ebooks and sharing to Kindle
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
+- Duplicati - Remote file backup
 
 ## Setup
 
@@ -62,6 +63,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | TRANSMISSION_PASSWORD    | Transmission client admin user password                                                                                     |
 | TRANSMISSION_URL         | Subdomain to route to download client web interface                                                                         |
 | APP_THEME                | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
+| BACKUP_ROOT              | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
 
 ### File Structure
 
@@ -111,3 +113,4 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - When setting up the services running through the VPN, for container-to-container communication treats them as all running on the same network. All services should be available to each other on localhost with their respective ports.
 - For the torrent management services I also configured them locally before exposing them. Link all the services together and set up form authentication first thing to make sure nothing sensitive is unprotected.
 - PUID and PGID must be the user that has control over the media files. I chown'd the whole file tree to make sure that user would have all the permissions it needed, thus giving the containers that do the media file manipulation all the permissions they would need as well.
+- Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
