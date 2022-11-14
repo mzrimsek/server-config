@@ -10,27 +10,27 @@ After getting Portainer running, getting Traefik running next is probably the mo
 
 As a side note, many of these setups also include Kubernetes configurations. If that is of interest, there is a corresponding folder that details how a cluster can be created. Due to Portainer's ability to manage Kubernetes clusters, it's likely still useful to have Portainer up and running, if only to add the cluster as an agent endpoint.
 
-## Stacks
+## Services
 
-- [Portainer](./portainer) - Docker Container and Kubernetes Cluster Management and Orchestration
-- [Traefik](./traefik) - Container-focused Reverse Proxy
-- [Jenkins](./jenkins) - Customizable Build Server
-- [Postgres](./postgres) - SQL based Database
-- [MQTT](./mqtt) - MQTT Servers for Cross-Server Communication
+- [Portainer](./services/portainer) - Docker Container and Kubernetes Cluster Management and Orchestration
+- [Traefik](./services/traefik) - Container-focused Reverse Proxy
+- [Jenkins](./services/jenkins) - Customizable Build Server
+- [Postgres](./services/postgres) - SQL based Database
+- [MQTT](./services/mqtt) - MQTT Servers for Cross-Server Communication
   - RabbitMQ
   - Mosquitto
-- [Monitoring](./monitor) - Grafana-bases System Resource Monitoring
-- [Home Assistant](./homeassistant) - Home Automation Platform
-- [Dashboard](./dashboard) - Simple and Customizable Dashboard for your Services
-- [Vikunja](./vikunja) - Task Management Platform
-- [Trilium](./trilium) - OneNote-like Wiki and Notes Platform
-- [Firefly III](./fireflyiii) - Budgeting and Transaction Tracking
-- [Muse](./muse) - A Discord music bot
-- [n8n](./n8n) - An automation platform similar to
-- [PiHole](./pihole) - Network-wide Adblocking and DNS Management
-- [Jellyfin](./jellyfin) - Media organization and viewing
-- [Transmission](./torrent) - Torrenting download client
-- [Duplicati](./duplicati/) - File backup
+- [Monitoring](./services/monitor) - Grafana-bases System Resource Monitoring
+- [Home Assistant](./services/homeassistant) - Home Automation Platform
+- [Dashboard](./services/dashboard) - Simple and Customizable Dashboard for your Services
+- [Vikunja](./services/vikunja) - Task Management Platform
+- [Trilium](./services/trilium) - OneNote-like Wiki and Notes Platform
+- [Firefly III](./services/fireflyiii) - Budgeting and Transaction Tracking
+- [Muse](./services/muse) - A Discord music bot
+- [n8n](./services/n8n) - An automation platform similar to
+- [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
+- [Jellyfin](./services/jellyfin) - Media organization and viewing
+- [Transmission](./services/torrent) - Torrenting download client
+- [Duplicati](./services/duplicati/) - File backup
 - [Games](./games)
   - Factorio
   - Minecraft
@@ -40,12 +40,17 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - The Forest
   - Skyrim Together Reborn
 
-### More complicated stacks
+## Stacks
 
 These are more fully designed solutions rather than a service with a container or two.
 
 - [Media](./stacks/media) - An automated media aquisition, organization, and consumption solution
 - [Networking](./stacks/networking) - A stack of services that provide network utilities like adblock, VPNs, and reverse proxying
+
+Core stacks that reflect my main service setups
+
+- [Infrastructure](./stacks/core/infrastructure/) - Mostly services that support other services, like network infrastructure, databases, and media aquisition
+- [Main](./stacks/core/main/) - Mostly daily driver services
 
 ## Notes
 
@@ -56,4 +61,4 @@ Setting up an app in Docker that is proxied by Traefik in the cluster (yes this 
 1. Set up the Docker container on a host machine accessible by the cluster
 2. Use the provided `nonHostedTraefikRoute.yaml` k3s deployment to create a service that routes traffic to the container
 
-I use unRAID for my NAS OS and adjusted the web UI port to live on 55080 instead of 80 so Traefik could bind control 80 on that machine
+I use unRAID for my NAS OS and adjusted the web UI port to live on 55080 instead of 80 so Traefik could bind to and control port 80 on that machine
