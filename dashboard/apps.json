@@ -164,13 +164,6 @@
           "newTab": true
         },
         {
-          "name": "Calibre",
-          "displayURL": "calibre.zrimsek.local",
-          "url": "http://datascape:8080",
-          "icon": "library_books",
-          "newTab": true
-        },
-        {
           "name": "Calibre Web",
           "displayURL": "library.zrimsek.com",
           "url": "https://library.zrimsek.com",
@@ -200,6 +193,27 @@
       "displayURL": "octopi.local",
       "url": "http://octopi.local/",
       "icon": "print",
+      "newTab": true
+    },
+    {
+      "name": "Automated Backups",
+      "displayURL": "backup.zrimsek.local",
+      "url": "http://datascape:8200",
+      "icon": "",
+      "newTab": true
+    },
+    {
+      "name": "Automated Backups",
+      "displayURL": "backup.zrimsek.local",
+      "url": "http://watermelon-pi:8200",
+      "icon": "",
+      "newTab": true
+    },
+    {
+      "name": "Calibre Desktop",
+      "displayURL": "calibre.zrimsek.local",
+      "url": "http://datascape:8080",
+      "icon": "library_books",
       "newTab": true
     }
   ]
