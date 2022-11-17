@@ -7,7 +7,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Traefik - Container-first Reverse Proxy
 - Pihole - Local DNS configuration and Network Adblocker
 - Gluetun - VPN container for containers to communicate over
-- Wireguard - (WORK IN PROGRESS)
 - Postgres - SQL Database
 - pgAdmin - Web interface for Postgres database access and management
 - Transmission - Torrent download client
@@ -15,9 +14,9 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Sonarr - TV torrent management
 - Radarr - Movie torrent management
 - Lidarr - Music torrent management
-- Readarr - Ebook and Audiobook torrent management (WORK IN PROGRESS)
-- Calibre - Ebook and Audiobook Library mangement and Ereader
-- Calibre-web - Calibre web interface for downloading Ebooks and sharing to Kindle
+- _Readarr - Ebook and Audiobook torrent management (WORK IN PROGRESS)_
+- _Calibre - Ebook and Audiobook Library mangement and Ereader (WORK IN PROGRESS)_
+- _Calibre-web - Calibre web interface for downloading Ebooks and sharing to Kindle (WORK IN PROGRESS)_
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
@@ -40,6 +39,10 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | HOST_IP                          | IP address of machine hosting these containers                                                                              |
 | PUID                             | User Id of the host user that containers should run under (for applicable containers)                                       |
 | PGID                             | Group Id of the host user that containers should run under (for applicable containers)                                      |
+| MAILER_HOST                      | SMTP server host                                                                                                            |
+| MAILER_PORT                      | SMTP server port                                                                                                            |
+| MAILER_USERNAME                  | SMTP server username                                                                                                        |
+| MAILER_PASSWORD                  | SMTP server password                                                                                                        |
 | TRAEFIK_TLS_EMAIL                | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
 | TRAEFIK_DASHBOARD_URL            | Subdomain to route to the Traefik dashboard                                                                                 |
 | TRAEFIK_DASHBOARD_USER           | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
@@ -68,6 +71,12 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | WATCHTOWER_NOTIFICATION_PROVIDER | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification provider                                   |
 | WATCHTOWER_NOTIFICATION_URL      | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification URL to get updates on Watchtower actions   |
 | WATCHTOWER_UPDATE_INTERVAL       | Value in seconds to wait between checking containers for updates                                                            |
+| LDAP_ORGANIZATION                | Name of your LDAP organization                                                                                              |
+| LDAP_DOMAIN                      | If your domain is "google.com", just put "google"                                                                           |
+| LDAP_TLD                         | If your domain is "google.com", just put "com"                                                                              |
+| LDAP_ADMIN_PASSWORD              | Password used for initial admin account when creating the LDAP server                                                       |
+| LDAP_CONFIG_PASSWORD             | LDAP Server Configuration Password                                                                                          |
+| LDAP_UI_URL                      | Subdomain to route to user management dashboard                                                                             |
 
 ### File Structure
 

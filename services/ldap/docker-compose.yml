@@ -1,0 +1,54 @@
+version: '3'
+services:
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    hostname: openldap
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: ${LDAP_ORGANIZATION}
+      LDAP_DOMAIN: ${LDAP_DOMAIN}.${LDAP_TLD}
+      LDAP_BASE_DN: ""
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+      LDAP_CONFIG_PASSWORD: ${LDAP_CONFIG_PASSWORD}
+      LDAP_READONLY_USER: "false"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+      LDAP_BACKEND: "mdb"
+      LDAP_TLS: "false"
+      LDAP_TLS_VERIFY_CLIENT: "never"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_SSL_HELPER_PREFIX: "ldap"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ${CONFIG_DIR}/openldap/var_lib_ldap:/var/lib/ldap
+      - ${CONFIG_DIR}/openldap/etc_ldap_slapd.d:/etc/ldap/slapd.d
+    ports:
+      - "389:389"
+      - "636:636"
+
+  openldap-ui:
+    image: wheelybird/ldap-user-manager:v1.5
+    container_name: openldap-ui
+    environment:
+      SERVER_HOSTNAME: ${LDAP_UI_URL}
+      NO_HTTPS: "true"
+      LDAP_URI: "ldap://openldap"
+      LDAP_BASE_DN: "dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
+      LDAP_REQUIRE_STARTTLS: "false"
+      LDAP_ADMINS_GROUP: "admins"
+      LDAP_ADMIN_BIND_DN: "cn=admin,dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
+      LDAP_ADMIN_BIND_PWD: ${LDAP_ADMIN_PASSWORD}
+      LDAP_IGNORE_CERT_ERRORS: "true"
+      SMTP_HOSTNAME: ${MAILER_HOST}
+      SMTP_HOST_PORT: ${MAILER_PORT}
+      SMTP_USERNAME: ${MAILER_USERNAME}
+      SMTP_PASSWORD: ${MAILER_PASSWORD}
+      SMTP_USE_TLS: "true"
+      EMAIL_FROM_ADDRESS: ${MAILER_USERNAME}
+      USERNAME_FORMAT: "{first_name_initial}{last_name}"
+    ports:
+      - "8785:80"
+    depends_on:
+      - openldap
