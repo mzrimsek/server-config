@@ -77,6 +77,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | LDAP_ADMIN_PASSWORD              | Password for admin account                                                                                                  |
 | LDAP_CONFIG_PASSWORD             | LDAP Server Configuration Password                                                                                          |
 | LDAP_UI_URL                      | Subdomain to route to user management dashboard                                                                             |
+| AUTHELIA_URL                     | Subdomain to route to Authelia login page                                                                                   |
 
 ### File Structure
 
@@ -128,3 +129,4 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - For the torrent management services I also configured them locally before exposing them. Link all the services together and set up form authentication first thing to make sure nothing sensitive is unprotected.
 - PUID and PGID must be the user that has control over the media files. I chown'd the whole file tree to make sure that user would have all the permissions it needed, thus giving the containers that do the media file manipulation all the permissions they would need as well.
 - Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
+- Make sure to rename the Authelia config file to "configuration.yml" if copying to the volume

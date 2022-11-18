@@ -204,6 +204,41 @@ services:
       - openldap
     restart: unless-stopped
 
+  # SSO provider
+  authelia:
+    image: authelia/authelia
+    container_name: authelia
+    hostname: authelia
+    volumes:
+      - ${CONFIG_DIR}/authelia:/config
+    expose:
+      - 9092
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.authelia.rule=Host(`${AUTHELIA_URL}`)'
+      - 'traefik.http.routers.authelia.entrypoints=websecure'
+      - 'traefik.http.routers.authelia.tls.certresolver=tlsresolver'
+      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9092/api/verify?rd=https://${AUTHELIA_URL}'
+      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'
+      - 'com.centurylinklabs.watchtower.enable=true'
+    environment:
+      - TZ=${TIMEZONE}
+    depends_on:
+      - openldap
+    restart: unless-stopped
+
+  authelia-redis:
+    image: redis:alpine
+    container_name: authelia-redis
+    volumes:
+      - ${CONFIG_DIR}/authelia/redis:/data
+    expose:
+      - 6379
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+
   ## NOTES MANAGEMENT
 
   # knowledgebase

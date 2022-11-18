@@ -1,0 +1,86 @@
+###############################################################
+#                   Authelia configuration                    #
+###############################################################
+
+jwt_secret: ${AUTHELIA_JWT_SECRET}
+default_redirection_url: ${AUTHELIA_DEFAULT_REDIRECT}
+
+server:
+  host: 0.0.0.0
+  port: 9092
+
+log:
+  level: debug
+
+totp:
+  disable: false
+  issuer: authelia.com
+  algorithm: sha1
+  digits: 6
+  period: 30
+  skew: 1
+  secret_size: 32
+
+webauthn:
+  disable: false
+  display_name: Authelia
+  attestation_conveyance_preference: indirect
+  user_verification: preferred
+  timeout: 60s
+
+authentication_backend:
+  ldap:
+    implementation: custom
+    url: ldap://openldap
+    timeout: 5s
+    start_tls: false
+    tls:
+      server_name: openldap
+      skip_verify: true
+      minimum_version: TLS1.2
+    base_dn: DC=${LDAP_DOMAIN},DC=${LDAP_TLD}
+    additional_users_dn: OU=users
+    users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
+    username_attribute: uid
+    mail_attribute: mail
+    display_name_attribute: displayName
+    additional_groups_dn: OU=groups
+    groups_filter: (&(member=UID={input},OU=users,DC=${LDAP_DOMAIN},DC=${LDAP_TLD})(objectClass=groupOfNames))
+    group_name_attribute: cn
+    user: cn=admin,dc=${LDAP_DOMAIN},dc=${LDAP_TLD}
+    password: ${LDAP_ADMIN_PASSWORD}
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: www.${LDAP_DOMAIN}.${LDAP_TLD} # just an example
+      policy: bypass # options are: bypass, one_factor and two_factor
+
+session:
+  name: authelia_session
+  secret: ${AUTHELIA_SESSION_SECRET}
+  expiration: 3600  # 1 hour
+  inactivity: 300  # 5 minutes
+  domain: ${LDAP_DOMAIN}.${LDAP_TLD}
+
+  redis:
+    host: authelia-redis
+    port: 6379
+
+regulation:
+  max_retries: 3
+  find_time: 120
+  ban_time: 300
+
+storage:
+  encryption_key: ${AUTHELIA_STORAGE_ENCRYPTION_KEY}
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  smtp:
+    username: ${MAILER_USERNAME}
+    password: ${MAILER_PASSWORD}
+    host: ${MAILER_HOST}
+    port: ${MAILER_PORT}
+    sender: ${MAILER_USERNAME}
