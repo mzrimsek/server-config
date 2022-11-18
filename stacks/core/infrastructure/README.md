@@ -21,6 +21,9 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
 - Watchtower - Automated container image updates
+- OpenLDAP - Open source LDAP server for centralized user & group management
+- phpLDAPadmin - Powerful interface to manage LDAP servers
+- Authelia - SSO OAuth provider to centralize authenication to services
 
 ## Setup
 
@@ -95,6 +98,8 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
       /complete
       /pending
   /config (CONFIG_DIR)
+    /authelia
+      /redis
     /calibre
     /calibre-web
     /duplicati
@@ -103,6 +108,10 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
       /data
       /log
       /config
+    /openldap
+      /etc_ldap_slapd.d
+      /ui
+      /var_lib_ldap
     /pihole
       /etc
       /dnsmasq.d
