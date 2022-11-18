@@ -27,28 +27,18 @@ services:
     ports:
       - "389:389"
       - "636:636"
+    restart: unless-stopped
 
   openldap-ui:
-    image: wheelybird/ldap-user-manager:v1.5
-    container_name: openldap-ui
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
     environment:
-      SERVER_HOSTNAME: ${LDAP_UI_URL}
-      NO_HTTPS: "true"
-      LDAP_URI: "ldap://openldap"
-      LDAP_BASE_DN: "dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
-      LDAP_REQUIRE_STARTTLS: "false"
-      LDAP_ADMINS_GROUP: "admins"
-      LDAP_ADMIN_BIND_DN: "cn=admin,dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
-      LDAP_ADMIN_BIND_PWD: ${LDAP_ADMIN_PASSWORD}
-      LDAP_IGNORE_CERT_ERRORS: "true"
-      SMTP_HOSTNAME: ${MAILER_HOST}
-      SMTP_HOST_PORT: ${MAILER_PORT}
-      SMTP_USERNAME: ${MAILER_USERNAME}
-      SMTP_PASSWORD: ${MAILER_PASSWORD}
-      SMTP_USE_TLS: "true"
-      EMAIL_FROM_ADDRESS: ${MAILER_USERNAME}
-      USERNAME_FORMAT: "{first_name_initial}{last_name}"
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    volumes:
+      - ${CONFIG_DIR}/openldap/ui:/var/www/phpldapadmin
     ports:
       - "8785:80"
     depends_on:
       - openldap
+    restart: unless-stopped

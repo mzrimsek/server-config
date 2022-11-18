@@ -74,7 +74,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | LDAP_ORGANIZATION                | Name of your LDAP organization                                                                                              |
 | LDAP_DOMAIN                      | If your domain is "google.com", just put "google"                                                                           |
 | LDAP_TLD                         | If your domain is "google.com", just put "com"                                                                              |
-| LDAP_ADMIN_PASSWORD              | Password used for initial admin account when creating the LDAP server                                                       |
+| LDAP_ADMIN_PASSWORD              | Password for admin account                                                                                                  |
 | LDAP_CONFIG_PASSWORD             | LDAP Server Configuration Password                                                                                          |
 | LDAP_UI_URL                      | Subdomain to route to user management dashboard                                                                             |
 

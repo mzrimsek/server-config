@@ -187,30 +187,19 @@ services:
 
   # ldap web ui
   openldap-ui:
-    image: wheelybird/ldap-user-manager:v1.5
+    image: osixia/phpldapadmin:latest
     container_name: openldap-ui
     environment:
-      SERVER_HOSTNAME: ${LDAP_UI_URL}
-      NO_HTTPS: "true"
-      LDAP_URI: "ldap://openldap"
-      LDAP_BASE_DN: "dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
-      LDAP_REQUIRE_STARTTLS: "false"
-      LDAP_ADMINS_GROUP: "admins"
-      LDAP_ADMIN_BIND_DN: "cn=admin,dc=${LDAP_DOMAIN},dc=${LDAP_TLD}"
-      LDAP_ADMIN_BIND_PWD: ${LDAP_ADMIN_PASSWORD}
-      LDAP_IGNORE_CERT_ERRORS: "true"
-      SMTP_HOSTNAME: ${MAILER_HOST}
-      SMTP_HOST_PORT: ${MAILER_PORT}
-      SMTP_USERNAME: ${MAILER_USERNAME}
-      SMTP_PASSWORD: ${MAILER_PASSWORD}
-      SMTP_USE_TLS: "true"
-      EMAIL_FROM_ADDRESS: ${MAILER_USERNAME}
-      USERNAME_FORMAT: "{first_name_initial}{last_name}"
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    volumes:
+      - ${CONFIG_DIR}/openldap/ui:/var/www/phpldapadmin
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.openldap.rule=Host(`${LDAP_UI_URL}`)"
       - "traefik.http.routers.openldap.entrypoints=websecure"
       - "traefik.http.routers.openldap.tls.certresolver=tlsresolver"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - openldap
     restart: unless-stopped
