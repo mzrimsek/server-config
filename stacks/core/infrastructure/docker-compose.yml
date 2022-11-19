@@ -20,9 +20,9 @@ services:
       - "--entrypoints.websecure.address=:443/tcp"
       - "--providers.docker"
       - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
-      - "--api.insecure" # FIX THIS
+      - "--api"
       - "--log=true"
-      - "--log.level=info"
+      - "--log.level=DEBUG"
       - "--accesslog=true"
       - "--providers.file.directory=/config"
       - "--providers.file.watch=true"
@@ -32,13 +32,11 @@ services:
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
     labels:
-      # Dashboard
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
-      # - traefik.http.routers.traefik.middlewares=authdashboard # FIX THIS
-      # - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER} # FIX THIS
+      - traefik.http.routers.traefik.middlewares=authelia@docker
     restart: unless-stopped
   
   # nordvpn client
@@ -96,6 +94,7 @@ services:
       - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_URL}`)"
       - "traefik.http.routers.pihole.entrypoints=websecure"
       - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.pihole.middlewares=authelia@docker"
       - "traefik.http.services.pihole.loadbalancer.server.port=8080"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
@@ -140,7 +139,7 @@ services:
   # database interface
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
@@ -153,6 +152,8 @@ services:
       - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_URL}`)"
       - "traefik.http.routers.pgadmin.entrypoints=websecure"
       - "traefik.http.routers.pgadmin.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.pgadmin.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # AUTHENTICATION
@@ -199,6 +200,7 @@ services:
       - "traefik.http.routers.openldap.rule=Host(`${LDAP_UI_URL}`)"
       - "traefik.http.routers.openldap.entrypoints=websecure"
       - "traefik.http.routers.openldap.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.openldap.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - openldap
@@ -244,7 +246,7 @@ services:
   # knowledgebase
   trilium:
     container_name: trilium
-    image: zadam/trilium
+    image: zadam/trilium:latest
     environment:
       - TRILIUM_DATA_DIR=/data
     volumes:
@@ -254,6 +256,7 @@ services:
       - "traefik.http.routers.trilium.rule=Host(`${TRILIUM_URL}`)"
       - "traefik.http.routers.trilium.entrypoints=websecure"
       - "traefik.http.routers.trilium.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.trilium.middlewares=authelia@docker"
       - "traefik.http.services.trilium.loadbalancer.server.port=8080"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
@@ -277,6 +280,7 @@ services:
       - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.routers.prowlarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.prowlarr.middlewares=authelia@docker"
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -303,6 +307,7 @@ services:
       - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.routers.sonarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.sonarr.middlewares=authelia@docker"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -330,6 +335,7 @@ services:
       - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.routers.radarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.radarr.middlewares=authelia@docker"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -357,6 +363,7 @@ services:
       - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
       - "traefik.http.routers.lidarr.entrypoints=websecure"
       - "traefik.http.routers.lidarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.lidarr.middlewares=authelia@docker"
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -384,6 +391,7 @@ services:
       - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
       - "traefik.http.routers.readarr.entrypoints=websecure"
       - "traefik.http.routers.readarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.readarr.middlewares=authelia@docker"
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -409,6 +417,7 @@ services:
       - "traefik.http.routers.calibre-reader.rule=Host(`${CALIBRE_READER_URL}`)"
       - "traefik.http.routers.calibre-reader.entrypoints=websecure"
       - "traefik.http.routers.calibre-reader.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.calibre-reader.middlewares=authelia@docker"
       - "traefik.http.services.calibre-reader.loadbalancer.server.port=8081"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -434,6 +443,7 @@ services:
       - "traefik.http.routers.calibre-web.rule=Host(`${CALIBRE_WEB_URL}`)"
       - "traefik.http.routers.calibre-web.entrypoints=websecure"
       - "traefik.http.routers.calibre-web.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.calibre-web.middlewares=authelia@docker"
       - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
@@ -461,6 +471,7 @@ services:
       - "traefik.http.routers.transmission.rule=Host(`${TRANSMISSION_URL}`)"
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.routers.transmission.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.transmission.middlewares=authelia@docker"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: service:nordvpn
