@@ -37,6 +37,8 @@ services:
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.middlewares=authelia@docker
+    depends_on:
+      - authelia
     restart: unless-stopped
   
   # nordvpn client
@@ -213,6 +215,8 @@ services:
     hostname: authelia
     volumes:
       - ${CONFIG_DIR}/authelia:/config
+    ports:
+      - 9092:9092
     expose:
       - 9092
     labels:
@@ -222,6 +226,7 @@ services:
       - "traefik.http.routers.authelia.tls.certresolver=tlsresolver"
       - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9092/api/verify?rd=https://${AUTHELIA_URL}"
       - "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.authelia.forwardauth.tls.insecureSkipVerify=true"
       - "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:

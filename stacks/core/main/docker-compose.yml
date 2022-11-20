@@ -38,13 +38,14 @@ services:
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
     labels:
-      # Dashboard
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
-      # - traefik.http.routers.traefik.middlewares=authdashboard # FIX THIS
-      # - traefik.http.middlewares.authdashboard.basicauth.users=${TRAEFIK_DASHBOARD_USER} # FIX THIS
+      - traefik.http.middlewares.authelia.forwardauth.address=http://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_URL}
+      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardauth.tls.insecureSkipVerify=true
+      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
     restart: unless-stopped
 
   service-dashboard:
@@ -58,6 +59,7 @@ services:
       - "traefik.http.routers.service-dashboard.entrypoints=websecure"
       - "traefik.http.routers.service-dashboard.tls.certresolver=tlsresolver"
       - "traefik.http.services.service-dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.routers.service-dashboard.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
@@ -83,6 +85,7 @@ services:
       - "traefik.http.routers.fireflyiii.entrypoints=websecure"
       - "traefik.http.routers.fireflyiii.tls.certresolver=tlsresolver"
       - "traefik.http.services.fireflyiii.loadbalancer.server.port=8080"
+      - "traefik.http.routers.fireflyiii.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
@@ -131,6 +134,7 @@ services:
       - "traefik.http.routers.vikunja-frontend.rule=Host(`${VIKUNJA_URL}`)"
       - "traefik.http.routers.vikunja-frontend.entrypoints=websecure"
       - "traefik.http.routers.vikunja-frontend.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.vikunja-frontend.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 

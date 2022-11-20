@@ -53,6 +53,8 @@ Goal is to have all the main services I use in one convenient place.
 | WATCHTOWER_NOTIFICATION_PROVIDER | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification provider                                   |
 | WATCHTOWER_NOTIFICATION_URL      | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification URL to get updates on Watchtower actions   |
 | WATCHTOWER_UPDATE_INTERVAL       | Value in seconds to wait between checking containers for updates                                                            |
+| AUTHELIA_HOST                    | Internal network routing to authelia container (e.g. `authelia:9092`)                                                       |
+| AUTHELIA_URL                     | Subdomain to route to Authelia login page                                                                                   |
 
 ### File Structure
 
