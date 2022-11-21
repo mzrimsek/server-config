@@ -86,6 +86,8 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 
 The Authelia config file is templated with variables to replace. Some of them are duplicates of the above.
 
+More access control rules can be found [here](https://www.authelia.com/configuration/security/access-control/#access-control-list).
+
 | Variable                        | Description                                       |
 | ------------------------------- | ------------------------------------------------- |
 | AUTHELIA_JWT_SECRET             | Secret used for JWT generation                    |
