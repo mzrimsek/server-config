@@ -82,6 +82,27 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | LDAP_UI_URL                      | Subdomain to route to user management dashboard                                                                             |
 | AUTHELIA_URL                     | Subdomain to route to Authelia login page                                                                                   |
 
+#### Authelia
+
+The Authelia config file is templated with variables to replace. Some of them are duplicates of the above.
+
+| Variable                        | Description                                       |
+| ------------------------------- | ------------------------------------------------- |
+| AUTHELIA_JWT_SECRET             | Secret used for JWT generation                    |
+| AUTHELIA_SESSION_SECRET         | Secret used for session management                |
+| AUTHELIA_DEFAULT_REDIRECT       | Default redirect route after logging in           |
+| AUTHELIA_STORAGE_ENCRYPTION_KEY | Secret used to encrypt infomation in the database |
+| LDAP_DOMAIN                     | If your domain is "google.com", just put "google" |
+| LDAP_TLD                        | If your domain is "google.com", just put "com"    |
+| LDAP_ADMIN_PASSWORD             | Password for admin account                        |
+| DATABASE_HOST                   | Database connection host machine                  |
+| DATABASE_USER                   | Database connection username                      |
+| DATABASE_PASSWORD               | Database connection password                      |
+| MAILER_HOST                     | SMTP server host                                  |
+| MAILER_PORT                     | SMTP server port                                  |
+| MAILER_USERNAME                 | SMTP server username                              |
+| MAILER_PASSWORD                 | SMTP server password                              |
+
 ### File Structure
 
 - MEDIA_DIR subdirectories need to be manually created
