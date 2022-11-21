@@ -74,8 +74,13 @@ regulation:
 
 storage:
   encryption_key: ${AUTHELIA_STORAGE_ENCRYPTION_KEY}
-  local:
-    path: /config/db.sqlite3
+  postgres:
+    host: ${DATABASE_HOST}
+    port: 5432
+    database: authelia
+    schema: public
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
 
 notifier:
   smtp:
