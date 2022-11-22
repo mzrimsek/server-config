@@ -23,12 +23,12 @@ totp:
   skew: 1
   secret_size: 32
 
-webauthn:
-  disable: false
-  display_name: Authelia
-  attestation_conveyance_preference: indirect
-  user_verification: preferred
-  timeout: 60s
+# webauthn:
+#   disable: false
+#   display_name: Authelia
+#   attestation_conveyance_preference: indirect
+#   user_verification: preferred
+#   timeout: 60s
 
 authentication_backend:
   ldap:
