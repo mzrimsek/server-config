@@ -8,7 +8,6 @@ services:
       - NET_ADMIN
     volumes:
       - ${CONFIG_DIR}/wireguard/data:/data
-      - ${CONFIG_DIR}/wireguard:/wireguard
       - ${CONFIG_DIR}/wireguard/config.yaml:/config.yaml
     environment:
       - WG_ADMIN_USERNAME=admin
