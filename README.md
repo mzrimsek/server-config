@@ -31,6 +31,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Jellyfin](./services/jellyfin) - Media organization and viewing
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
+- [OpenLDAP](./services/ldap) - User credential backend
 - [Wireguard](./services/vpn) - VPN tunnel
 - Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
 - [Games](./games)
