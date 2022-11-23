@@ -1,0 +1,10 @@
+auth:
+  oidc:
+    name: "Authelia"
+    issuer: "https://${AUTHELIA_URL}"
+    clientID: "wireguard"
+    clientSecret: "${WIREGUARD_CLIENT_SECRET}"
+    scopes:
+      - openid
+      - email
+    redirectURL: "https://${WIREGUARD_URL}/callback"

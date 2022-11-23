@@ -79,6 +79,13 @@
           "newTab": true
         },
         {
+          "name": "VPN Device Management",
+          "displayURL": "vpn.zrimsek.com",
+          "url": "https://vpn.zrimsek.com",
+          "icon": "lock",
+          "newTab": true
+        },
+        {
           "name": "Downloads",
           "displayURL": "download.zrimsek.com",
           "url": "https://download.zrimsek.com",

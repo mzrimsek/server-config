@@ -24,6 +24,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - OpenLDAP - Open source LDAP server for centralized user & group management
 - phpLDAPadmin - Powerful interface to manage LDAP servers
 - Authelia - SSO OAuth provider to centralize authenication to services
+- Wireguard - Easily configurable VPN tunnel access
 
 ## Setup
 
@@ -81,6 +82,12 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | LDAP_CONFIG_PASSWORD             | LDAP Server Configuration Password                                                                                          |
 | LDAP_UI_URL                      | Subdomain to route to user management dashboard                                                                             |
 | AUTHELIA_URL                     | Subdomain to route to Authelia login page                                                                                   |
+| WIREGUARD_ADMIN_PASSWORD         | Admin user password                                                                                                         |
+| WIREGUARD_URL                    | Subdomain to route to the Wireguard login page                                                                              |
+| WIREGUARD_PRIVATE_KEY            | Generate with `wg generate`. If you change it every device has to be reconfigured                                           |
+| DATABASE_HOST                    | Database connection host machine                                                                                            |
+| DATABASE_USER                    | Database connection username                                                                                                |
+| DATABASE_PASSWORD                | Database connection password                                                                                                |
 
 #### Authelia
 
@@ -109,6 +116,18 @@ More OpenID Connect client configuration options can be found [here](https://www
 | MAILER_USERNAME                 | SMTP server username                                                                                                                                     |
 | MAILER_PASSWORD                 | SMTP server password                                                                                                                                     |
 
+#### Wireguard
+
+The Wireguard configuration file provided sets up an OIDC login provider - here it's being used to point towards Authelia to use as an identity provider
+
+| Variable                | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| AUTHELIA_URL            | Subdomain to route to Authelia login page         |
+| WIREGUARD_URL           | Subdomain to route to Wireguard login page        |
+| WIREGUARD_CLIENT_SECRET | Configured OIDC                                   |
+| LDAP_DOMAIN             | If your domain is "google.com", just put "google" |
+| LDAP_TLD                | If your domain is "google.com", just put "com"    |
+
 ### File Structure
 
 - MEDIA_DIR subdirectories need to be manually created
@@ -127,6 +146,7 @@ More OpenID Connect client configuration options can be found [here](https://www
   /config (CONFIG_DIR)
     /authelia
       /redis
+      /configuration.yaml
     /calibre
     /calibre-web
     /duplicati
@@ -155,6 +175,9 @@ More OpenID Connect client configuration options can be found [here](https://www
       /certs
     /transmission
     /trilium
+    /wireguard
+      /config.yaml
+      /data
 ```
 
 ### Notes
@@ -162,7 +185,8 @@ More OpenID Connect client configuration options can be found [here](https://www
 - Subdomains are assumed to be public. Traefik TLS for local subdomains is WORK IN PROGRESS
 - VPN container also supports other VPN providers if they are more preferable. See [wiki](https://github.com/qdm12/gluetun/wiki) for more info
 - When setting up the services running through the VPN, for container-to-container communication treats them as all running on the same network. All services should be available to each other on localhost with their respective ports.
-- For the torrent management services I also configured them locally before exposing them. Link all the services together and set up form authentication first thing to make sure nothing sensitive is unprotected.
+- For the torrent management services I also configured them locally before exposing them. Link all the services together and set up form authentication first thing to make sure nothing sensitive is unprotected. _I have since removed the auth in the apps in favor of Authelia middleware_
 - PUID and PGID must be the user that has control over the media files. I chown'd the whole file tree to make sure that user would have all the permissions it needed, thus giving the containers that do the media file manipulation all the permissions they would need as well.
 - Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
 - Make sure to rename the Authelia config file to "configuration.yml" if copying to the volume
+- Make sure to rename the Wireguard config file to "config.yaml" if copying to the volume. If you need the config file, it needs to be in the directory that will be mounted BEFORE you run the container, otherwise it will create and mount a directory with the filename. [It's stupid](https://stackoverflow.com/a/42260979).

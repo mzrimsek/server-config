@@ -66,6 +66,35 @@ services:
       - SERVER_REGIONS=United States
     restart: unless-stopped
 
+  # vpn tunnel client
+  wireguard:
+    image: place1/wg-access-server
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ${CONFIG_DIR}/wireguard/data:/data
+      - ${CONFIG_DIR}/wireguard/config.yaml:/config.yaml
+    environment:
+      - WG_ADMIN_USERNAME=admin
+      - WG_ADMIN_PASSWORD=${WIREGUARD_ADMIN_PASSWORD}
+      - WG_WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WG_STORAGE=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:5432/wireguard?sslmode=disable
+      - WG_DNS_UPSTREAM=8.8.8.8
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wireguard.rule=Host(`${WIREGUARD_URL}`)"
+      - "traefik.http.routers.wireguard.entrypoints=websecure"
+      - "traefik.http.routers.wireguard.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.wireguard.middlewares=authelia@docker"
+      - "traefik.http.services.wireguard.loadbalancer.server.port=8000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - "51820:51820/udp"
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    restart: unless-stopped
+
   # dns and network adblock
   pihole:
     container_name: pihole
