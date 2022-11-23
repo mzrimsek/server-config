@@ -26,7 +26,7 @@ services:
       - "--entrypoints.websecure.address=:443/tcp"
       - "--providers.docker"
       - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
-      - "--api.insecure" # FIX THIS
+      - "--api.insecure"
       - "--log=true"
       - "--log.level=info"
       - "--accesslog=true"
