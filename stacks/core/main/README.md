@@ -8,7 +8,6 @@ Goal is to have all the main services I use in one convenient place.
 - FireflyIII - Budgeting
 - Vikunja - Tasks and todos
 - Jellyfin - Media server
-- Dashboard - Configurable dashboard to easily access services
 - Duplicati - Remote file backup
 - Watchtower - Automated container image updates
 
@@ -40,7 +39,6 @@ Goal is to have all the main services I use in one convenient place.
 | TRAEFIK_TLS_EMAIL                | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
 | TRAEFIK_DASHBOARD_URL            | Subdomain to route to the Traefik dashboard                                                                                 |
 | TRAEFIK_DASHBOARD_USER           | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
-| SERVICE_DASHBOARD_URL            | Subdomain to route to service shortcut dashboard                                                                            |
 | FIREFLY_APP_KEY                  | Randomly generated key used by Firefly for encryption                                                                       |
 | FIREFLY_URL                      | Subdomain to route to Firefly budgeting web interface                                                                       |
 | FIREFLY_COMMAND_LINE_TOKEN       | Token generated within Firefly to enable a daily CRON job for recurring transactions and auto-budgeting                     |

@@ -49,21 +49,6 @@ services:
       - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
     restart: unless-stopped
 
-  service-dashboard:
-    image: phntxx/dashboard:latest
-    container_name: service-dashboard
-    volumes:
-      - ${CONFIG_DIR}/dashboard:/app/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.service-dashboard.rule=Host(`${SERVICE_DASHBOARD_URL}`)"
-      - "traefik.http.routers.service-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.service-dashboard.tls.certresolver=tlsresolver"
-      - "traefik.http.services.service-dashboard.loadbalancer.server.port=8080"
-      - "traefik.http.routers.service-dashboard.middlewares=authelia@docker"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
   # budgeting
   fireflyiii:
     container_name: fireflyiii
