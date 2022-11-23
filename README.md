@@ -31,6 +31,8 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Jellyfin](./services/jellyfin) - Media organization and viewing
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
+- [Wireguard](./services/vpn) - VPN tunnel
+- Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
 - [Games](./games)
   - Factorio
   - Minecraft
