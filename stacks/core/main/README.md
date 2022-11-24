@@ -61,7 +61,6 @@ Goal is to have all the main services I use in one convenient place.
 ```
 /data
   /config (CONFIG_DIR)
-    /dashboard
     /duplicati
     /fireflyiii
     /jellyfin
