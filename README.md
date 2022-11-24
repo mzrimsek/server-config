@@ -21,7 +21,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Mosquitto
 - [Monitoring](./services/monitor) - Grafana-bases System Resource Monitoring
 - [Home Assistant](./services/homeassistant) - Home Automation Platform
-- [Dashboard](./services/dashboard) - Simple and Customizable Dashboard for your Services
+- [Homepage](./services/homepage) - Simple and Customizable Dashboard for your Services
 - [Vikunja](./services/vikunja) - Task Management Platform
 - [Trilium](./services/trilium) - OneNote-like Wiki and Notes Platform
 - [Firefly III](./services/fireflyiii) - Budgeting and Transaction Tracking
