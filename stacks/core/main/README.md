@@ -80,4 +80,4 @@ Goal is to have all the main services I use in one convenient place.
 
 #### Removed services
 
-- (11-24-22) Service dashboard was migrated out of this stack to be run in a stack - the new service I am using has tighter integration with services that are more easily accessible from another device on the network.
+- (11-24-22) Service dashboard was migrated out of this stack to be run in its own stack - the new service I am using has tighter integration with services that are more easily accessible from the device running the infrastructure stack, but it does not belong in that stack. [Found here](../../../services/homepage/)
