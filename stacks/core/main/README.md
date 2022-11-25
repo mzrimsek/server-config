@@ -77,3 +77,7 @@ Goal is to have all the main services I use in one convenient place.
 
 - The stack provided mounts the media from a remote share. This could easily be modified to directly mount a directory by changing the media volume mount on the Jellyfin container in the docker compose file.
 - Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
+
+#### Removed services
+
+- (11-24-22) Service dashboard was migrated out of this stack to be run in a stack - the new service I am using has tighter integration with services that are more easily accessible from another device on the network.
