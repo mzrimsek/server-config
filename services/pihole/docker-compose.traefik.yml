@@ -25,6 +25,19 @@ services:
     volumes:
       - ${CONFIG_DIR}/pihole/etc:/etc/pihole
       - ${CONFIG_DIR}/pihole/dnsmasq.d:/etc/dnsmasq.d
+    networks:
+      - public
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_URL}`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.pihole.middlewares=authelia@docker"
+      - "traefik.http.services.pihole.loadbalancer.server.port=8080"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
