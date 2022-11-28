@@ -3,14 +3,15 @@ version: "3"
 services:
   server:
     image: lloesche/valheim-server
-    container_name: valheim
+    container_name: valheim${INSTANCE_MODIFIER}
     volumes:
-      - ${CONFIG_DIR}/valheim/config:/config
-      - ${CONFIG_DIR}/valheim/data:/opt/valheim
+      - ${CONFIG_DIR}/valheim${INSTANCE_MODIFIER}/config:/config
+      - ${CONFIG_DIR}/valheim${INSTANCE_MODIFIER}/data:/opt/valheim
     ports:
       - 2456-2457:2456-2457/udp
     environment:
       - SERVER_NAME=${SERVER_NAME}
       - SERVER_PASS=${SERVER_PASSWORD}
       - TZ=${TIMEZONE}
+      - STEAMCMD_ARGS=${STEAMCMD_ARGS}
     restart: always
