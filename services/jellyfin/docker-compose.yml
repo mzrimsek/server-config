@@ -5,9 +5,9 @@ services:
     image: jellyfin/jellyfin
     container_name: jellyfin
     volumes:
-      - /opt/jellyfin/config:/config
-      - /opt/jellyfin/cache:/cache
-      - media:/media
+      - ${CONFIG_DIR}/jellyfin/config:/config
+      - ${CONFIG_DIR}/jellyfin/cache:/cache
+      - media:/media # just mount a volume here if media is local
     environment:
       - JELLYFIN_PublishedServerUrl=${APP_URL}
     network_mode: "host"
