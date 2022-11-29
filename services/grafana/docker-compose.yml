@@ -15,7 +15,6 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-clock-panel
     ports:
       - 3000:3000
     labels:
