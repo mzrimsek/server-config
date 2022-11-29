@@ -1,0 +1,34 @@
+version: "3"
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
+
+volumes:
+  grafana_data: {}
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ${CONFIG_DIR}/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ${CONFIG_DIR}/grafana/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+
+      # grafana
+      - "traefik.http.routers.grafana.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=tlsresolver"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped

@@ -2,14 +2,13 @@ version: "3"
 
 volumes:
   prometheus_data: {}
-  grafana_data: {}
 
 services:
   prometheus:
-    image: prom/prometheus:v2.26.0
-    container_name: docker_metrics
+    image: prom/prometheus
+    container_name: prometheus
     volumes:
-      - /opt/monitor/prometheus:/etc/prometheus
+      - ${CONFIG_DIR}/prometheus:/etc/prometheus
       - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -20,10 +19,15 @@ services:
       - "--web.enable-lifecycle"
     expose:
       - 9090
+    ports:
+      - 9090:9090
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
+  # system resource collection
   nodeexporter:
-    image: prom/node-exporter:v1.1.2
+    image: prom/node-exporter
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -36,10 +40,13 @@ services:
       - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"
     expose:
       - 9100
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
+  # container resource collection
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.39.0
+    image: gcr.io/cadvisor/cadvisor
     container_name: cadvisor
     volumes:
       - /:/rootfs:ro
@@ -49,19 +56,6 @@ services:
       - /cgroup:/cgroup:ro
     expose:
       - 8080
-    restart: unless-stopped
-
-  grafana:
-    image: grafana/grafana:7.5.2
-    container_name: docker_metrics_graphs
-    ports:
-      - 8020:3000
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - /opt/monitor/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - /opt/monitor/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-    environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - GF_USERS_ALLOW_SIGN_UP=false
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped

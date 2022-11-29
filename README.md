@@ -48,7 +48,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 These are more fully designed solutions rather than a service with a container or two.
 
 - [Media](./stacks/media) - An automated media aquisition, organization, and consumption solution
-- [Networking](./stacks/networking) - A stack of services that provide network utilities like adblock, VPNs, and reverse proxying
+- [System Monitoring](./stacks/system-monitoring) - Exposes a Prometheus service pulling host machine and container stats
 
 Core stacks that reflect my main service setups
 

@@ -1,6 +1,6 @@
 # Media Stack
 
-A fully functioning media acquisition stack.
+A fully functioning media acquisition stack. For any extra...necessary security...I'd recommend getting a VPN client. [See example here](../core/infrastructure)
 
 ## Services
 
