@@ -20,13 +20,26 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=https://${GRAFANA_URL}
+      # optional oauth configuration
+      - GF_AUTH_GENERIC_OAUTH_ENABLED=true
+      - GF_AUTH_GENERIC_OAUTH_NAME=Authelia
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=grafana
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=${AUTHELIA_CLIENT_SECRET}
+      - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email groups
+      - GF_AUTH_GENERIC_OAUTH_EMPTY_SCOPES=false
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=${AUTHELIA_URL}/api/oidc/authorization
+      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=${AUTHELIA_URL}/api/oidc/token
+      - GF_AUTH_GENERIC_OAUTH_API_URL=${AUTHELIA_URL}/api/oidc/userinfo
+      - GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH=preferred_username
+      - GF_AUTH_GENERIC_OAUTH_GROUPS_ATTRIBUTE_PATH=groups
+      - GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH=name
+      - GF_AUTH_GENERIC_OAUTH_USE_PKCE=true
     networks:
       - public
     labels:
       - "traefik.enable=true"
-
-      # grafana
-      - "traefik.http.routers.grafana.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_URL}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=tlsresolver"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
