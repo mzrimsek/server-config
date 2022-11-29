@@ -30,6 +30,8 @@ services:
       - "--log=true"
       - "--log.level=info"
       - "--accesslog=true"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.addrouterslabels=true"
       - "--providers.file.directory=/config"
       - "--providers.file.watch=true"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
@@ -37,6 +39,7 @@ services:
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
+      
     labels:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
