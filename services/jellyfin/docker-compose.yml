@@ -10,7 +10,9 @@ services:
       - media:/media # just mount a volume here if media is local
     environment:
       - JELLYFIN_PublishedServerUrl=${APP_URL}
-    network_mode: "host"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    network_mode: "host" # port 8096
     restart: unless-stopped
 
 volumes:
