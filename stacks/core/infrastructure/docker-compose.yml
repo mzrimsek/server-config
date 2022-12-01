@@ -38,6 +38,7 @@ services:
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.middlewares=authelia@docker
+      - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=2000000 # raise max body size to 2MB
     depends_on:
       - authelia
     restart: unless-stopped

@@ -29,13 +29,13 @@ services:
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
-      
     labels:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=tlsresolver
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.middlewares=authelia@docker
+      - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=2000000 # raise max body size to 2MB
       - traefik.http.middlewares.authelia.forwardauth.address=http://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_URL}
       - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
       - traefik.http.middlewares.authelia.forwardauth.tls.insecureSkipVerify=true
