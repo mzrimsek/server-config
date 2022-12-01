@@ -7,7 +7,6 @@ Goal is to have all the main services I use in one convenient place.
 - Traefik - Container-first Reverse Proxy
 - FireflyIII - Budgeting
 - Vikunja - Tasks and todos
-- Jellyfin - Media server
 - Duplicati - Remote file backup
 - Watchtower - Automated container image updates
 
@@ -21,10 +20,6 @@ Goal is to have all the main services I use in one convenient place.
 
 | Variable                         | Description                                                                                                                 |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| TARGET_SHARE                     | Remote media share name                                                                                                     |
-| SHARE_HOSTNAME                   | Remote media share hosting machine hostname                                                                                 |
-| SHARE_USER                       | Remote media share accessing user username                                                                                  |
-| SHARE_PASS                       | Remote media share accessing user password                                                                                  |
 | CONFIG_DIR                       | Root directory where service configuration files will live                                                                  |
 | TIMEZONE                         | Desired [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for containers (for applicable containers) |
 | PUID                             | User Id of the host user that containers should run under (for applicable containers)                                       |
@@ -44,7 +39,6 @@ Goal is to have all the main services I use in one convenient place.
 | FIREFLY_COMMAND_LINE_TOKEN       | Token generated within Firefly to enable a daily CRON job for recurring transactions and auto-budgeting                     |
 | VIKUNJA_JWT_SECRET               | Randomly generated key used by Vikunja for encryption                                                                       |
 | VIKUNJA_URL                      | Subdomain to route to Vikunja tasks web interface                                                                           |
-| JELLYFIN_URL                     | Subdomain to route to Jellyfin media server web interface                                                                   |
 | APP_THEME                        | [Addon themes](https://theme-park.dev/) for the media aquisition services (`organizr` is a great dark theme)                |
 | BACKUP_ROOT1                     | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
 | BACKUP_ROOT2                     | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
@@ -63,9 +57,6 @@ Goal is to have all the main services I use in one convenient place.
   /config (CONFIG_DIR)
     /duplicati
     /fireflyiii
-    /jellyfin
-      /config
-      /cache
     /traefik
       /providers
       /certs
@@ -81,3 +72,4 @@ Goal is to have all the main services I use in one convenient place.
 #### Removed services
 
 - (11-24-22) Service dashboard was migrated out of this stack to be run in its own stack - the new service I am using has tighter integration with services that are more easily accessible from the device running the infrastructure stack, but it does not belong in that stack. [Found here](../../../services/homepage/)
+- (12-1-22) Jellyfin migrated out of stack to be run on its own to run next to the media file it serves rather than fetching them over the network before serving them. [Found here](../../../services/jellyfin/)

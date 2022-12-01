@@ -1,14 +1,5 @@
 version: "3"
 
-volumes:
-  remote_media:
-    name: remote_media
-    driver: local
-    driver_opts:
-      type: cifs
-      device: ${TARGET_SHARE}
-      o: addr=${SHARE_HOSTNAME},username=${SHARE_USER},password=${SHARE_PASS},file_mode=0777,dir_mode=0777
-
 services:
   # reverse proxy
   traefik:
@@ -124,21 +115,6 @@ services:
       - "traefik.http.routers.vikunja-frontend.tls.certresolver=tlsresolver"
       - "traefik.http.routers.vikunja-frontend.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
-  # media player
-  jellyfin:
-    image: jellyfin/jellyfin
-    container_name: jellyfin
-    volumes:
-      - ${CONFIG_DIR}/jellyfin/config:/config
-      - ${CONFIG_DIR}/jellyfin/cache:/cache
-      - remote_media:/media # optionally mount directory instead of using mounted share
-    environment:
-      - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-    network_mode: "host" # port 8096
     restart: unless-stopped
 
   # data backup
