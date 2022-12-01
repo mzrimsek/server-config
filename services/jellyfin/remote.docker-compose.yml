@@ -7,10 +7,19 @@ services:
     volumes:
       - ${CONFIG_DIR}/jellyfin/config:/config
       - ${CONFIG_DIR}/jellyfin/cache:/cache
-      - ${MEDIA_DIR}:/media
+      - media:/media
     environment:
       - JELLYFIN_PublishedServerUrl=${APP_URL}
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8096
     restart: unless-stopped
+
+volumes:
+  media:
+    name: remote_media
+    driver: local
+    driver_opts:
+      type: cifs
+      device: ${TARGET_SHARE}
+      o: addr=${SHARE_HOSTNAME},username=${SHARE_USER},password=${SHARE_PASS},file_mode=0777,dir_mode=0777
