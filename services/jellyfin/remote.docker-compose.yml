@@ -13,6 +13,9 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8096
+    devices: # pass iGPU for transcoding
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
     restart: unless-stopped
 
 volumes:
