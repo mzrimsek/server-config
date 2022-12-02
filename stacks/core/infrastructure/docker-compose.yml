@@ -286,6 +286,8 @@ services:
     image: zadam/trilium:latest
     environment:
       - TRILIUM_DATA_DIR=/data
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
     volumes:
       - ${CONFIG_DIR}/trilium:/data
     labels:
