@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+    speedtest:
+        container_name: speedtest
+        image: henrywhitaker3/speedtest-tracker
+        ports:
+            - 8765:80
+        networks:
+          - public
+        volumes:
+            - ${CONFIG_DIR}/speedtest:/config
+        environment:
+            - TZ=${TIMEZONE}
+            - OOKLA_EULA_GDPR=true
+        logging:
+            driver: "json-file"
+            options:
+                max-file: "10"
+                max-size: "200k"
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.speedtest.rule=Host(`${SPEEDTEST_URL}`)"
+          - "traefik.http.routers.speedtest.entrypoints=websecure"
+          - "traefik.http.routers.speedtest.tls.certresolver=tlsresolver"
+          - "traefik.http.routers.speedtest.middlewares=authelia@docker"
+          - "com.centurylinklabs.watchtower.enable=true"
+        restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

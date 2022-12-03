@@ -19,7 +19,6 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [MQTT](./services/mqtt) - MQTT Servers for Cross-Server Communication
   - RabbitMQ
   - Mosquitto
-- [Monitoring](./services/monitor) - Grafana-bases System Resource Monitoring
 - [Home Assistant](./services/homeassistant) - Home Automation Platform
 - [Homepage](./services/homepage) - Simple and Customizable Dashboard for your Services
 - [Vikunja](./services/vikunja) - Task Management Platform
@@ -34,6 +33,8 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [OpenLDAP](./services/ldap) - User credential backend
 - [Wireguard](./services/vpn) - VPN tunnel
 - Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
+- [Grafana](./services/grafana/) - Data visualization
+- [Speedtest Tracker](./services/speedtest/) - Continuous Network Speedtests
 - [Games](./games)
   - Factorio
   - Minecraft
