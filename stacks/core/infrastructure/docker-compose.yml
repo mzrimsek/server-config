@@ -439,57 +439,6 @@ services:
       - transmission
     restart: unless-stopped
 
-  # calibre library desktop interface
-  calibre:
-    image: lscr.io/linuxserver/calibre:latest
-    container_name: calibre
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${CONFIG_DIR}/calibre:/config
-      - ${MEDIA_DIR}:/data/media
-    network_mode: service:nordvpn
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.calibre-reader.rule=Host(`${CALIBRE_READER_URL}`)"
-      - "traefik.http.routers.calibre-reader.entrypoints=websecure"
-      - "traefik.http.routers.calibre-reader.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.calibre-reader.middlewares=authelia@docker"
-      - "traefik.http.services.calibre-reader.loadbalancer.server.port=8081"
-      - "com.centurylinklabs.watchtower.enable=true"
-    depends_on:
-      - nordvpn
-    restart: unless-stopped
-
-  # calibre library web interface
-  calibre-web:
-    image: ghcr.io/linuxserver/calibre-web
-    container_name: calibre-web
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      - DOCKER_MODS=ghcr.io/gilbn/theme.park:calibre-web
-      - TP_THEME=${APP_THEME}
-    volumes:
-      - ${CONFIG_DIR}/calibre-web:/config
-      - ${MEDIA_DIR}/books:/books
-    network_mode: service:nordvpn
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.calibre-web.rule=Host(`${CALIBRE_WEB_URL}`)"
-      - "traefik.http.routers.calibre-web.entrypoints=websecure"
-      - "traefik.http.routers.calibre-web.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.calibre-web.middlewares=authelia@docker"
-      - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-    depends_on:
-      - nordvpn
-      - calibre
-
   ## GENERAL CLIENTS
   
   # download client

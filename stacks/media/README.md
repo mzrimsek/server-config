@@ -11,8 +11,6 @@ A fully functioning media acquisition stack. For any extra...necessary security.
 - Radarr - Movie Management
 - Lidarr - Music Management
 - Readarr - Book Management
-- Calibre - Ebook and Audiobook Library mangement and Ereader
-- Calibre-web - Calibre web interface for downloading Ebooks and sharing to Kindle
 
 ## Setup
 
@@ -61,8 +59,6 @@ A fully functioning media acquisition stack. For any extra...necessary security.
     /radarr
     /lidarr
     /readarr
-    /calibre
-    /calibre-web
 ```
 
 ## Configuration

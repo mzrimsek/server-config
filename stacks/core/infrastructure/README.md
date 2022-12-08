@@ -14,9 +14,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Sonarr - TV torrent management
 - Radarr - Movie torrent management
 - Lidarr - Music torrent management
-- _Readarr - Ebook and Audiobook torrent management (WORK IN PROGRESS)_
-- _Calibre - Ebook and Audiobook Library mangement and Ereader (WORK IN PROGRESS)_
-- _Calibre-web - Calibre web interface for downloading Ebooks and sharing to Kindle (WORK IN PROGRESS)_
+- Readarr - Ebook and Audiobook torrent management
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
@@ -65,8 +63,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | RADARR_URL                       | Subdomain to route to movie torrent management interface                                                                    |
 | LIDARR_URL                       | Subdomain to route to music torrent management interface                                                                    |
 | READARR_URL                      | Subdomain to route to book and audiobook torrent management interface                                                       |
-| CALIBRE_READER_URL               | Subdomain to route to Calibre web Ereader                                                                                   |
-| CALIBRE_WEB_URL                  | Subdomain to route to Calibre web management interface                                                                      |
 | TRANSMISSION_USERNAME            | Transmission client admin user username                                                                                     |
 | TRANSMISSION_PASSWORD            | Transmission client admin user password                                                                                     |
 | TRANSMISSION_URL                 | Subdomain to route to download client web interface                                                                         |
@@ -147,8 +143,6 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
     /authelia
       /redis
       /configuration.yaml
-    /calibre
-    /calibre-web
     /duplicati
     /lidarr
     /mosquitto
