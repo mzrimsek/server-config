@@ -15,6 +15,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Radarr - Movie torrent management
 - Lidarr - Music torrent management
 - Readarr - Ebook and Audiobook torrent management
+- Bazarr - Subtitle Management
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
@@ -84,6 +85,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | DATABASE_HOST                    | Database connection host machine                                                                                            |
 | DATABASE_USER                    | Database connection username                                                                                                |
 | DATABASE_PASSWORD                | Database connection password                                                                                                |
+| BAZARR_URL                       | Subdomain to route to subtitle management interface                                                                         |
 
 #### Authelia
 
@@ -143,6 +145,7 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
     /authelia
       /redis
       /configuration.yaml
+    /bazarr
     /duplicati
     /lidarr
     /mosquitto
@@ -184,3 +187,4 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
 - Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
 - Make sure to rename the Authelia config file to "configuration.yml" if copying to the volume
 - Make sure to rename the Wireguard config file to "config.yaml" if copying to the volume. If you need the config file, it needs to be in the directory that will be mounted BEFORE you run the container, otherwise it will create and mount a directory with the filename. [It's stupid](https://stackoverflow.com/a/42260979).
+- Bazarr doesn't really need to live in the VPN network but it does need direct access to the Sonarr and Radarr services, so adding it to the VPN services seems like the easiest way to accomplish that

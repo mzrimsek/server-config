@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  # tv, movies, music
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - ${CONFIG_DIR}/jellyfin/config:/config
+      - ${CONFIG_DIR}/jellyfin/cache:/cache
+      - ${MEDIA_DIR}:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    network_mode: "host" # port 8096
+    devices: # pass iGPU for transcoding
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+    restart: unless-stopped
+
+  # books
+  kavita:
+    image: kizaing/kavita:latest
+    container_name: kavita
+    volumes:
+      - ${CONFIG_DIR}/kavita:/kavita/config
+      - ${MEDIA_DIR}:/media
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kavita.rule=Host(`${KAVITA_URL}`)"
+      - "traefik.http.routers.kavita.entrypoints=websecure"
+      - "traefik.http.routers.kavita.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.kavita.middlewares=authelia@docker"
+      - "traefik.http.services.kavita.loadbalancer.server.port=5000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

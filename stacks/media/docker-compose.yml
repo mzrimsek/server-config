@@ -14,6 +14,16 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
+  # ebook reader
+  kavita:
+    image: kizaing/kavita:latest
+    volumes:
+      - ${CONFIG_DIR}/kavita:/kavita/config
+      - ${MEDIA_DIR}:/media
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+
   # download client
   transmission:
     image: lscr.io/linuxserver/transmission
@@ -110,4 +120,19 @@ services:
       - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 10204:8787
+    restart: unless-stopped
+
+  # subtitle management
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/bazarr:/config
+      - ${MEDIA_DIR}:/media
+    ports:
+      - 6767:6767
     restart: unless-stopped
