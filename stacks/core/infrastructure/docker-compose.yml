@@ -449,7 +449,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/bazarr:/config
-      - ${MEDIA_DIR}:/media
+      - ${MEDIA_DIR}:/data
     network_mode: service:nordvpn
     labels:
       - "traefik.enable=true"
