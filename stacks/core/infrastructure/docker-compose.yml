@@ -62,6 +62,7 @@ services:
       - 51413:51413 # transmission
       - 51413:51413/udp # transmission
       - 6767:6767 # bazarr
+      - 8090:8090 # mylar3
     environment:
       - VPN_SERVICE_PROVIDER=nordvpn
       - OPENVPN_USER=${NORDVPN_USER}
@@ -440,6 +441,34 @@ services:
       - transmission
     restart: unless-stopped
 
+  # comic management
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:mylar3
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/mylar3:/config
+      - ${MEDIA_DIR}/comics:/comics
+      - ${DOWNLOADS_DIR}:/downloads
+    network_mode: service:nordvpn
+    labels:
+      - "traefik.http.routers.mylar3.rule=Host(`${MYLAR3_URL}`)"
+      - "traefik.http.routers.mylar3.entrypoints=websecure"
+      - "traefik.http.routers.mylar3.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.mylar3.middlewares=authelia@docker"
+      - "traefik.http.services.mylar3.loadbalancer.server.port=8090"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - nordvpn
+      - transmission
+    restart: unless-stopped
+
+  # subtitle management
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
@@ -447,9 +476,11 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:bazarr
+      - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/bazarr:/config
-      - ${MEDIA_DIR}:/media
+      - ${MEDIA_DIR}:/data
     network_mode: service:nordvpn
     labels:
       - "traefik.enable=true"

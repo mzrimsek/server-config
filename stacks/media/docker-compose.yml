@@ -132,7 +132,23 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/bazarr:/config
-      - ${MEDIA_DIR}:/media
+      - ${MEDIA_DIR}:/data
     ports:
       - 6767:6767
+    restart: unless-stopped
+
+  # comic management
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/mylar3:/config
+      - ${MEDIA_DIR}/comics:/comics
+      - ${DOWNLOADS_DIR}:/downloads
+    ports:
+      - 8090:8090
     restart: unless-stopped

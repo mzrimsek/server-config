@@ -12,6 +12,7 @@ A fully functioning media acquisition stack. For any extra...necessary security.
 - Radarr - Movie Management
 - Lidarr - Music Management
 - Readarr - Book Management
+- Mylar3 - Comic Management
 - Bazarr - Subtitle Management
 
 ## Setup

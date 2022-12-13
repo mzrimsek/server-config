@@ -15,6 +15,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Radarr - Movie torrent management
 - Lidarr - Music torrent management
 - Readarr - Ebook and Audiobook torrent management
+- Mylar3 - Comic torrent management
 - Bazarr - Subtitle Management
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
@@ -86,6 +87,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | DATABASE_USER                    | Database connection username                                                                                                |
 | DATABASE_PASSWORD                | Database connection password                                                                                                |
 | BAZARR_URL                       | Subdomain to route to subtitle management interface                                                                         |
+| MYLAR3_URL                       | Subdomain to route to comic management interface                                                                            |
 
 #### Authelia
 
@@ -138,6 +140,7 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
     /movies
     /music
     /books
+    /comics
     /downloads (DOWNLOADS_DIR)
       /complete
       /pending
@@ -167,6 +170,7 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
     /radarr
     /readarr
     /sonarr
+    /mylar3
     /traefik
       /providers
       /certs
