@@ -63,6 +63,7 @@ services:
       - 51413:51413/udp # transmission
       - 6767:6767 # bazarr
       - 8090:8090 # mylar3
+      - 5055:5055 # jellyseerr
     environment:
       - VPN_SERVICE_PROVIDER=nordvpn
       - OPENVPN_USER=${NORDVPN_USER}
@@ -489,6 +490,28 @@ services:
       - "traefik.http.routers.bazarr.tls.certresolver=tlsresolver"
       - "traefik.http.routers.bazarr.middlewares=authelia@docker"
       - "traefik.http.services.bazarr.loadbalancer.server.port=6767"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - nordvpn
+    restart: unless-stopped
+
+  # media request interface
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/jellyseerr:/app/config
+    network_mode: service:nordvpn
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyseerr.rule=Host(`${JELLYSEERR_URL}`)"
+      - "traefik.http.routers.jellyseerr.entrypoints=websecure"
+      - "traefik.http.routers.jellyseerr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.jellyseerr.middlewares=authelia@docker"
+      - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - nordvpn

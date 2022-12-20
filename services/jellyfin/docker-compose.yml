@@ -17,3 +17,17 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0
     restart: unless-stopped
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=${TIMEZONE}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - 5055:5055
+    volumes:
+      - ${CONFIG_DIR}/jellyseerr:/app/config
+    restart: unless-stopped

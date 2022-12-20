@@ -17,6 +17,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Readarr - Ebook and Audiobook torrent management
 - Mylar3 - Comic torrent management
 - Bazarr - Subtitle Management
+- Jellyseerr - Streamlines requests to Sonarr and Radarr for a Jellyfin library
 - Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
@@ -88,6 +89,7 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | DATABASE_PASSWORD                | Database connection password                                                                                                |
 | BAZARR_URL                       | Subdomain to route to subtitle management interface                                                                         |
 | MYLAR3_URL                       | Subdomain to route to comic management interface                                                                            |
+| JELLYSEERR_URL                   | Subdomain to route to the Jellyseerr media request interface                                                                |
 
 #### Authelia
 
@@ -151,6 +153,7 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
     /bazarr
     /duplicati
     /lidarr
+    /jellyseerr
     /mosquitto
       /data
       /log
@@ -192,3 +195,4 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
 - Make sure to rename the Authelia config file to "configuration.yml" if copying to the volume
 - Make sure to rename the Wireguard config file to "config.yaml" if copying to the volume. If you need the config file, it needs to be in the directory that will be mounted BEFORE you run the container, otherwise it will create and mount a directory with the filename. [It's stupid](https://stackoverflow.com/a/42260979).
 - Bazarr doesn't really need to live in the VPN network but it does need direct access to the Sonarr and Radarr services, so adding it to the VPN services seems like the easiest way to accomplish that
+- Jellyseerr lives in this stack for the same reason as Bazarr - it integrates closely with services already in the VPN network. You could argue it goes with the Jellyfin stack as well.

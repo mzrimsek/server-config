@@ -28,6 +28,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [n8n](./services/n8n) - An automation platform similar to
 - [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
 - [Jellyfin](./services/jellyfin) - Media organization and viewing
+  - Includes Jellyseerr
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
 - [OpenLDAP](./services/ldap) - User credential backend
