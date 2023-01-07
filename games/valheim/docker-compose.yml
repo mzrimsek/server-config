@@ -14,4 +14,5 @@ services:
       - SERVER_PASS=${SERVER_PASSWORD}
       - TZ=${TIMEZONE}
       - STEAMCMD_ARGS=${STEAMCMD_ARGS}
+      - BEPINEX=true
     restart: always
