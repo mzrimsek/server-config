@@ -147,6 +147,7 @@ services:
       - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATION_PROVIDER}
       - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
       - WATCHTOWER_POLL_INTERVAL=${WATCHTOWER_UPDATE_INTERVAL}
+      - WATCHTOWER_WARN_ON_HEAD_FAILURE=never
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
