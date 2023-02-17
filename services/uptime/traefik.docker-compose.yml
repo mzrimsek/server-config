@@ -4,6 +4,8 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma
     container_name: uptime-kuma
+    ports:
+      - 13001:3001
     volumes:
       - ${CONFIG_DIR}/uptime:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
