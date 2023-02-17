@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    container_name: uptime-kuma
+    volumes:
+      - ${CONFIG_DIR}/uptime:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime.rule=Host(`${TRAEFIK_PROXY_URL}`)"
+      - "traefik.http.routers.uptime.entrypoints=websecure"
+      - "traefik.http.routers.uptime.tls.certresolver=tlsresolver"
+      - "traefik.http.services.uptime.loadbalancer.server.port=3001"
+      - "traefik.http.routers.uptime.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+    
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

@@ -36,6 +36,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
 - [Grafana](./services/grafana/) - Data visualization
 - [Speedtest Tracker](./services/speedtest/) - Continuous Network Speedtests
+- [Uptime Kama](./services/uptime/) - Continuous uptime monitoring for websites, ports, and various other services
 - [Games](./games)
   - Factorio
   - Minecraft
