@@ -60,6 +60,7 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
+  # at-a-glance system resource monitoring
   glances:
     image: nicolargo/glances:latest-alpine
     container_name: glances
@@ -71,4 +72,23 @@ services:
       - "GLANCES_OPT=-w"
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+  # automated container updating and image monitoring
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    expose: 
+      - 8080
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATION_PROVIDER}
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
+      - WATCHTOWER_POLL_INTERVAL=${WATCHTOWER_UPDATE_INTERVAL}
+      - WATCHTOWER_WARN_ON_HEAD_FAILURE=never
+      - WATCHTOWER_HTTP_API_METRICS=true
+      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_API_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped

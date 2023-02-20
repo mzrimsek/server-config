@@ -8,12 +8,17 @@ The goal of this stack is to provide data sources for Prometheus and then expose
 - cAdvisor - Docker container monitoring
 - nodeExporter - System resource monitoring
 - Glances - At a glance system monitoring web interface
+- Watchtower - Automated container image updates
 
 ## Environment Variables
 
-| Variable   | Description                                                |
-| ---------- | ---------------------------------------------------------- |
-| CONFIG_DIR | Root directory where service configuration files will live |
+| Variable                         | Description                                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| CONFIG_DIR                       | Root directory where service configuration files will live                                                                |
+| WATCHTOWER_NOTIFICATION_PROVIDER | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification provider                                 |
+| WATCHTOWER_NOTIFICATION_URL      | [Shoutrrr](https://containrrr.dev/shoutrrr/v0.5/services/overview/) notification URL to get updates on Watchtower actions |
+| WATCHTOWER_UPDATE_INTERVAL       | Value in seconds to wait between checking containers for updates                                                          |
+| WATCHTOWER_API_TOKEN             | API Token to send with requests to metric endpoints                                                                       |
 
 ## Notes
 
