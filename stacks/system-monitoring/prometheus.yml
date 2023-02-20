@@ -24,9 +24,9 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
   
-  - job_name: watchtower
+  - job_name: 'watchtower'
     scrape_interval: 5s
     metrics_path: /v1/metrics
-    bearer_token: ${WATCHTOWER_API_TOKEN}
+    bearer_token: '${WATCHTOWER_API_TOKEN}'
     static_configs:
       - targets: ['watchtower:8080']
