@@ -12,6 +12,8 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
+    ports:
+      - 13000:3000
     volumes:
       - grafana_data:/var/lib/grafana
       - ${CONFIG_DIR}/grafana/dashboards:/etc/grafana/provisioning/dashboards

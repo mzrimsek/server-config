@@ -1,6 +1,13 @@
 # Monitoring Data Collection
 
-The goal of this stack is to provide data sources for Prometheus and then expose a single Prometheus endpoint per device to then be organized later by a single Grafana instance
+The goal of this stack is to provide data sources for Prometheus and then expose a single Prometheus endpoint per device to then be organized later by a single Grafana instance, as well as a Glances instance to get at a glance system stats.
+
+## Services
+
+- Prometheus - Time series database
+- cAdvisor - Docker container monitoring
+- nodeExporter - System resource monitoring
+- Glances - At a glance system monitoring web interface
 
 ## Environment Variables
 
