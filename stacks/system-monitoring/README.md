@@ -4,11 +4,11 @@ The goal of this stack is to provide data sources for Prometheus and then expose
 
 ## Services
 
-- Prometheus - Time series database
-- cAdvisor - Docker container monitoring
-- nodeExporter - System resource monitoring
-- Glances - At a glance system monitoring web interface
-- Watchtower - Automated container image updates
+- [Prometheus](https://prometheus.io/) - Time series database
+- [cAdvisor](https://github.com/google/cadvisor) - Docker container monitoring
+- [nodeExporter](https://github.com/prometheus/node_exporter) - System resource monitoring
+- [Glances](https://nicolargo.github.io/glances/) - At a glance system monitoring web interface
+- [Watchtower](https://containrrr.dev/watchtower/) - Automated container image updates
 
 ## Environment Variables
 
