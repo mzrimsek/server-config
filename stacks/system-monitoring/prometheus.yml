@@ -30,3 +30,8 @@ scrape_configs:
     bearer_token: '${WATCHTOWER_API_TOKEN}'
     static_configs:
       - targets: ['watchtower:8080']
+
+  - job_name: 'glances'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['${GLANCES_HOST}:19091']

@@ -62,14 +62,15 @@ services:
 
   # at-a-glance system resource monitoring
   glances:
-    image: nicolargo/glances:latest-alpine
+    image: nicolargo/glances:latest-full
     container_name: glances
     pid: host
-    network_mode: "host" # port 61208
+    network_mode: "host"
     volumes:
+      - ${CONFIG_DIR}/glances/glances.conf:/glances/conf/glances.conf
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - "GLANCES_OPT=-w"
+      - "GLANCES_OPT=-C /glances/conf/glances.conf --quiet --export prometheus"
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
@@ -89,6 +90,8 @@ services:
       - WATCHTOWER_WARN_ON_HEAD_FAILURE=never
       - WATCHTOWER_HTTP_API_METRICS=true
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_API_TOKEN}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
