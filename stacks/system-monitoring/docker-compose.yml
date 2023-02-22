@@ -70,7 +70,7 @@ services:
       - ${CONFIG_DIR}/glances/glances.conf:/glances/conf/glances.conf
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - "GLANCES_OPT=-C /glances/conf/glances.conf --quiet --export prometheus"
+      - "GLANCES_OPT=-C /glances/conf/glances.conf --quiet -w"
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped

@@ -23,7 +23,7 @@ The goal of this stack is to provide data sources for Prometheus and then expose
 ## Notes
 
 - For some reason there were permission issues I could not figure out when trying to mount the Prometheus data volume from a directory. Switching to the Docker volume instead works. Seems like there's no negative impact on anything doing it this way.
-- Glances here is configured do to Prometheus exports but can also be configured to run with a web interface
+- Glances can be configured as a web interface or as a data exporter for something like Prometheus
   - Ports
     - Web: 61208
     - Prom: 19091 (or whatever you configure)

@@ -31,7 +31,7 @@ scrape_configs:
     static_configs:
       - targets: ['watchtower:8080']
 
-  - job_name: 'glances'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['${GLANCES_HOST}:19091']
+  # - job_name: 'glances'
+  #   scrape_interval: 5s
+  #   static_configs:
+  #     - targets: ['${GLANCES_HOST}:19091']
