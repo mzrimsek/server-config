@@ -9,3 +9,5 @@ This article was useful: https://linuxize.com/post/install-configure-fail2ban-on
 5. Update config file by updating the `ignoreip` line to allow all local network connections
 
 - `ignoreip = 127.0.0.1/8 ::1 192.168.1.0/24`
+
+Example `jail.local` file provided
