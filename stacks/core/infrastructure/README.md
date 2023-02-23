@@ -180,7 +180,20 @@ The Wireguard configuration file provided sets up an OIDC login provider - here 
       /data
 ```
 
-### Notes
+## Additional Configurations
+
+### Traefik Prometheus Exports
+
+Add this to your Prometheus configuration to scrape Traefik data
+
+```yml
+- job_name: 'traefik'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['${HOST_IP}:8082']
+```
+
+## Notes
 
 - Subdomains are assumed to be public. Traefik TLS for local subdomains is WORK IN PROGRESS
 - VPN container also supports other VPN providers if they are more preferable. See [wiki](https://github.com/qdm12/gluetun/wiki) for more info

@@ -11,6 +11,7 @@ services:
       # proxy entrypoints
       - 80:80/tcp # web
       - 443:443/tcp # websecure
+      - 8082:8082/tcp # metrics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CONFIG_DIR}/traefik/providers:/config
@@ -24,7 +25,12 @@ services:
       - "--log=true"
       - "--log.level=DEBUG"
       - "--accesslog=true"
+      - "--entryPoints.metrics.address=:8082"
       - "--metrics.prometheus=true"
+      - "--metrics.prometheus.addEntryPointsLabels=true"
+      - "--metrics.prometheus.addrouterslabels=true"
+      - "--metrics.prometheus.addServicesLabels=true"
+      - "--metrics.prometheus.entryPoint=metrics"
       - "--providers.file.directory=/config"
       - "--providers.file.watch=true"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"

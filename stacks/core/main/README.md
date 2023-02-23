@@ -60,12 +60,25 @@ Goal is to have all the main services I use in one convenient place.
       /files
 ```
 
-### Notes
+## Additional Configurations
+
+### Traefik Prometheus Exports
+
+Add this to your Prometheus configuration to scrape Traefik data
+
+```yml
+- job_name: 'traefik'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['${HOST_IP}:8082']
+```
+
+## Notes
 
 - The stack provided mounts the media from a remote share. This could easily be modified to directly mount a directory by changing the media volume mount on the Jellyfin container in the docker compose file.
 - Duplicati is being used for backing up some files to Google Drive. Duplicati can't interact to create files at it's destination when not running in Host mode for some reason. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
 
-#### Removed services
+### Removed services
 
 - (11-24-22) Service dashboard was migrated out of this stack to be run in its own stack - the new service I am using has tighter integration with services that are more easily accessible from the device running the infrastructure stack, but it does not belong in that stack. [Found here](../../../services/homepage/)
 - (12-1-22) Jellyfin migrated out of stack to be run on its own to run next to the media file it serves rather than fetching them over the network before serving them. [Found here](../../../services/jellyfin/)
