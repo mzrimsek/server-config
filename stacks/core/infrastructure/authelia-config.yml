@@ -8,6 +8,21 @@ default_redirection_url: ${AUTHELIA_DEFAULT_REDIRECT}
 server:
   host: 0.0.0.0
   port: 9092
+  buffers:
+    read: 8192
+    write: 8192
+
+telemetry:
+  metrics:
+    enabled: true
+    address: "tcp://0.0.0.0:9959"
+    buffers:
+      read: 4096
+      write: 4096
+    timeouts:
+      read: 6s
+      write: 6s
+      idle: 30s
 
 theme: auto
 

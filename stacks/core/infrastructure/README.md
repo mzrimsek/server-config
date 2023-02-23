@@ -193,6 +193,17 @@ Add this to your Prometheus configuration to scrape Traefik data
       - targets: ['${HOST_IP}:8082']
 ```
 
+### Authelia Prometheus Exports
+
+Add this to your Prometheus configuration to scrap Authelia data
+
+```yml
+- job_name: 'authelia'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['${HOST_IP}:9959']
+```
+
 ## Notes
 
 - Subdomains are assumed to be public. Traefik TLS for local subdomains is WORK IN PROGRESS
