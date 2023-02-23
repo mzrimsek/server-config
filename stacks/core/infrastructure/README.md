@@ -217,3 +217,4 @@ Add this to your Prometheus configuration to scrap Authelia data
 - Bazarr doesn't really need to live in the VPN network but it does need direct access to the Sonarr and Radarr services, so adding it to the VPN services seems like the easiest way to accomplish that
 - Jellyseerr lives in this stack for the same reason as Bazarr - it integrates closely with services already in the VPN network. You could argue it goes with the Jellyfin stack as well.\
 - A recent change to Prowlarr forces you to set up authentication for the application which is not always a desirable based on your configuration, like if you have Authelia protecting your routes already. You can no longer disable auth from the web, but [it is still configurable from the config file](https://wiki.servarr.com/prowlarr/faq#can-i-disable-forced-authentication).
+- Increased the Authelia buffer sizes because some services (Firefly III) will have massive requests that get rejected
