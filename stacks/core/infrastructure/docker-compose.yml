@@ -256,8 +256,8 @@ services:
     volumes:
       - ${CONFIG_DIR}/authelia:/config
     ports:
-      - 9092:9092
-      - 9959:9959
+      - 9092:9092 # web
+      - 9959:9959 # metrics
     expose:
       - 9092
     labels:
