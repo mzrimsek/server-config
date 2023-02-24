@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  exporter:
+    image: registry.gitlab.com/hectorjsmith/fail2ban-prometheus-exporter:latest
+    container_name: fail2ban-metrics
+    volumes:
+      - /var/run/fail2ban/:/var/run/fail2ban:ro
+    ports:
+      - "9191:9191"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
