@@ -14,3 +14,14 @@ This works well with the [system monitoring stack](../../stacks/system-monitorin
 | GRAFANA_URL            | URL that points to the Grafana instance                                                                     |
 | AUTHELIA_CLIENT_SECRET | Client secret to enable login with [Authelia](https://www.authelia.com/integration/openid-connect/grafana/) |
 | AUTHELIA_URL           | Base URL that points to the Authelia instance                                                               |
+
+## Prometheus Metrics
+
+Add this to your Prometheus config to pull in Grafana metrics for monitoring
+
+```yml
+ - job_name: 'grafana'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['${HOST_IP}:13000']
+```
