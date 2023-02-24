@@ -50,7 +50,6 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 
 These are more fully designed solutions rather than a service with a container or two.
 
-- [Media](./stacks/media) - An automated media aquisition, organization, and consumption solution
 - [Media Consumption](./stacks/media-consumption/) - A paired down media consumption stack
 - [System Monitoring](./stacks/system-monitoring) - Exposes a Prometheus service pulling host machine and container stats
 
