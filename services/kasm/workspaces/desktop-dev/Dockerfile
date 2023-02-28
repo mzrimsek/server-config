@@ -1,4 +1,4 @@
-FROM kasmweb/core-ubuntu-focal:1.12.0
+FROM kasmweb/desktop:1.12.0-rolling
 USER root
 
 ENV HOME /home/kasm-default-profile
@@ -23,11 +23,6 @@ RUN set -ex && \
   chmod +x $HOME/Desktop/code.desktop && \
   chown 1000:1000 $HOME/Desktop/code.desktop && \
   rm vs_code.deb
-
-# Google Chrome
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-  dpkg -i google-chrome-stable_current_amd64.deb && \
-  rm google-chrome-stable_current_amd64.deb
 
 # git
 RUN apt update && \
