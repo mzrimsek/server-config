@@ -53,6 +53,11 @@ RUN apt-get update && \
   python3-venv \
   python3-virtualenv
 
+# Fira Code
+RUN add-apt-repository universe && \
+  apt update && \
+  apt install fonts-firacode
+
 
 ######### End Customizations ###########
 
