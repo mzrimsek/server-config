@@ -32,6 +32,9 @@ RUN apt update && \
 RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - && \
   apt-get install -y nodejs
 
+# NVM
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+
 # Go Lang
 RUN apt update && \
   apt upgrade -y && \
