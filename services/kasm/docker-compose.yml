@@ -23,7 +23,7 @@ services:
       - public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kasm.rule=Host(`${WORKSPACE_URL}`)"
+      - "traefik.http.routers.kasm.rule=Host(`${KASM_URL}`)"
       - "traefik.http.routers.kasm.entrypoints=websecure"
       - "traefik.http.routers.kasm.tls.certresolver=tlsresolver"
       - "traefik.http.services.kasm.loadbalancer.server.port=8443"
