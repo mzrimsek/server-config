@@ -49,9 +49,12 @@ services:
     volumes:
       - ${CONFIG_DIR}/emulatorjs/config:/config
       - ${CONFIG_DIR}/emulatorjs/data:/data
+      - ${ROMS_DIR}/gb:/data/gb/roms
       - ${ROMS_DIR}/gba:/data/gba/roms
       - ${ROMS_DIR}/gbc:/data/gbc/roms
       - ${ROMS_DIR}/nds:/data/nds/roms
+      - ${ROMS_DIR}/n64:/data/n64/roms
+      - ${ROMS_DIR}/snes:/data/snes/roms
     ports:
       - 17500:3000 # internal configuration interface
     networks:
