@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  exporter:
+    image: 'utkuozdemir/nvidia_gpu_exporter:1.1.0'
+    container_name: nvidiasmi-metrics
+    devices:
+      - '/dev/nvidiactl:/dev/nvidiactl'
+      - '/dev/nvidia0:/dev/nvidia0'
+    volumes:
+      - '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so:/usr/lib/x86_64-linux-gnu/libnvidia-ml.so'
+      - '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1:/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1'
+      - '/usr/bin/nvidia-smi:/usr/bin/nvidia-smi'
+    ports:
+      - '9835:9835'
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
