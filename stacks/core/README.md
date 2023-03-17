@@ -21,3 +21,22 @@ Sometimes services are deployed in both stacks because they serve some kind of u
 - Watchtower - Automated container image updates. Kind of self explanatory - I don't let things like the reverse proxy or VPN client auto update because they are too critical to the underlying architecture.
 
 Authelia is used as the auth provider for both stacks, but my configuration essentially sets up the `Main` stack authelia middleware to point at `Infrastructure`'s Authelia container. Then configuration is done on the container labels and in the file providers used for host/external services. With this in mind, I've applied the authelia@docker middleware nearly all routes that are handled by reverse proxy - even the ones that will always be set to bypass. The idea here being that if all the routes have the middleware, I can handle access control consistently for all services and all in the one Authelia configuration file.
+
+### Unraid Specific
+
+On occasion the docker.img will fill up (not sure why it should really only hold the docker images). I believe this causes the whole daemon to gradually stop working (the console commands become unresponsive and the tab does not load). So far a simple reboot fixes it, but is not ideal.
+
+Some suggest deleting the docker.img file to try and fix it because it may have become corrupt at some point. If you do this, you will lose all of your running Docker containers because the images will all be gone. Here are some steps:
+
+1. Stop the Docker service in Unraid
+2. Click the little checkbox to delete the docker.img file
+3. Apply
+4. Reenable the Docker service
+5. Install Portainer-CE from the community applications
+6. Update the Portainer configuration
+   1. Rename to 'portainer'
+   2. Set port for web ui to 9000
+   3. Set the restart policy to 'always'
+   4. Add watchtower label (`com.centurylinklabs.watchtower.enable=true`)
+7. Login to Portainer at `http://<unraid-ip>:9000`
+8. Your stacks and everything should all be intact and you should just have to redeploy them for all the images to pull and the containers be regenerated
