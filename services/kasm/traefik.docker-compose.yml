@@ -1,5 +1,10 @@
 version: "3"
 
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
+
 services:
   kasm:
     image: lscr.io/linuxserver/kasm:latest
@@ -13,8 +18,17 @@ services:
       - /dev/input:/dev/input
       - /run/udev/data:/run/udev/data
     ports:
-      - 8443:8443
       - 19000:3000
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kasm.rule=Host(`${KASM_URL}`)"
+      - "traefik.http.routers.kasm.entrypoints=websecure"
+      - "traefik.http.routers.kasm.tls.certresolver=tlsresolver"
+      - "traefik.http.services.kasm.loadbalancer.server.port=8443"
+      - "traefik.http.services.kasm.loadbalancer.server.scheme=https"
+      - "com.centurylinklabs.watchtower.enable=true"
     deploy: # pass NVIDIA gpu to container
       resources:
         reservations:
