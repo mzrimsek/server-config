@@ -16,3 +16,4 @@
 
 - [Theme Park](https://theme-park.dev/) is thrown in here to add a nice dark theme to application because light themes suck
 - For interacting with cloud providers like Google Drive, Duplicati needs to run in host network mode to properly interact. [See here](https://forum.duplicati.com/t/google-drive-shared-drive-path-error/14036/3)
+- When creating a backup that ties into Google Drive, Duplicati will not create the folder until it runs the job for the first time. This means after entering your AuthID and trying to "Test Connection" you will get a "Failed to Connect" error until the first backup job is run. This is expected behavior. If you run your job and see the folder get created and populated, it's probably configured correctly.
