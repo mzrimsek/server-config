@@ -38,6 +38,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Speedtest Tracker](./services/speedtest/) - Continuous Network Speedtests
 - [Uptime Kama](./services/uptime/) - Continuous uptime monitoring for websites, ports, and various other services
 - [KASM Workspaces](./services/kasm) - Container Streaming Platform
+- [Grocy](./services/grocy) - Groceries and household management
 - [Games](./games)
   - Factorio
   - Minecraft
