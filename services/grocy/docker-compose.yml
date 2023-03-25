@@ -12,4 +12,6 @@ services:
       - ${CONFIG_DIR}/grocy:/config
     ports:
       - 9283:80
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
