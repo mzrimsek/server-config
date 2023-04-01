@@ -534,7 +534,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
-      - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+      # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
