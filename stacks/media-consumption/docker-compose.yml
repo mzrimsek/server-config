@@ -10,12 +10,26 @@ services:
       - ${CONFIG_DIR}/jellyfin/cache:/cache
       - ${MEDIA_DIR}:/media
     environment:
-      - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL}
+      - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8096
     devices: # pass iGPU for transcoding
       - /dev/dri
+    restart: unless-stopped
+    
+  jellyfin-vue:
+    image: ghcr.io/jellyfin/jellyfin-vue:stable-rc
+    container_name: jellyfin-vue
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin-vue.rule=Host(`${JELLYFIN_VUE_URL}`)"
+      - "traefik.http.routers.jellyfin-vue.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin-vue.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.jellyfin-vue.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   # books
