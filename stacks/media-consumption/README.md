@@ -5,6 +5,7 @@ A more paired down version of the media stack that is just services that consume
 ## Services
 
 - Jellyfin - TV, Movies, and Music Media Library Access
+- Jellyfin Vue - A fun alternative interface to Jellyfin
 - Kavita - eBook Library Access
 - EmulatorJS - ROM Game Library Access
 
@@ -16,6 +17,7 @@ A more paired down version of the media stack that is just services that consume
 | MEDIA_DIR              | Parent directory for tv, movie, etc. media libraries                                   |
 | ROMS_DIR               | Parent directory for each ROM library                                                  |
 | JELLYFIN_URL           | Subdomain to route to Jellyfin                                                         |
+| JELLYFIN_VUE_URL       | Subdomain to route to Jellyfin Vue alternate interface                                 |
 | KAVITA_URL             | Subdomain to route to Kavita                                                           |
 | EMULATORJS_URL         | Subdomain to route to Emulator                                                         |
 | TRAEFIK_PUBLIC_NETWORK | Public network that Traefik runs                                                       |
