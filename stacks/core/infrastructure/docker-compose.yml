@@ -62,8 +62,6 @@ services:
       - 7878:7878 # radarr
       - 8686:8686 # lidarr
       - 8787:8787 # readarr
-      - 8080:8080 # calibre
-      - 8081:8081 # calibre
       - 9091:9091 # transmission
       - 51413:51413 # transmission
       - 51413:51413/udp # transmission
