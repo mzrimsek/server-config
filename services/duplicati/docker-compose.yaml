@@ -16,4 +16,6 @@ services:
       - ${CONFIG_DIR}/duplicati/backups:/backups
       - ${BACKUP_ROOT}:/source
     network_mode: "host" # port 8200
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
