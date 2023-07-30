@@ -17,7 +17,7 @@ services:
     devices: # pass iGPU for transcoding
       - /dev/dri
     restart: unless-stopped
-    
+
   jellyfin-vue:
     image: ghcr.io/jellyfin/jellyfin-vue:stable-rc
     container_name: jellyfin-vue
@@ -48,6 +48,17 @@ services:
       - "traefik.http.routers.kavita.tls.certresolver=tlsresolver"
       - "traefik.http.routers.kavita.middlewares=authelia@docker"
       - "traefik.http.services.kavita.loadbalancer.server.port=5000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+  kavita-email:
+    container_name: kavita-email
+    image: kizaing/kavitaemail:latest
+    ports:
+      - 5003:5003
+    volumes:
+      - ${CONFIG_DIR}/kavita-email:/app/config
+    labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
