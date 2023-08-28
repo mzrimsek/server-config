@@ -53,9 +53,9 @@ services:
   fireflyiii:
     container_name: fireflyiii
     image: fireflyiii/core:latest
-    environment: 
+    environment:
       APP_KEY: ${FIREFLY_APP_KEY}
-      TRUSTED_PROXIES: '**'
+      TRUSTED_PROXIES: "**"
       DB_HOST: ${DATABASE_HOST}
       DB_PORT: 5432
       DB_CONNECTION: pgsql
@@ -79,7 +79,7 @@ services:
   fireflyiii_cron:
     container_name: fireflyiii_cron
     image: alpine
-    command: sh -c "echo \"0 3 * * * wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
+    command: sh -c "echo \"0 0 3 * * ? wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
     restart: unless-stopped
 
   # tasks backend
@@ -101,7 +101,7 @@ services:
       VIKUNJA_SERVICE_TIMEZONE: ${TIMEZONE}
       VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_JWT_SECRET}
       VIKUNJA_SERVICE_FRONTENDURL: https://${VIKUNJA_URL}
-    volumes: 
+    volumes:
       - ${CONFIG_DIR}/vikunja/files:/app/vikunja/files
     labels:
       - "traefik.enable=true"
@@ -143,4 +143,3 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8200
     restart: unless-stopped
-
