@@ -79,7 +79,7 @@ services:
   fireflyiii_cron:
     container_name: fireflyiii_cron
     image: alpine
-    command: sh -c "echo \"0 0 3 * * ? wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
+    command: sh -c "echo \"0 3 * * * wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
     restart: unless-stopped
 
   # tasks backend
