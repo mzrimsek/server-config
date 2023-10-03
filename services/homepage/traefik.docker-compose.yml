@@ -7,7 +7,8 @@ services:
     networks:
       - public
     volumes:
-      - ${CONFIG_DIR}/homepage:/app/config
+      - ${CONFIG_DIR}/homepage/config:/app/config
+      - ${CONFIG_DIR}/homepage/images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
