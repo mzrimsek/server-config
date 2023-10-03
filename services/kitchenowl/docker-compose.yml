@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  front:
+    container_name: kitchenowl
+    image: tombursch/kitchenowl-web:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - back
+    networks:
+      - default
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  back:
+    container_name: kitchenowl-api
+    image: tombursch/kitchenowl:latest
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      JWT_SECRET_KEY: ${SECRET_KEY}
+    volumes:
+      - ${CONFIG_DIR}/kitchenowl:/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  default:

@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  front:
+    container_name: kitchenowl
+    image: tombursch/kitchenowl-web:latest
+    restart: unless-stopped
+    ports:
+      - 58980:80
+    depends_on:
+      - back
+    networks:
+      - internal
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kitchenowl.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.kitchenowl.entrypoints=websecure"
+      - "traefik.http.routers.kitchenowl.tls.certresolver=tlsresolver"
+      - "com.centurylinklabs.watchtower.enable=true"
+  back:
+    container_name: kitchenowl-api
+    image: tombursch/kitchenowl:latest
+    restart: unless-stopped
+    networks:
+      - internal
+    environment:
+      JWT_SECRET_KEY: ${SECRET_KEY}
+      FRONT_URL: https://${APP_URL}
+    volumes:
+      - ${CONFIG_DIR}/kitchenowl:/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
