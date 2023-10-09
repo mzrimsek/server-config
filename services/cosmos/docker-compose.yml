@@ -1,0 +1,19 @@
+version: "3.3"
+
+services:
+  cosmos-server:
+    container_name: cosmos-server
+    image: azukaar/cosmos-server:latest
+    ports:
+      - 8080:80
+      - 8443:443
+      - 4242:4242/udp
+    privileged: true
+    hostname: cosmos-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /:/mnt/host
+      - ${CONFIG_DIR}/cosmos:/config
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
