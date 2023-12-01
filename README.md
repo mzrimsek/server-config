@@ -42,6 +42,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [KitchenOwl](./services/kitchenowl) - Grocery and Recipe management
 - [Ntfy](./services/ntfy) - Simple notification service
 - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
+- [Linkding](./services/linkding) - Bookmark management
 - [Games](./games)
   - Factorio
   - Minecraft

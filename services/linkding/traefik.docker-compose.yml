@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:latest
+    volumes:
+      - "${CONFIG_DIR}/linkding:/etc/linkding/data"
+    environment:
+      - LD_SUPERUSER_NAME=${ADMIN_USERNAME}
+      - LD_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+      # - LD_ENABLE_AUTH_PROXY=True
+      # - LD_AUTH_PROXY_USERNAME_HEADER=HTTP_REMOTE_USER
+      # - LD_AUTH_PROXY_LOGOUT_URL=https://${AUTH_URL}
+      # - LD_CSRF_TRUSTED_ORIGINS=https://${APP_URL}
+      - LD_DB_ENGINE=postgres
+      - LD_DB_DATABASE=${DATABASE_NAME:-linkding}
+      - LD_DB_USER=${DATABASE_USER}
+      - LD_DB_PASSWORD=${DATABASE_PASSWORD}
+      - LD_DB_HOST=${DATABASE_HOST}
+      - LD_DB_PORT=${DATABASE_PORT:-5432}
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linkding.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.linkding.entrypoints=websecure"
+      - "traefik.http.routers.linkding.tls.certresolver=tlsresolver"
+      - "traefik.http.services.linkding.loadbalancer.server.port=9090"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
