@@ -11,7 +11,7 @@ services:
         HOST_GID: ${HOST_GID}
     container_name: jenkins
     volumes:
-      - /opt/jenkins:/var/jenkins_home
+      - ${CONFIG_DIR}/jenkins/data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - public

@@ -76,3 +76,5 @@ Setting up an app in Docker that is proxied by Traefik in the cluster (yes this 
 I use unRAID for my NAS OS and adjusted the web UI port to live on 55080 instead of 80 so Traefik could bind to and control port 80 on that machine
 
 If your Ubuntu install doesn't take up your whole drive for whatever reason [try this](https://askubuntu.com/questions/1269493/ubuntu-server-20-04-1-lts-not-all-disk-space-was-allocated-during-installation)
+
+_Eventually, I wanted to try Proxmox out...so I migrated all my Docker services to my NAS and turned the other server into a Proxmox host_

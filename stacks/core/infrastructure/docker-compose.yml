@@ -48,7 +48,7 @@ services:
     depends_on:
       - authelia
     restart: unless-stopped
-  
+
   # nordvpn client
   nordvpn:
     container_name: nordvpn
@@ -117,11 +117,11 @@ services:
       - 9.9.9.9
     environment:
       TZ: ${TIMEZONE}
-      WEBPASSWORD: '${PIHOLE_PASSWORD}'
+      WEBPASSWORD: "${PIHOLE_PASSWORD}"
       WEB_PORT: 8080
-      VIRTUAL_HOST: '${PIHOLE_URL}'
+      VIRTUAL_HOST: "${PIHOLE_URL}"
       PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
-      DNSSEC: 'true'
+      DNSSEC: "true"
       FTLCONF_REPLY_ADDR4: ${HOST_IP}
       DNSMASQ_LISTENING: all
       WEBTHEME: default-dark
@@ -171,11 +171,11 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-       - ${CONFIG_DIR}/postgres/db_data:/var/lib/postgresql/data
+      - ${CONFIG_DIR}/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
-  
+
   # database interface
   pgadmin:
     container_name: pgadmin
@@ -185,8 +185,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: "True"
     volumes:
-       - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
-       - ${CONFIG_DIR}/postgres/backup:/backup
+      - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
+      - ${CONFIG_DIR}/postgres/backup:/backup
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_URL}`)"
@@ -198,7 +198,7 @@ services:
 
   # AUTHENTICATION
 
-# ldap server
+  # ldap server
   openldap:
     image: osixia/openldap:1.5.0
     container_name: openldap
@@ -523,7 +523,7 @@ services:
     restart: unless-stopped
 
   ## GENERAL CLIENTS
-  
+
   # download client
   transmission:
     image: lscr.io/linuxserver/transmission

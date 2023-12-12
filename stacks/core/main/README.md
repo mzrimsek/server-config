@@ -82,3 +82,4 @@ Add this to your Prometheus configuration to scrape Traefik data
 
 - (11-24-22) Service dashboard was migrated out of this stack to be run in its own stack - the new service I am using has tighter integration with services that are more easily accessible from the device running the infrastructure stack, but it does not belong in that stack. [Found here](../../../services/homepage/)
 - (12-1-22) Jellyfin migrated out of stack to be run on its own to run next to the media file it serves rather than fetching them over the network before serving them. [Found here](../../../services/jellyfin/)
+- (12-11-23) Main Condensed stack created to pair down services that will be run back on the main server. [Found here](../main_condensed/)

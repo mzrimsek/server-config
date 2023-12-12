@@ -14,6 +14,6 @@ services:
       - 8000:8080
       - 50000:50000
     volumes:
-      - /opt/jenkins:/var/jenkins_home
+      - ${CONFIG_DIR}/jenkins/data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
