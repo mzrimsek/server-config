@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  jellystat:
+    container_name: jellystat
+    image: cyfershepard/jellystat:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_IP: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT:-5432}
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - ${CONFIG_DIR}/jellystat/backup-data:/app/backend/backup-data
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellystat.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.jellystat.entrypoints=websecure"
+      - "traefik.http.routers.jellystat.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.jellystat.middlewares=authelia@docker"
+      - "traefik.http.services.jellystat.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    name: ${TRAEFIK_PUBLIC_NETWORK}
+    external: true

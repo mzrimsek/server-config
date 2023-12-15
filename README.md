@@ -44,6 +44,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
 - [Linkding](./services/linkding) - Bookmark management
 - [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
+- [Jellystatus](./services/jellystat) - A page to get stats on your Jellyfin server usage
 - [Games](./games)
   - Factorio
   - Minecraft

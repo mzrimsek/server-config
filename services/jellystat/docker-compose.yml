@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  jellystat:
+    container_name: jellystat
+    image: cyfershepard/jellystat:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_IP: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - 3000:3000
+    volumes:
+      - ${CONFIG_DIR}/jellystat/backup-data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
