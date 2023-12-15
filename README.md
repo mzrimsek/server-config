@@ -43,6 +43,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Ntfy](./services/ntfy) - Simple notification service
 - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
 - [Linkding](./services/linkding) - Bookmark management
+- [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
 - [Games](./games)
   - Factorio
   - Minecraft
