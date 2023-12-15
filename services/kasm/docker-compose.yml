@@ -10,16 +10,16 @@ services:
     volumes:
       - ${CONFIG_DIR}/kasm/data:/opt
       - ${CONFIG_DIR}/kasm/profiles:/profiles
-      - /dev/input:/dev/input
-      - /run/udev/data:/run/udev/data
+      # - /dev/input:/dev/input # gamepad passthrough
+      # - /run/udev/data:/run/udev/data # gamepad passthrough
     ports:
       - 8443:8443
       - 19000:3000
-    deploy: # pass NVIDIA gpu to container
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+    # deploy: # pass NVIDIA gpu to container
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
     restart: unless-stopped

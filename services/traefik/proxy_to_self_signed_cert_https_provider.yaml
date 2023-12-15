@@ -1,0 +1,28 @@
+# this is for proxying to a service that has its own self-signed cert in front of it
+# Traefik will throw errors when it cannot validate that cert and so will not actually send
+# our traffic all the way. the serversTransport change fixes that
+# useful for proxying traffic to services like Proxmox through Traefik
+
+http:
+  routers:
+    ${SERVICE_NAME}:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`${APP_URL}`)"
+      middlewares:
+      - authelia@docker
+      tls:
+        certResolver:
+          - "tlsresolver"
+      service: ${SERVICE_NAME}
+
+  services:
+    ${SERVICE_NAME}:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://${HOST_IP}:${HOST_PORT}"
+
+  serversTransports:
+    insecureTransport:
+      insecureSkipVerify: true
