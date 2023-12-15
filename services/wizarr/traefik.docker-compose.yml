@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  wizarr:
+    container_name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    volumes:
+      - ${CONFIG_DIR}/wizarr/database:/data/database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wizarr.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.wizarr.entrypoints=websecure"
+      - "traefik.http.routers.wizarr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.wizarr.middlewares=authelia@docker"
+      - "traefik.http.services.wizarr.loadbalancer.server.port=5690"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    name: ${TRAEFIK_PUBLIC_NETWORK}
+    external: true

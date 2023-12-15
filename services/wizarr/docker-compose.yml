@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  wizarr:
+    container_name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    ports:
+      - 5690:5690
+    volumes:
+      - ${CONFIG_DIR}/wizarr/database:/data/database
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
