@@ -2,8 +2,10 @@ version: "3"
 
 volumes:
   prometheus_data: {}
+  influxdb_data: {}
 
 services:
+  # data scraping
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -23,6 +25,20 @@ services:
       - 9090:9090
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+  # time series database
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    expose:
+      - 8086
+      - 8089/udp
+    ports:
+      - 8086:8086
+      - 8089:8089/udp
+    volumes:
+      - influxdb_data:/var/lib/influxdb
     restart: unless-stopped
 
   # system resource collection
@@ -79,7 +95,7 @@ services:
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
-    expose: 
+    expose:
       - 8080
     environment:
       - WATCHTOWER_CLEANUP=true
