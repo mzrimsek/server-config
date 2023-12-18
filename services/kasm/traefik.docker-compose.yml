@@ -23,12 +23,6 @@ services:
     networks:
       - public
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.kasm.rule=Host(`${KASM_URL}`)"
-      - "traefik.http.routers.kasm.entrypoints=websecure"
-      - "traefik.http.routers.kasm.tls.certresolver=tlsresolver"
-      - "traefik.http.services.kasm.loadbalancer.server.port=8443"
-      - "traefik.http.services.kasm.loadbalancer.server.scheme=https"
       - "com.centurylinklabs.watchtower.enable=true"
     # deploy: # pass NVIDIA gpu to container
     #   resources:
