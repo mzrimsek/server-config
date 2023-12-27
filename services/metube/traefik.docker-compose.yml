@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    volumes:
+      - ${DOWNLOADS_DIR}:/downloads
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ytdl.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.ytdl.entrypoints=websecure"
+      - "traefik.http.routers.ytdl.tls.certresolver=tlsresolver"
+      - "traefik.http.services.ytdl.loadbalancer.server.port=8081"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

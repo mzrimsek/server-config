@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    ports:
+      - 8081:8081
+    volumes:
+      - ${DOWNLOADS_DIR}:/downloads
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
