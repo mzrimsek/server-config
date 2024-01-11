@@ -8,3 +8,6 @@ Enable remote Docker access: https://stackoverflow.com/questions/40591356/enable
 ExecStart=
 ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
 ```
+
+3. Restart Docker: `sudo systemctl daemon-reload && sudo systemctl restart docker`
+4. Add as an endpoint to Portainer for remote management
