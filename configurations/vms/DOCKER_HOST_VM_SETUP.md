@@ -1,6 +1,8 @@
 # Docker Host VM Setup
 
 1. Install OS
-2. Install Docker
-3. Expose Remote API
-4. Add to Portainer
+2. Update Packages
+3. Update Sudoer rules for user
+4. Install Docker
+5. Expose Remote API
+6. Add to Portainer
