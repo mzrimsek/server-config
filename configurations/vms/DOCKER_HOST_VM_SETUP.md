@@ -1,8 +1,8 @@
 # Docker Host VM Setup
 
 1. Install OS
-2. Update Packages
-3. Update Sudoer rules for user
-4. Install Docker
-5. Expose Remote API
-6. Add to Portainer
+2. Update Packages - `sudo apt update && sudo apt-upgrade`
+3. Expand main partition to use all free space
+4. Update Sudoer rules for user
+5. [Install Docker and Expose Remote API](../DOCKER_SETUP.md)
+6. Add to Portainer as API Endpoint
