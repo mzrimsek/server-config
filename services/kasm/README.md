@@ -6,7 +6,7 @@ A container streaming service to spin up services on demand in the browser
 
 Navigate to `https://host:19000` to get to the setup wizard and initialize the system. The HTTPS is important!
 
-After you log into the Web UI, as the admin account navigate to Infrastructure -> Zones. Edit the default zone and ensure the "Upstream Auth Address" field is set to "proxy" and "Proxy Port" field is set to "0".
+After you log into the Web UI, as the admin account navigate to Infrastructure -> Zones. Edit the default zone and ensure the "Upstream Auth Address" field is set to "proxy" and "Proxy Port" field is set to "0". [Reference](https://kasmweb.com/docs/latest/how_to/reverse_proxy.html#update-zones)
 
 ### Note
 
