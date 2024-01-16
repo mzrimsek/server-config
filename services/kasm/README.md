@@ -6,6 +6,8 @@ A container streaming service to spin up services on demand in the browser
 
 Navigate to `https://host:19000` to get to the setup wizard and initialize the system. The HTTPS is important!
 
+After you log into the Web UI, as the admin account navigate to Infrastructure -> Zones. Edit the default zone and ensure the "Upstream Auth Address" field is set to "proxy" and "Proxy Port" field is set to "0".
+
 ### Note
 
 If you navigate by clicking from the url in Portainer it will take you to the HTTP version of the site. You will need to manually change the url to HTTPS.
