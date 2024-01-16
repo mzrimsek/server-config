@@ -1,4 +1,4 @@
-FROM kasmweb/desktop:1.12.0-rolling
+FROM kasmweb/desktop:1.14.0-rolling
 USER root
 
 ENV HOME /home/kasm-default-profile
@@ -29,7 +29,7 @@ RUN apt update && \
   apt install -y git
 
 # Node JS
-RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_21.x | bash - && \
   apt-get install -y nodejs
 
 # NVM
@@ -48,7 +48,7 @@ RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-p
   rm packages-microsoft-prod.deb
 
 RUN apt-get update && \
-  apt-get install -y dotnet-sdk-6.0
+  apt-get install -y dotnet-sdk-8.0
 
 # Python
 RUN apt-get update && \
