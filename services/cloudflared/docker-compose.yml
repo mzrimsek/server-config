@@ -8,3 +8,5 @@ services:
     restart: unless-stopped
     environment:
       - TUNNEL_TOKEN=${TOKEN}
+    labels:
+      - "com.centurylinklabs.watchtower.monitor-only=true"
