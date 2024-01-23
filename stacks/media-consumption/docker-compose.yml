@@ -34,7 +34,7 @@ services:
 
   # books
   kavita:
-    image: kizaing/kavita:latest
+    image: jvmilazz0/kavita:latest
     container_name: kavita
     volumes:
       - ${CONFIG_DIR}/kavita:/kavita/config
