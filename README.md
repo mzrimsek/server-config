@@ -54,6 +54,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
   - Project Zomboid
   - The Forest
   - Skyrim Together Reborn
+  - Palworld
 
 ## Stacks
 
