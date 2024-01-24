@@ -17,3 +17,5 @@ When proxying traffic to the container, you will need to work around the self si
 If you want to use Authelia as an auth provider you can reference [this](https://www.authelia.com/integration/openid-connect/kasm-workspaces/)
 
 Some instances you want to have a persistent profile you can optionally use so you don't lose all your work when you close your session. You can reference [this](https://kasmweb.com/docs/latest/guide/persistent_data/persistent_profiles.html) to add a persistent profile to your instances from the admin panel.
+
+`/mnt/kasm_profiles/{image_id}/{user_id}`
