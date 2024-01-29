@@ -12,6 +12,14 @@
 | PGID        | Group Id of the host user that containers should run under (for applicable containers)                                      |
 | BACKUP_ROOT | Root directory to configure backup jobs for (should be parent enough to capture any directories to be backed up)            |
 
+## User Configuration
+
+1. Add duplicati user `sudo adduser duplicati`
+2. Get UID `id -u duplicati`
+3. Get GID `id -g duplicati`
+4. Give duplicati user access to backup directories `sudo setfacl -R -m u:duplicati:rw ${BACKUP_ROOT}`
+5. Set the PUID and PGID environment variables in your `.env` file
+
 ## Notes
 
 - [Theme Park](https://theme-park.dev/) is thrown in here to add a nice dark theme to application because light themes suck
