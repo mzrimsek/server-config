@@ -1,19 +1,17 @@
 version: "3"
 
+volumes:
+  jenkins_data: {}
+
 services:
   jenkins:
     build:
       context: ./
-      args:
-        # host jenkins user id
-        HOST_UID: ${HOST_UID}
-        # host docker group id
-        HOST_GID: ${HOST_GID}
     container_name: jenkins
     ports:
       - 8000:8080
       - 50000:50000
     volumes:
-      - ${CONFIG_DIR}/jenkins/data:/var/jenkins_home
+      - jenkins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
