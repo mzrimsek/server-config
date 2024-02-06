@@ -22,8 +22,6 @@ services:
       - 19000:3000
     networks:
       - public
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
     # deploy: # pass NVIDIA gpu to container
     #   resources:
     #     reservations:
