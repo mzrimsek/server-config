@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
-  api:
-    container_name: vikunja_api
-    image: vikunja/api:latest
+  vikunja:
+    container_name: vikunja
+    image: vikunja/vikunja:latest
     ports:
       - 3456:3456
     environment:
@@ -21,15 +21,6 @@ services:
       VIKUNJA_SERVICE_TIMEZONE: America/New_York
       VIKUNJA_SERVICE_JWTSECRET: ${JWT_SECRET}
       VIKUNJA_SERVICE_FRONTENDURL: ${APP_URL}
-    volumes: 
-      - /opt/vikunja/files:/app/vikunja/files
-    restart: unless-stopped
-
-  frontend:
-    container_name: vikunja_frontend
-    image: vikunja/frontend:latest
-    ports:
-      - 9500:80
-    environment:
-      VIKUNJA_API_URL: ${APP_URL}:3456/api/v1
+    volumes:
+      - ${CONFIG_DIR}/vikunja/files:/app/vikunja/files
     restart: unless-stopped

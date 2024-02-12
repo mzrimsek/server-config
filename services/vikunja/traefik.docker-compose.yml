@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
-  api:
-    container_name: vikunja_api
-    image: vikunja/api:latest
+  vikunja:
+    container_name: vikunja
+    image: vikunja/vikunja:latest
     environment:
       VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
       VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -18,30 +18,17 @@ services:
       VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
       VIKUNJA_SERVICE_TIMEZONE: America/New_York
       VIKUNJA_SERVICE_JWTSECRET: ${JWT_SECRET}
-      VIKUNJA_SERVICE_FRONTENDURL: ${APP_URL}
-    volumes: 
-      - /opt/vikunja/files:/app/vikunja/files
+      VIKUNJA_SERVICE_PUBLICURL: ${APP_URL}
+    volumes:
+      - ${CONFIG_DIR}/vikunja/files:/app/vikunja/files
     networks:
       - public
     labels:
       - "traefik.enable=true"
-      
-      - "traefik.http.routers.vikunja-api.rule=Host(`${TRAEFIK_PROXY_URL}`) && PathPrefix(`/api/v1`, `/dav/`, `/.well-known/`)"
-      - "traefik.http.routers.vikunja-api.entrypoints=websecure"
-      - "traefik.http.routers.vikunja-api.tls.certresolver=tlsresolver"
-    restart: unless-stopped
-
-  frontend:
-    container_name: vikunja_frontend
-    image: vikunja/frontend:latest
-    networks:
-      - public
-    labels:
-      - "traefik.enable=true"
-      
       - "traefik.http.routers.vikunja.rule=Host(`${TRAEFIK_PROXY_URL}`)"
       - "traefik.http.routers.vikunja.entrypoints=websecure"
       - "traefik.http.routers.vikunja.tls.certresolver=tlsresolver"
+      - "traefik.http.services.vikunja.loadbalancer.server.port=3456"
     restart: unless-stopped
 
 networks:

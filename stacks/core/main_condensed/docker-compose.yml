@@ -29,10 +29,10 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
-  # tasks backend
-  vikunja_api:
-    container_name: vikunja_api
-    image: vikunja/api:latest
+  # tasks
+  vikunja:
+    container_name: vikunja
+    image: vikunja/vikunja:latest
     environment:
       VIKUNJA_DATABASE_HOST: ${DATABASE_HOST}
       VIKUNJA_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -47,31 +47,18 @@ services:
       VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
       VIKUNJA_SERVICE_TIMEZONE: ${TIMEZONE}
       VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_JWT_SECRET}
-      VIKUNJA_SERVICE_FRONTENDURL: https://${VIKUNJA_URL}
+      VIKUNJA_SERVICE_PUBLICURL: https://${VIKUNJA_URL}
     volumes:
       - ${CONFIG_DIR}/vikunja/files:/app/vikunja/files
     networks:
       - public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.vikunja-api.rule=Host(`${VIKUNJA_URL}`) && PathPrefix(`/api/v1`, `/dav/`, `/.well-known/`)"
-      - "traefik.http.routers.vikunja-api.entrypoints=websecure"
-      - "traefik.http.routers.vikunja-api.tls.certresolver=tlsresolver"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
-  # tasks frontend
-  vikunja_frontend:
-    container_name: vikunja_frontend
-    image: vikunja/frontend:latest
-    networks:
-      - public
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vikunja-frontend.rule=Host(`${VIKUNJA_URL}`)"
-      - "traefik.http.routers.vikunja-frontend.entrypoints=websecure"
-      - "traefik.http.routers.vikunja-frontend.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.vikunja-frontend.middlewares=authelia@docker"
+      - "traefik.http.routers.vikunja.rule=Host(`${VIKUNJA_URL}`)"
+      - "traefik.http.routers.vikunja.entrypoints=websecure"
+      - "traefik.http.routers.vikunja.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.vikunja.middlewares=authelia@docker"
+      - "traefik.http.services.vikunja.loadbalancer.server.port=3456"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
