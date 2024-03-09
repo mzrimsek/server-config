@@ -27,6 +27,7 @@ services:
       - "traefik.http.routers.linkding.entrypoints=websecure"
       - "traefik.http.routers.linkding.tls.certresolver=tlsresolver"
       - "traefik.http.services.linkding.loadbalancer.server.port=9090"
+      - "traefik.http.routers.linkding.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 

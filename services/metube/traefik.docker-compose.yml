@@ -14,6 +14,7 @@ services:
       - "traefik.http.routers.ytdl.entrypoints=websecure"
       - "traefik.http.routers.ytdl.tls.certresolver=tlsresolver"
       - "traefik.http.services.ytdl.loadbalancer.server.port=8081"
+      - "traefik.http.routers.ytdl.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 

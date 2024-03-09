@@ -44,6 +44,7 @@ services:
       - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_URL}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.grafana.middlewares=authelia@docker"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
