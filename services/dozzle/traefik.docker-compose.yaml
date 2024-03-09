@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOZZLE_AUTH_PROVIDER=forward-proxy
+      - DOZZLE_REMOTE_HOST=${REMOTE_HOSTS}
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dozzle.rule=Host(`${DOZZLE_URL}`)"
+      - "traefik.http.routers.dozzle.entrypoints=websecure"
+      - "traefik.http.routers.dozzle.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.dozzle.middlewares=authelia@docker"
+      - "traefik.http.services.dozzle.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

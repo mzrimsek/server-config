@@ -46,6 +46,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
 - [Jellystat](./services/jellystat) - A page to get stats on your Jellyfin server usage
 - [Metube](./services/metube) - A service to assist in downloading youtube videos
+- [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
 - [Games](./games)
   - Factorio
   - Minecraft
