@@ -9,6 +9,7 @@ services:
     environment:
       - DOZZLE_AUTH_PROVIDER=forward-proxy
       - DOZZLE_REMOTE_HOST=${REMOTE_HOSTS}
+      - DOZZLE_ENABLE_ACTIONS=${DOZZLE_ENABLE_ACTIONS:-false}
     networks:
       - public
     labels:
