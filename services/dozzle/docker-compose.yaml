@@ -4,6 +4,8 @@ services:
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest
+    environment:
+      - DOZZLE_ENABLE_ACTIONS=${DOZZLE_ENABLE_ACTIONS:-false}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
