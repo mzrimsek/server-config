@@ -47,6 +47,7 @@ services:
       - "traefik.http.routers.ntfy.rule=Host(`${APP_URL}`)"
       - "traefik.http.routers.ntfy.entrypoints=websecure"
       - "traefik.http.routers.ntfy.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.ntfy.middlewares=authelia@docker"
       - "traefik.http.services.ntfy.loadbalancer.server.port=8080"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
