@@ -51,17 +51,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
-  kavita-email:
-    container_name: kavita-email
-    image: kizaing/kavitaemail:latest
-    ports:
-      - 5003:5003
-    volumes:
-      - ${CONFIG_DIR}/kavita-email:/app/config
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
   # roms
   emulatorjs:
     image: lscr.io/linuxserver/emulatorjs:latest
