@@ -23,6 +23,7 @@ services:
       - NTFY_AUTH_FILE=/var/cache/ntfy/auth.db
       - NTFY_AUTH_DEFAULT_ACCESS=deny-all
       - NTFY_ENABLE_LOGIN=true
+      - NTFY_ENABLE_SIGNUP=false
     user: ${PUID:-1000}:${PGID:-1000}
     volumes:
       - ${CONFIG_DIR}/ntfy/cache:/var/cache/ntfy
