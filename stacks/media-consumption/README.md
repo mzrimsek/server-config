@@ -7,7 +7,6 @@ A more paired down version of the media stack that is just services that consume
 - Jellyfin - TV, Movies, and Music Media Library Access
 - Jellyfin Vue - A fun alternative interface to Jellyfin
 - Kavita - eBook Library Access
-- Kavita Email - Email sender service for Kavita
 - EmulatorJS - ROM Game Library Access
 
 ## Environment Variables
