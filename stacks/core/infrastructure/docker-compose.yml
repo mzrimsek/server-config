@@ -56,6 +56,7 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
+      - 8743:8000
       # service entrypoints
       - 9696:9696 # prowlarr
       - 8989:8989 # sonarr
