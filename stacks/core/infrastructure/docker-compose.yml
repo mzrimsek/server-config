@@ -177,26 +177,6 @@ services:
       - 5432:5432
     restart: unless-stopped
 
-  # database interface
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: "True"
-    volumes:
-      - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
-      - ${CONFIG_DIR}/postgres/backup:/backup
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_URL}`)"
-      - "traefik.http.routers.pgadmin.entrypoints=websecure"
-      - "traefik.http.routers.pgadmin.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.pgadmin.middlewares=authelia@docker"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
   # AUTHENTICATION
 
   # ldap server
