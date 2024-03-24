@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  cloudbeaver:
+    container_name: cloudbeaver
+    image: dbeaver/cloudbeaver:latest
+    volumes:
+      - ${CONFIG_DIR}/cloudbeaver/config:/opt/cloudbeaver/workspace
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cloudbeaver.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.cloudbeaver.entrypoints=websecure"
+      - "traefik.http.routers.cloudbeaver.tls.certresolver=tlsresolver"
+      - "traefik.http.services.cloudbeaver.loadbalancer.server.port=8978"
+      - "traefik.http.routers.cloudbeaver.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
