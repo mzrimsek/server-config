@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-       - /opt/postgres/db_data:/var/lib/postgresql/data
+       - ${CONFIG_DIR}/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
@@ -24,6 +24,6 @@ services:
     ports:
       - 5050:80
     volumes:
-       - /opt/postgres/pgadmin_data:/var/lib/pgadmin
-       - /opt/postgres/backup:/backup
+       - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
+       - ${CONFIG_DIR}/postgres/backup:/backup
     restart: unless-stopped

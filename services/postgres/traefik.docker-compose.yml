@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-       - /opt/postgres/db_data:/var/lib/postgresql/data
+       - ${CONFIG_DIR}/postgres/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     networks:
@@ -21,9 +21,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: 'True'
     volumes:
-       - /opt/postgres/pgadmin_data:/var/lib/pgadmin
+       - ${CONFIG_DIR}/postgres/pgadmin_data:/var/lib/pgadmin
     networks:
       - postgres
       - public
