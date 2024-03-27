@@ -24,6 +24,7 @@ services:
       - NTFY_AUTH_DEFAULT_ACCESS=deny-all
       - NTFY_ENABLE_LOGIN=true
       - NTFY_ENABLE_SIGNUP=false
+      - NTFY_ENABLE_RESERVATIONS=true
     user: ${PUID:-1000}:${PGID:-1000}
     volumes:
       - ${CONFIG_DIR}/ntfy/cache:/var/cache/ntfy
