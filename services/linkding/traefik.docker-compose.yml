@@ -3,7 +3,7 @@ version: "3"
 services:
   linkding:
     container_name: linkding
-    image: sissbruecker/linkding:latest
+    image: sissbruecker/linkding:latest-plus
     volumes:
       - "${CONFIG_DIR}/linkding:/etc/linkding/data"
     environment:
