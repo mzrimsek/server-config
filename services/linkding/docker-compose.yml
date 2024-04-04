@@ -3,7 +3,7 @@ version: "3"
 services:
   linkding:
     container_name: linkding
-    image: sissbruecker/linkding:latest
+    image: sissbruecker/linkding:latest-plus
     ports:
       - 9090:9090
     volumes:
