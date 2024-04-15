@@ -39,7 +39,7 @@ Follow the steps for Option 1 and then use the `glances-password.docker-compose.
 
 ```bash
 # Enter container
-docker exec -it glances_docker sh
+docker exec -it glances sh
 
 # Generate password file for default login - add the --username password to set the username as well
 glances -s --password
