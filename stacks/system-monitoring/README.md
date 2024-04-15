@@ -35,7 +35,7 @@ The goal of this stack is to provide data sources for Prometheus and then expose
 
 You can see how to enable it [here](https://glances.readthedocs.io/en/latest/docker.html#how-to-protect-your-dockerized-server-or-web-server-with-a-login-password) but as of 4/15/2024 Option 2 does not work.
 
-Follow the steps for Option 1 and then use the `glances-password.docker-compose.yml` file. Run the commands from the folder containing your `glances.conf` file.
+Follow the steps for Option 1 and then use the `glances-password.docker-compose.yml` file. Run the commands from the folder containing your `glances.conf` file. If you have issues getting the password to work you may need to actually write out the password when prompted instead of pasting it in.
 
 ```bash
 # Enter container
