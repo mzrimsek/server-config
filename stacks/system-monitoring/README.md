@@ -42,6 +42,7 @@ Follow the steps for Option 1 and then use the `glances-password.docker-compose.
 docker exec -it glances sh
 
 # Generate password file for default login - add the --username password to set the username as well
+glances -s --password
 
 # Exit container (CTRL+C a few times) and then type "exit" after you confirm the password and the Announce line appears
 
