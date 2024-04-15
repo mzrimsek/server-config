@@ -30,3 +30,20 @@ The goal of this stack is to provide data sources for Prometheus and then expose
   - Flags (these are mutually exclusive...swap flags to switch behavior)
     - Web: -w
     - Prom: --export prometheus
+
+### Glances Password Protection
+
+You can see how to enable it [here](https://glances.readthedocs.io/en/latest/docker.html#how-to-protect-your-dockerized-server-or-web-server-with-a-login-password) but as of 4/15/2024 Option 2 does not work.
+
+Follow the steps for Option 1 and then use the `glances-password.docker-compose.yml` file. Run the commands from the folder containing your `glances.conf` file.
+
+```bash
+# Enter container
+docker exec -it glances_docker sh
+
+# Generate password file for default login - add the --username password to set the username as well
+glances -s --password
+
+# Exit container the copy the password file to the host
+docker cp glances:/root/.config/glances/glances.pwd ./secrets/glances_password
+```
