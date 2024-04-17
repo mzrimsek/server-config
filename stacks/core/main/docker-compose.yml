@@ -63,6 +63,7 @@ services:
       DB_USERNAME: ${DATABASE_USER}
       DB_PASSWORD: ${DATABASE_PASSWORD}
       TZ: ${TIMEZONE}
+      ALLOW_WEBHOOKS: true
     volumes:
       - ${CONFIG_DIR}/fireflyiii:/var/www/html/storage/upload
     labels:
