@@ -86,6 +86,8 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | BAZARR_URL               | Subdomain to route to subtitle management interface                                                                         |
 | MYLAR3_URL               | Subdomain to route to comic management interface                                                                            |
 | JELLYSEERR_URL           | Subdomain to route to the Jellyseerr media request interface                                                                |
+| DUPLICATI_PUID           | User Id that the Duplicati container should run under.                                                                      |
+| DUPLICATI_PGID           | Group Id that the Duplicati container should run under.                                                                     |
 
 #### Authelia
 
@@ -113,6 +115,12 @@ More OpenID Connect client configuration options can be found [here](https://www
 | MAILER_PORT                     | SMTP server port                                                                                                                                         |
 | MAILER_USERNAME                 | SMTP server username                                                                                                                                     |
 | MAILER_PASSWORD                 | SMTP server password                                                                                                                                     |
+
+##### Redis Notes
+
+I was having intermittent issues with the Redis container being unable to write to the db file and being unable to generate temp files when saving data. It seems that the redis container will chown the mounted volume as root and then step down the redis user, causing permission issues in some systems.
+
+I added a `fix-redis.sh` script that will step into the container and chown some volumes that may be the culprits as the redis user to ensure the redis-server process in the container has the permissions it needs to write to the mounted volumes. Not a perfect fix but should work for now. Will probably revisit at a later time to try and make it happen automatically rather than as a separate script.
 
 #### Wireguard
 
@@ -218,3 +226,4 @@ Add this to your Prometheus configuration to scrap Authelia data
 - Jellyseerr lives in this stack for the same reason as Bazarr - it integrates closely with services already in the VPN network. You could argue it goes with the Jellyfin stack as well.\
 - A recent change to Prowlarr forces you to set up authentication for the application which is not always a desirable based on your configuration, like if you have Authelia protecting your routes already. You can no longer disable auth from the web, but [it is still configurable from the config file](https://wiki.servarr.com/prowlarr/faq#can-i-disable-forced-authentication).
 - Increased the Authelia buffer sizes because some services (Firefly III) will have massive requests that get rejected
+- Added duplicati specific user and group id variables to help with some permission issues
