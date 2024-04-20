@@ -147,8 +147,8 @@ services:
     container_name: duplicati
     image: lscr.io/linuxserver/duplicati:latest
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${DUPLICATI_PUID}
+      - PGID=${DUPLICATI_PGID}
       - TZ=${TIMEZONE}
       - DOCKER_MODS=ghcr.io/gilbn/theme.park:duplicati
       - TP_THEME=${APP_THEME}
@@ -259,6 +259,7 @@ services:
   authelia-redis:
     image: redis:alpine
     container_name: authelia-redis
+    user: ${AUTHELIA_REDIS_PUID}:${AUTHELIA_REDIS_PGID}
     volumes:
       - ${CONFIG_DIR}/authelia/redis:/data
     expose:
