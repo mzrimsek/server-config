@@ -120,7 +120,7 @@ More OpenID Connect client configuration options can be found [here](https://www
 
 I was having intermittent issues with the Redis container being unable to write to the db file and being unable to generate temp files when saving data. It seems that the redis container will chown the mounted volume as root and then step down the redis user, causing permission issues in some systems.
 
-I added a command to the redis container that will run after startup to chown the some volumes that may be the culprits as the redis user to ensure the redis-server process in the container has the permissions it needs to write to the mounted volumes.
+I added a `fix-redis.sh` script that will step into the container and chown some volumes that may be the culprits as the redis user to ensure the redis-server process in the container has the permissions it needs to write to the mounted volumes. Not a perfect fix but should work for now. Will probably revisit at a later time to try and make it happen automatically rather than as a separate script.
 
 #### Wireguard
 
