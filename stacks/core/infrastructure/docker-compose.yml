@@ -259,7 +259,9 @@ services:
   authelia-redis:
     image: redis:alpine
     container_name: authelia-redis
-    user: ${AUTHELIA_REDIS_PUID}:${AUTHELIA_REDIS_PGID}
+    command: >
+      sh -c "chown -R redis:redis /etc/crontabs && 
+             chown -R redis:redis /data"
     volumes:
       - ${CONFIG_DIR}/authelia/redis:/data
     expose:

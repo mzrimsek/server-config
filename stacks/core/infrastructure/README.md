@@ -77,8 +77,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | LDAP_CONFIG_PASSWORD     | LDAP Server Configuration Password                                                                                          |
 | LDAP_UI_URL              | Subdomain to route to user management dashboard                                                                             |
 | AUTHELIA_URL             | Subdomain to route to Authelia login page                                                                                   |
-| AUTHELIA_REDIS_PUID      | User Id that the Authelia Redis container should run under. See below for notes                                             |
-| AUTHELIA_REDIS_PGID      | Group Id that the Authelia Redis container should run under. See below for notes                                            |
 | WIREGUARD_ADMIN_PASSWORD | Admin user password                                                                                                         |
 | WIREGUARD_URL            | Subdomain to route to the Wireguard login page                                                                              |
 | WIREGUARD_PRIVATE_KEY    | Generate with `wg generate`. If you change it every device has to be reconfigured                                           |
@@ -122,7 +120,7 @@ More OpenID Connect client configuration options can be found [here](https://www
 
 I was having intermittent issues with the Redis container being unable to write to the db file and being unable to generate temp files when saving data. It seems that the redis container will chown the mounted volume as root and then step down the redis user, causing permission issues in some systems.
 
-The `AUTHELIA_REDIS_PUID` and `AUTHELIA_REDIS_PGID` variables were added to the docker compose config to allow the user to specify the user and group that the redis container should run as. This should be the same user and group that the mounted volume is owned by.
+I added a command to the redis container that will run after startup to chown the some volumes that may be the culprits as the redis user to ensure the redis-server process in the container has the permissions it needs to write to the mounted volumes.
 
 #### Wireguard
 
