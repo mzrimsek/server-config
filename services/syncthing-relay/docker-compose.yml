@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  syncthing-relay:
+    image: syncthing/relaysrv
+    container_name: syncthing-relay
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    network_mode: host
+    restart: unless-stopped
+    entrypoint:
+      ["/bin/entrypoint.sh", "/bin/strelaysrv", "-pools", "", "-debug"]
+    volumes:
+      - ${CONFIG_DIR}/syncthing-relay:/var/strelaysrv

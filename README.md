@@ -48,6 +48,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Metube](./services/metube) - A service to assist in downloading youtube videos
 - [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
 - [CloudBeaver](./services/cloudbeaver) - A web-based database management tool
+- [Syncthing Relay](./services/syncthing-relay) - A Syncthing relay server
 - [Games](./games)
   - Factorio
   - Minecraft
