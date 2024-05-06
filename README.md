@@ -46,6 +46,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Jellystat](./services/jellystat) - A page to get stats on your Jellyfin server usage
 - [Metube](./services/metube) - A service to assist in downloading youtube videos
 - [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
+- [Traggo](./services/traggo) - A simple time tracking service
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
