@@ -1,0 +1,31 @@
+version: "3.1"
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost-blog
+    environment:
+      database__client: mysql
+      database__connection__host: ${DB_HOST}
+      database__connection__user: ${DB_USER}
+      database__connection__password: ${DB_PASSWORD}
+      database__connection__database: ghost
+      url: https://${APP_URL}
+    volumes:
+      - ${CONFIG_DIR}/ghost/content:/var/lib/ghost/content
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ghost-blog.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.ghost-blog.entrypoints=websecure"
+      - "traefik.http.routers.ghost-blog.tls.certresolver=tlsresolver"
+      - "traefik.http.services.ghost-blog.loadbalancer.server.port=2368"
+      - "traefik.http.routers.ghost-blog.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
