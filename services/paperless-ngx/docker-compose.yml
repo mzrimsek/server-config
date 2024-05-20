@@ -1,0 +1,40 @@
+version: "3.4"
+
+services:
+  paperless-ngx-redis:
+    container_name: paperless-ngx-redis
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_DIR}/paperless-ngx/redis:/data
+
+  paperless-ngx:
+    container_name: paperless-ngx
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    depends_on:
+      - paperless-ngx-redis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${CONFIG_DIR}/paperless-ngx/data:/usr/src/paperless/data
+      - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
+      - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
+      - ${CONFIG_DIR}/paperless-ngx/consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: ${DB_HOST}
+      PAPERLESS_DBPORT: ${DB_PORT}
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: ${DB_USER}
+      PAPERLESS_DBPASS: ${DB_PASS}
+      PAPERLESS_ADMIN_USER: ${ADMIN_USER}
+      PAPERLESS_ADMIN_MAIL: ${ADMIN_MAIL}
+      PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASS}
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_TIME_ZONE: ${TIMEZONE:-America/New_York}
+
+    #PAPERLESS_URL=https://paperless.example.com
+    #PAPERLESS_SECRET_KEY=change-me
+
+    restart: unless-stopped
