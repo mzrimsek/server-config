@@ -53,6 +53,7 @@ services:
 
       PAPERLESS_URL: https://${APP_URL}
       PAPERLESS_SECRET_KEY: ${SECRET_KEY}
+      PAPERLESS_CONSUMER_POLLING: 60 # seconds
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.paperless-ngx.rule=Host(`${APP_URL}`)"
