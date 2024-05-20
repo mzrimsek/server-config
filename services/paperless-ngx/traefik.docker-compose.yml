@@ -15,8 +15,6 @@ services:
       - paperless-ngx-redis
       - tika
       - gotenberg
-    ports:
-      - "8000:8000"
     volumes:
       - ${CONFIG_DIR}/paperless-ngx/data:/usr/src/paperless/data
       - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
@@ -47,6 +45,17 @@ services:
 
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: ${TIMEZONE:-America/New_York}
+
+      PAPERLESS_URL: https://${APP_URL}
+      PAPERLESS_SECRET_KEY: ${SECRET_KEY}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless-ngx.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.paperless-ngx.entrypoints=websecure"
+      - "traefik.http.routers.paperless-ngx.tls.certresolver=tlsresolver"
+      - "traefik.http.services.paperless-ngx.loadbalancer.server.port=8000"
+      - "traefik.http.routers.paperless-ngx.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   gotenberg:
