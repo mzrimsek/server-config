@@ -21,7 +21,7 @@ services:
       - ${CONFIG_DIR}/paperless-ngx/data:/usr/src/paperless/data
       - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
       - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
-      - ${CONFIG_DIR}/paperless-ngx/consume:/usr/src/paperless/consume
+      - ${CONSUME_DIR}:/usr/src/paperless/consume
     networks:
       - public
       - internal
