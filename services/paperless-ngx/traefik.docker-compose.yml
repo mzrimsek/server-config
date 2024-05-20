@@ -20,6 +20,8 @@ services:
       - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
       - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
       - ${CONFIG_DIR}/paperless-ngx/consume:/usr/src/paperless/consume
+    networks:
+      - public
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_TIKA_ENABLED: 1
@@ -74,3 +76,8 @@ services:
     container_name: paperless-ngx-tika
     image: ghcr.io/paperless-ngx/tika:latest
     restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
