@@ -23,7 +23,7 @@ services:
       - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
       - ${CONFIG_DIR}/paperless-ngx/consume:/usr/src/paperless/consume
     environment:
-      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_REDIS: redis://paperless-ngx-redis:6379
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
