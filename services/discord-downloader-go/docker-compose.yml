@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  discord-download-bot:
+    image: getgot/discord-downloader-go
+    container_name: discord-download-bot
+    volumes:
+      - ${CONFIG_DIR}/discord-downloader-bot/settings.json:/root/settings.json
+      - ${CONFIG_DIR}/discord-downloader-bot/database:/root/database
+      - ${DOWNLOAD_DIR}:/root/downloads
+    restart: unless-stopped
