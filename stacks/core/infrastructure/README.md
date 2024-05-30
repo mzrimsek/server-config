@@ -50,8 +50,9 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | TRAEFIK_TLS_EMAIL        | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
 | TRAEFIK_DASHBOARD_URL    | Subdomain to route to the Traefik dashboard                                                                                 |
 | TRAEFIK_DASHBOARD_USER   | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
-| NORDVPN_USER             | NordVPN service credentials username / email                                                                                |
-| NORDVPN_PASS             | NordVPN service credentials password                                                                                        |
+| VPN_PROVIDER             | VPN service Gluetun should use                                                                                              |
+| VPN_USER                 | VPN service credentials username / email                                                                                    |
+| VPN_PASS                 | VPN service credentials password                                                                                            |
 | PIHOLE_PASSWORD          | Password to access the PiHole admin dashboard                                                                               |
 | PIHOLE_URL               | Subdomain to route to the PiHole admin dashboard                                                                            |
 | POSTGRES_USER            | Name of admin user for database                                                                                             |

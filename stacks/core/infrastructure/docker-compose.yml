@@ -49,9 +49,9 @@ services:
       - authelia
     restart: unless-stopped
 
-  # nordvpn client
-  nordvpn:
-    container_name: nordvpn
+  # vpn client
+  service-vpn:
+    container_name: service-vpn
     image: qmcgaw/gluetun:v3.28.0
     cap_add:
       - NET_ADMIN
@@ -70,9 +70,9 @@ services:
       - 8090:8090 # mylar3
       - 5055:5055 # jellyseerr
     environment:
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - OPENVPN_USER=${NORDVPN_USER}
-      - OPENVPN_PASSWORD=${NORDVPN_PASS}
+      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
+      - OPENVPN_USER=${VPN_USER}
+      - OPENVPN_PASSWORD=${VPN_PASS}
       - SERVER_REGIONS=United States
     restart: unless-stopped
 
