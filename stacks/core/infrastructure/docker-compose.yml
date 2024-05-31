@@ -52,7 +52,7 @@ services:
   # vpn client
   service-vpn:
     container_name: service-vpn
-    image: qmcgaw/gluetun:v3.28.0
+    image: qmcgaw/gluetun:v3.38
     cap_add:
       - NET_ADMIN
     ports:
