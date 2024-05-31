@@ -74,7 +74,7 @@ services:
       - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
       - OPENVPN_USER=${VPN_USER}
       - OPENVPN_PASSWORD=${VPN_PASS}
-      - SERVER_REGIONS=United States
+      - SERVER_COUNTRIES=United States
     restart: unless-stopped
 
   # vpn tunnel client
