@@ -6,6 +6,8 @@ services:
     image: redis:alpine
     volumes:
       - ${CONFIG_DIR}/paperless-ngx/redis:/data
+    networks:
+      - internal
     restart: unless-stopped
 
   paperless-ngx:
@@ -20,8 +22,9 @@ services:
       - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
       - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
       - ${CONSUME_DIR}:/usr/src/paperless/consume
-    ports:
-      - 7788:8000
+    networks:
+      - public
+      - internal
     environment:
       PAPERLESS_REDIS: redis://paperless-ngx-redis:6379
       PAPERLESS_TIKA_ENABLED: 1
@@ -52,12 +55,20 @@ services:
       PAPERLESS_SECRET_KEY: ${SECRET_KEY}
       PAPERLESS_CONSUMER_POLLING: 60 # seconds
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless-ngx.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.paperless-ngx.entrypoints=websecure"
+      - "traefik.http.routers.paperless-ngx.tls.certresolver=tlsresolver"
+      - "traefik.http.services.paperless-ngx.loadbalancer.server.port=8000"
+      - "traefik.http.routers.paperless-ngx.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   gotenberg:
     container_name: paperless-ngx-gotenberg
     image: docker.io/gotenberg/gotenberg:7.10
+    networks:
+      - internal
     restart: unless-stopped
 
     # The gotenberg chromium route is used to convert .eml files. We do not
@@ -70,17 +81,27 @@ services:
   tika:
     container_name: paperless-ngx-tika
     image: ghcr.io/paperless-ngx/tika:latest
+    networks:
+      - internal
     restart: unless-stopped
 
   protonmail-bridge:
     container_name: paperless-ngx-protonmail-bridge
     image: shenxn/protonmail-bridge
+    networks:
+      - internal
     ports:
       - 1025:25/tcp
       - 1143:143/tcp
     volumes:
       - protonmail-bridge:/root
     restart: unless-stopped
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
 
 volumes:
   protonmail-bridge:
