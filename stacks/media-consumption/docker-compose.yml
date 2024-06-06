@@ -11,7 +11,6 @@ services:
       - ${MEDIA_DIR}:/media
     environment:
       - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_URL}
-    user: ${JELLYFIN_PUID:-1000}:${JELLYFIN_PGID:-1000}
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     network_mode: "host" # port 8096
@@ -57,8 +56,8 @@ services:
     image: lscr.io/linuxserver/emulatorjs:latest
     container_name: emulatorjs
     environment:
-      - PUID=${EMULATOR_PUID:-1000}
-      - PGID=${EMULATOR_PGID:-1000}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
       - TZ=${TIMEZONE:-America/New_York}
     volumes:
       - ${CONFIG_DIR}/emulatorjs/config:/config
