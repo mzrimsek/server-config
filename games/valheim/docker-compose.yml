@@ -6,13 +6,37 @@ services:
     container_name: valheim${INSTANCE_MODIFIER}
     volumes:
       - ${CONFIG_DIR}/valheim${INSTANCE_MODIFIER}/config:/config
+      - ${CONFIG_DIR}/valheim${INSTANCE_MODIFIER}/backup:/backup
       - ${CONFIG_DIR}/valheim${INSTANCE_MODIFIER}/data:/opt/valheim
     ports:
-      - 2456-2457:2456-2457/udp
+      - 2456-2458:2456-2458/udp # Game ports
+      - 9001:9001 # Supervisor port
+      - 8080:8080 # Status port
     environment:
       - SERVER_NAME=${SERVER_NAME}
       - SERVER_PASS=${SERVER_PASSWORD}
-      - TZ=${TIMEZONE}
-      - STEAMCMD_ARGS=${STEAMCMD_ARGS}
+      - SERVER_PUBLIC=${SERVER_PUBLIC:-true}
+      - TZ=${TIMEZONE:-America/New_York}
       - BEPINEX=true
+      # auto update
+      - UPDATE_CRON=${UPDATE_CRON:-*/15 * * * *} # Update every day at midnight
+      - UPDATE_IF_IDLE=${UPDATE_IF_IDLE:-true}
+      # auto restart
+      - RESTART_CRON=${RESTART_CRON:-0 5 * * *} # Restart every day at 5am
+      - RESTART_IF_IDLE=${RESTART_IF_IDLE:-true}
+      # auto backup
+      - BACKUPS=${BACKUPS:-true}
+      - BACKUPS_CRON=${BACKUPS_CRON:-0 */6 * * *} # Backup every 6 hours
+      - BACKUPS_MAX_AGE=${BACKUPS_MAX_AGE:-7} # Keep backups for 7 days
+      - BACKUPS_MAX_COUNT=${BACKUPS_MAX_COUNT:-0} # Keep n backups, 0 to keep all
+      - BACKUPS_IF_IDLE=${BACKUPS_IF_IDLE:-true}
+      - BACKUPS_DIRECTORY=/backup
+      # supervisor
+      - SUPERVISOR_HTTP=${SUPERVISOR_HTTP:-false}
+      - SUPERVISOR_HTTP_PORT=${SUPERVISOR_HTTP_PORT:-9001}
+      - SUPERVISOR_HTTP_USER=${SUPERVISOR_HTTP_USER:-admin}
+      - SUPERVISOR_HTTP_PASS=${SUPERVISOR_HTTP_PASS:-admin}
+      # status
+      - STATUS_HTTP=${SERVER_PUBLIC:-false} # Enable the status page for public servers
+      - STATUS_HTTP_PORT=${STATUS_HTTP_PORT:-8080}
     restart: always
