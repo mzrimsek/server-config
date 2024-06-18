@@ -64,6 +64,7 @@ services:
       - 7878:7878 # radarr
       - 8686:8686 # lidarr
       - 8787:8787 # readarr
+      - 8788:8788 # readarr-audiobooks
       - 9091:9091 # transmission
       - 51413:51413 # transmission
       - 51413:51413/udp # transmission
@@ -422,6 +423,34 @@ services:
       - "traefik.http.routers.readarr.tls.certresolver=tlsresolver"
       - "traefik.http.routers.readarr.middlewares=authelia@docker"
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - service-vpn
+      - prowlarr
+      - transmission
+    restart: unless-stopped
+
+  # audiobook management
+  readarr-audiobooks:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr-audiobooks
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:readarr
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/readarr-audiobooks:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    network_mode: service:service-vpn
+    labels:
+      - "traefik.http.routers.readarr-audiobooks.rule=Host(`${READARR_AUDIOBOOKS_URL}`)"
+      - "traefik.http.routers.readarr-audiobooks.entrypoints=websecure"
+      - "traefik.http.routers.readarr-audiobooks.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.readarr-audiobooks.middlewares=authelia@docker"
+      - "traefik.http.services.readarr-audiobooks.loadbalancer.server.port=8788"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - service-vpn

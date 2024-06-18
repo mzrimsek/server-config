@@ -228,3 +228,4 @@ Add this to your Prometheus configuration to scrap Authelia data
 - A recent change to Prowlarr forces you to set up authentication for the application which is not always a desirable based on your configuration, like if you have Authelia protecting your routes already. You can no longer disable auth from the web, but [it is still configurable from the config file](https://wiki.servarr.com/prowlarr/faq#can-i-disable-forced-authentication).
 - Increased the Authelia buffer sizes because some services (Firefly III) will have massive requests that get rejected
 - Added duplicati specific user and group id variables to help with some permission issues
+- When you spin up the radarr-audiobooks instance you need to go into the config file it generates and modify the port from 8787 to 8788
