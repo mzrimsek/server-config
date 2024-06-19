@@ -40,6 +40,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Grocy](./services/grocy) - Groceries and household management
 - [KitchenOwl](./services/kitchenowl) - Grocery and Recipe management
 - [Ntfy](./services/ntfy) - Simple notification service
+- [Apprise](./services/apprise) - Notification management platform
 - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
 - [Linkding](./services/linkding) - Bookmark management
 - [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
