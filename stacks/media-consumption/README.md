@@ -8,6 +8,7 @@ A more paired down version of the media stack that is just services that consume
 - Jellyfin Vue - A fun alternative interface to Jellyfin
 - Kavita - eBook Library Access
 - EmulatorJS - ROM Game Library Access
+- Audiobookshelf - Audiobook & Podcast Library Access
 
 ## Environment Variables
 

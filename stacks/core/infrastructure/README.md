@@ -50,8 +50,9 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | TRAEFIK_TLS_EMAIL        | Email for Traefik to use when Let's Encrypt executes its TLS Challenge for cert generation                                  |
 | TRAEFIK_DASHBOARD_URL    | Subdomain to route to the Traefik dashboard                                                                                 |
 | TRAEFIK_DASHBOARD_USER   | [User credentials](https://doc.traefik.io/traefik/middlewares/http/basicauth/) to restrict access to Traefik dashboard      |
-| NORDVPN_USER             | NordVPN service credentials username / email                                                                                |
-| NORDVPN_PASS             | NordVPN service credentials password                                                                                        |
+| VPN_PROVIDER             | VPN service Gluetun should use                                                                                              |
+| VPN_USER                 | VPN service credentials username / email                                                                                    |
+| VPN_PASS                 | VPN service credentials password                                                                                            |
 | PIHOLE_PASSWORD          | Password to access the PiHole admin dashboard                                                                               |
 | PIHOLE_URL               | Subdomain to route to the PiHole admin dashboard                                                                            |
 | POSTGRES_USER            | Name of admin user for database                                                                                             |
@@ -227,3 +228,4 @@ Add this to your Prometheus configuration to scrap Authelia data
 - A recent change to Prowlarr forces you to set up authentication for the application which is not always a desirable based on your configuration, like if you have Authelia protecting your routes already. You can no longer disable auth from the web, but [it is still configurable from the config file](https://wiki.servarr.com/prowlarr/faq#can-i-disable-forced-authentication).
 - Increased the Authelia buffer sizes because some services (Firefly III) will have massive requests that get rejected
 - Added duplicati specific user and group id variables to help with some permission issues
+- When you spin up the radarr-audiobooks instance you need to go into the config file it generates and modify the port from 8787 to 8788

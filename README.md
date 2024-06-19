@@ -49,6 +49,8 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Traggo](./services/traggo) - A simple time tracking service
 - [Ghost](./services/ghost) - A simple blogging platform
 - [Paperless-NGX](./services/paperless-ngx) - A PDF processing and management server
+- [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
+- [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases

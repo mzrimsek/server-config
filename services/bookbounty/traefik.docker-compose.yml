@@ -1,0 +1,27 @@
+services:
+  bookbounty:
+    image: thewicklowwolf/bookbounty:latest
+    container_name: bookbounty
+    volumes:
+      - ${CONFIG_DIR}/bookbounty:/bookbounty/config
+      - ${DOWNLOADS_DIR}:/bookbounty/downloads
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - readarr_address=${READARR_ADDRESS}
+      - readarr_api_key=${READARR_API_KEY}
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bookbounty.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.bookbounty.entrypoints=websecure"
+      - "traefik.http.routers.bookbounty.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.bookbounty.middlewares=authelia@docker"
+      - "traefik.http.services.bookbounty.loadbalancer.server.port=5000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
