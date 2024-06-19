@@ -1,54 +1,6 @@
 version: "3"
 
 services:
-  # reverse proxy
-  traefik:
-    container_name: traefik
-    image: traefik:2.7
-    ports:
-      - 80:80/tcp # web
-      - 443:443/tcp # websecure
-      - 8082:8082/tcp # metrics
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${CONFIG_DIR}/traefik/providers:/config
-      - ${CONFIG_DIR}/traefik/certs:/etc/certs
-    command:
-      - "--entrypoints.web.address=:80/tcp"
-      - "--entrypoints.websecure.address=:443/tcp"
-      - "--providers.docker"
-      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
-      - "--api.insecure"
-      - "--log=true"
-      - "--log.level=info"
-      - "--accesslog=true"
-      - "--entryPoints.metrics.address=:8082"
-      - "--metrics.prometheus=true"
-      - "--metrics.prometheus.addEntryPointsLabels=true"
-      - "--metrics.prometheus.addrouterslabels=true"
-      - "--metrics.prometheus.addServicesLabels=true"
-      - "--metrics.prometheus.entryPoint=metrics"
-      - "--providers.file.directory=/config"
-      - "--providers.file.watch=true"
-      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-      - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
-      - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
-      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
-      - "--serverstransport.insecureskipverify"
-    labels:
-      - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
-      - traefik.http.routers.traefik.service=api@internal
-      - traefik.http.routers.traefik.tls.certresolver=tlsresolver
-      - traefik.http.routers.traefik.entrypoints=websecure
-      - traefik.http.routers.traefik.middlewares=authelia@docker
-      - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=2000000 # raise max body size to 2MB
-      - traefik.http.middlewares.authelia.forwardauth.address=http://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_URL}
-      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
-      - traefik.http.middlewares.authelia.forwardauth.tls.insecureSkipVerify=true
-      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
-    restart: unless-stopped
-
   # budgeting
   fireflyiii:
     container_name: fireflyiii
@@ -66,6 +18,8 @@ services:
       ALLOW_WEBHOOKS: true
     volumes:
       - ${CONFIG_DIR}/fireflyiii:/var/www/html/storage/upload
+    networks:
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fireflyiii.rule=Host(`${FIREFLY_URL}`)"
@@ -75,13 +29,6 @@ services:
       - "traefik.http.routers.fireflyiii.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
-
-  # # budgeting automation
-  # fireflyiii_cron:
-  #   container_name: fireflyiii_cron
-  #   image: alpine
-  #   command: sh -c "echo \"0 3 * * * wget -qO- https://${FIREFLY_URL}/api/v1/cron/${FIREFLY_COMMAND_LINE_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
-  #   restart: unless-stopped
 
   # tasks
   vikunja:
@@ -99,6 +46,8 @@ services:
       VIKUNJA_MAILER_PORT: ${MAILER_PORT}
       VIKUNJA_MAILER_USERNAME: ${MAILER_USERNAME}
       VIKUNJA_MAILER_PASSWORD: ${MAILER_PASSWORD}
+      VIKUNJA_MAILER_FROMEMAIL: ${MAILER_FROM}
+      VIKUNJA_MAILER_AUTHTYPE: ${MAILER_AUTH_TYPE}
       VIKUNJA_SERVICE_TIMEZONE: ${TIMEZONE}
       VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_JWT_SECRET}
       VIKUNJA_SERVICE_PUBLICURL: https://${VIKUNJA_URL}
@@ -116,22 +65,7 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
-  # data backup
-  backup:
-    container_name: duplicati
-    image: lscr.io/linuxserver/duplicati:latest
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      - DOCKER_MODS=ghcr.io/gilbn/theme.park:duplicati
-      - TP_THEME=${APP_THEME}
-    volumes:
-      - ${CONFIG_DIR}/duplicati:/config
-      - ${CONFIG_DIR}/duplicati/backups:/backups
-      - ${BACKUP_ROOT1}:/source/root1
-      - ${BACKUP_ROOT2}:/source/root2
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-    network_mode: "host" # port 8200
-    restart: unless-stopped
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

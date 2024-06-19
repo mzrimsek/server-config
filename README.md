@@ -15,7 +15,6 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Portainer](./services/portainer) - Docker Container and Kubernetes Cluster Management and Orchestration
 - [Traefik](./services/traefik) - Container-focused Reverse Proxy
 - [Jenkins](./services/jenkins) - Customizable Build Server
-- [Postgres](./services/postgres) - SQL based Database
 - [MQTT](./services/mqtt) - MQTT Servers for Cross-Server Communication
   - RabbitMQ
   - Mosquitto
@@ -47,6 +46,16 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Jellystat](./services/jellystat) - A page to get stats on your Jellyfin server usage
 - [Metube](./services/metube) - A service to assist in downloading youtube videos
 - [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
+- [Traggo](./services/traggo) - A simple time tracking service
+- [Ghost](./services/ghost) - A simple blogging platform
+- [Paperless-NGX](./services/paperless-ngx) - A PDF processing and management server
+- [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
+- [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
+- [Databases](./databases)
+  - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
+  - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
+  - [MySQL](./services/databases/mysql) - SQL based Database
+  - [Postgres](./services/databases/postgres) - SQL based Database
 - [CloudBeaver](./services/cloudbeaver) - A web-based database management tool
 - [Syncthing Relay](./services/syncthing-relay) - A Syncthing relay server
 - [Games](./games)

@@ -16,6 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CONFIG_DIR}/traefik/providers:/config
       - ${CONFIG_DIR}/traefik/certs:/etc/certs
+      - ${CONFIG_DIR}/traefik/letsencrypt:/letsencrypt
     command:
       - "--entrypoints.web.address=:80/tcp"
       - "--entrypoints.websecure.address=:443/tcp"
@@ -37,7 +38,7 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
-      - "--certificatesresolvers.tlsresolver.acme.storage=acme.json"
+      - "--certificatesresolvers.tlsresolver.acme.storage=/letsencrypt/acme.json"
     labels:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_URL}`)
       - traefik.http.routers.traefik.service=api@internal
@@ -49,10 +50,10 @@ services:
       - authelia
     restart: unless-stopped
 
-  # nordvpn client
-  nordvpn:
-    container_name: nordvpn
-    image: qmcgaw/gluetun:v3.28.0
+  # vpn client
+  service-vpn:
+    container_name: service-vpn
+    image: qmcgaw/gluetun:v3.38
     cap_add:
       - NET_ADMIN
     ports:
@@ -63,6 +64,7 @@ services:
       - 7878:7878 # radarr
       - 8686:8686 # lidarr
       - 8787:8787 # readarr
+      - 8788:8788 # readarr-audiobooks
       - 9091:9091 # transmission
       - 51413:51413 # transmission
       - 51413:51413/udp # transmission
@@ -70,10 +72,10 @@ services:
       - 8090:8090 # mylar3
       - 5055:5055 # jellyseerr
     environment:
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - OPENVPN_USER=${NORDVPN_USER}
-      - OPENVPN_PASSWORD=${NORDVPN_PASS}
-      - SERVER_REGIONS=United States
+      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
+      - OPENVPN_USER=${VPN_USER}
+      - OPENVPN_PASSWORD=${VPN_PASS}
+      - SERVER_COUNTRIES=United States
     restart: unless-stopped
 
   # vpn tunnel client
@@ -303,7 +305,7 @@ services:
       - TP_THEME=${APP_THEME}
     volumes:
       - ${CONFIG_DIR}/prowlarr:/config
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.prowlarr.rule=Host(`${PROWLARR_URL}`)"
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
@@ -312,7 +314,7 @@ services:
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
       - transmission
     restart: unless-stopped
 
@@ -330,7 +332,7 @@ services:
       - ${CONFIG_DIR}/sonarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.sonarr.rule=Host(`${SONARR_URL}`)"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
@@ -339,7 +341,7 @@ services:
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -358,7 +360,7 @@ services:
       - ${CONFIG_DIR}/radarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.radarr.rule=Host(`${RADARR_URL}`)"
       - "traefik.http.routers.radarr.entrypoints=websecure"
@@ -367,7 +369,7 @@ services:
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -386,7 +388,7 @@ services:
       - ${CONFIG_DIR}/lidarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.lidarr.rule=Host(`${LIDARR_URL}`)"
       - "traefik.http.routers.lidarr.entrypoints=websecure"
@@ -395,7 +397,7 @@ services:
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -414,7 +416,7 @@ services:
       - ${CONFIG_DIR}/readarr:/config
       - ${MEDIA_DIR}:/data
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.readarr.rule=Host(`${READARR_URL}`)"
       - "traefik.http.routers.readarr.entrypoints=websecure"
@@ -423,7 +425,35 @@ services:
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
+      - prowlarr
+      - transmission
+    restart: unless-stopped
+
+  # audiobook management
+  readarr-audiobooks:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr-audiobooks
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:readarr
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/readarr-audiobooks:/config
+      - ${MEDIA_DIR}:/data
+      - ${DOWNLOADS_DIR}:/downloads
+    network_mode: service:service-vpn
+    labels:
+      - "traefik.http.routers.readarr-audiobooks.rule=Host(`${READARR_AUDIOBOOKS_URL}`)"
+      - "traefik.http.routers.readarr-audiobooks.entrypoints=websecure"
+      - "traefik.http.routers.readarr-audiobooks.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.readarr-audiobooks.middlewares=authelia@docker"
+      - "traefik.http.services.readarr-audiobooks.loadbalancer.server.port=8788"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - service-vpn
       - prowlarr
       - transmission
     restart: unless-stopped
@@ -442,7 +472,7 @@ services:
       - ${CONFIG_DIR}/mylar3:/config
       - ${MEDIA_DIR}/comics:/comics
       - ${DOWNLOADS_DIR}:/downloads
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.http.routers.mylar3.rule=Host(`${MYLAR3_URL}`)"
       - "traefik.http.routers.mylar3.entrypoints=websecure"
@@ -451,7 +481,7 @@ services:
       - "traefik.http.services.mylar3.loadbalancer.server.port=8090"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
       - transmission
     restart: unless-stopped
 
@@ -468,7 +498,7 @@ services:
     volumes:
       - ${CONFIG_DIR}/bazarr:/config
       - ${MEDIA_DIR}:/data
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bazarr.rule=Host(`${BAZARR_URL}`)"
@@ -478,7 +508,7 @@ services:
       - "traefik.http.services.bazarr.loadbalancer.server.port=6767"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
     restart: unless-stopped
 
   # media request interface
@@ -490,7 +520,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_DIR}/jellyseerr:/app/config
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyseerr.rule=Host(`${JELLYSEERR_URL}`)"
@@ -500,7 +530,7 @@ services:
       - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
-      - nordvpn
+      - service-vpn
     restart: unless-stopped
 
   ## GENERAL CLIENTS
@@ -526,9 +556,9 @@ services:
       - "traefik.http.routers.transmission.middlewares=authelia@docker"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
       - "com.centurylinklabs.watchtower.enable=true"
-    network_mode: service:nordvpn
+    network_mode: service:service-vpn
     depends_on:
-      - nordvpn
+      - service-vpn
     restart: unless-stopped
 
   # mqtt client

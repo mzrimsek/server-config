@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost-blog
+    ports:
+      - 8080:2368
+    environment:
+      database__client: mysql
+      database__connection__host: ${DB_HOST}
+      database__connection__user: ${DB_USER}
+      database__connection__password: ${DB_PASSWORD}
+      database__connection__database: ghost
+      url: http://${APP_URL}
+    volumes:
+      - ${CONFIG_DIR}/ghost/content:/var/lib/ghost/content
+    restart: unless-stopped

@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  traggo:
+    image: traggo/server:latest
+    container_name: traggo
+    ports:
+      - 3030:3030
+    environment:
+      TRAGGO_DEFAULT_USER_NAME: ${ADMIN_USER_NAME:-admin}
+      TRAGGO_DEFAULT_USER_PASS: ${ADMIN_USER_PASS:-admin}
+    volumes:
+      - ${CONFIG_DIR}/traggo:/opt/traggo/data
+    restart: unless-stopped

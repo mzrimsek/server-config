@@ -1,0 +1,92 @@
+version: "3.4"
+
+services:
+  paperless-ngx-redis:
+    container_name: paperless-ngx-redis
+    image: redis:alpine
+    volumes:
+      - ${CONFIG_DIR}/paperless-ngx/redis:/data
+    networks:
+      - internal
+    restart: unless-stopped
+
+  paperless-ngx:
+    container_name: paperless-ngx
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    depends_on:
+      - paperless-ngx-redis
+      - tika
+      - gotenberg
+    volumes:
+      - ${CONFIG_DIR}/paperless-ngx/data:/usr/src/paperless/data
+      - ${CONFIG_DIR}/paperless-ngx/media:/usr/src/paperless/media
+      - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
+      - ${CONSUME_DIR}:/usr/src/paperless/consume
+    networks:
+      - public
+      - internal
+    environment:
+      PAPERLESS_REDIS: redis://paperless-ngx-redis:6379
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: ${DB_HOST}
+      PAPERLESS_DBPORT: ${DB_PORT:-5432}
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: ${DB_USER}
+      PAPERLESS_DBPASS: ${DB_PASS}
+
+      PAPERLESS_ADMIN_USER: ${ADMIN_USER}
+      PAPERLESS_ADMIN_MAIL: ${ADMIN_MAIL}
+      PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASS}
+
+      PAPERLESS_EMAIL_HOST: ${EMAIL_HOST}
+      PAPERLESS_EMAIL_PORT: ${EMAIL_PORT}
+      PAPERLESS_EMAIL_HOST_USER: ${EMAIL_USER}
+      PAPERLESS_EMAIL_HOST_PASSWORD: ${EMAIL_PASS}
+      PAPERLESS_EMAIL_FROM: ${EMAIL_FROM}
+
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_TIME_ZONE: ${TIMEZONE:-America/New_York}
+
+      PAPERLESS_URL: https://${APP_URL}
+      PAPERLESS_SECRET_KEY: ${SECRET_KEY}
+      PAPERLESS_CONSUMER_POLLING: 60 # seconds
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless-ngx.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.paperless-ngx.entrypoints=websecure"
+      - "traefik.http.routers.paperless-ngx.tls.certresolver=tlsresolver"
+      - "traefik.http.services.paperless-ngx.loadbalancer.server.port=8000"
+      - "traefik.http.routers.paperless-ngx.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+  gotenberg:
+    container_name: paperless-ngx-gotenberg
+    image: docker.io/gotenberg/gotenberg:7.10
+    networks:
+      - internal
+    restart: unless-stopped
+
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  tika:
+    container_name: paperless-ngx-tika
+    image: ghcr.io/paperless-ngx/tika:latest
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
