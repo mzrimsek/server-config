@@ -1,0 +1,11 @@
+services:
+  bookbounty:
+    image: thewicklowwolf/bookbounty:latest
+    container_name: bookbounty
+    ports:
+      - 5000:5000
+    volumes:
+      - ${CONFIG_DIR}/bookbounty:/bookbounty/config
+      - ${DOWNLOADS_DIR}:/bookbounty/downloads
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped

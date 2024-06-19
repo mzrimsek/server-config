@@ -5,5 +5,5 @@ services:
     container_name: it-tools
     image: "corentinth/it-tools:latest"
     ports:
-      - "8080:80"
+      - "9191:80"
     restart: unless-stopped
