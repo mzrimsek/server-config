@@ -70,6 +70,7 @@ services:
       - 51413:51413/udp # transmission
       - 6767:6767 # bazarr
       - 8090:8090 # mylar3
+      - 8091:8091 # mylar3-manga
       - 5055:5055 # jellyseerr
     environment:
       - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
@@ -479,6 +480,33 @@ services:
       - "traefik.http.routers.mylar3.tls.certresolver=tlsresolver"
       - "traefik.http.routers.mylar3.middlewares=authelia@docker"
       - "traefik.http.services.mylar3.loadbalancer.server.port=8090"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - service-vpn
+      - transmission
+    restart: unless-stopped
+
+    # manga management
+  mylar3-manga:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3-manga
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:mylar3
+      - TP_THEME=${APP_THEME}
+    volumes:
+      - ${CONFIG_DIR}/mylar3-manga:/config
+      - ${MEDIA_DIR}/manga:/comics
+      - ${DOWNLOADS_DIR}:/downloads
+    network_mode: service:service-vpn
+    labels:
+      - "traefik.http.routers.mylar3-manga.rule=Host(`${MYLAR3_MANGA_URL}`)"
+      - "traefik.http.routers.mylar3-manga.entrypoints=websecure"
+      - "traefik.http.routers.mylar3-manga.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.mylar3-manga.middlewares=authelia@docker"
+      - "traefik.http.services.mylar3-manga.loadbalancer.server.port=8091"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - service-vpn
