@@ -1,0 +1,16 @@
+services:
+  linkstack:
+    container_name: linkstack
+    image: linkstackorg/linkstack
+    hostname: linkstack
+    environment:
+      - HTTP_SERVER_NAME=${APP_URL}
+      - SERVER_ADMIN=${ADMIN_EMAIL}
+      - TZ=${TIMEZONE:-America/New_York}
+      - PHP_MEMORY_LIMIT=512M
+      - UPLOAD_MAX_FILESIZE=8M
+    volumes:
+      - ${CONFIG_DIR}/linkstack/config:/htdocs
+    ports:
+      - 7780:80
+    restart: unless-stopped
