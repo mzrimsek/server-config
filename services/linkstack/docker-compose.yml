@@ -1,16 +1,23 @@
+version: "3.8"
+
 services:
   linkstack:
-    container_name: linkstack
-    image: linkstackorg/linkstack
     hostname: linkstack
+    container_name: linkstack
+    image: linkstackorg/linkstack:latest
     environment:
-      - HTTP_SERVER_NAME=${APP_URL}
+      # - HTTP_SERVER_NAME=${APP_URL}
+      # - HTTPS_SERVER_NAME=${APP_URL}
       - SERVER_ADMIN=${ADMIN_EMAIL}
       - TZ=${TIMEZONE:-America/New_York}
+      - LOG_LEVEL=info
       - PHP_MEMORY_LIMIT=512M
       - UPLOAD_MAX_FILESIZE=8M
     volumes:
-      - ${CONFIG_DIR}/linkstack/config:/htdocs
+      - linkstack_data:/htdocs # trying to map a directory doesn't work for whatever reason
     ports:
-      - 7780:80
+      - "8190:443"
     restart: unless-stopped
+
+volumes:
+  linkstack_data:
