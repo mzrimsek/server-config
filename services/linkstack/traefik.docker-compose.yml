@@ -15,11 +15,19 @@ services:
       - UPLOAD_MAX_FILESIZE=8M
     volumes:
       - linkstack_data:/htdocs # trying to map a directory doesn't work for whatever reason
-    ports:
-      - "8190:443"
+    networks:
+      - public
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linkstack.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.linkstack.entrypoints=websecure"
+      - "traefik.http.routers.linkstack.tls.certresolver=tlsresolver"
+      - "traefik.http.services.linkstack.loadbalancer.server.port=443"
+      - "traefik.http.routers.linkstack.middlewares=authelia@docker"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
-volumes:
-  linkstack_data:
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
