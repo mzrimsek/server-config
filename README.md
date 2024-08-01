@@ -28,6 +28,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
 - [Jellyfin](./services/jellyfin) - Media organization and viewing
   - Includes Jellyseerr
+- [Jellyfin Auto Collections](./services/jellyfin-auto-collections/) - Automatically create collections in Jellyfin based on configurable lists
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
 - [OpenLDAP](./services/ldap) - User credential backend
