@@ -36,6 +36,7 @@ services:
       - "--providers.file.watch=true"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--serverstransport.insecureskipverify=true"
       - "--certificatesresolvers.tlsresolver.acme.tlschallenge"
       - "--certificatesresolvers.tlsresolver.acme.email=${TRAEFIK_TLS_EMAIL}"
       - "--certificatesresolvers.tlsresolver.acme.storage=/letsencrypt/acme.json"
