@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  pydio-cells:
+    image: pydio/cells:latest
+    container_name: pydio-cells
+    ports:
+      - 28080:8080
+    volumes:
+      - ${CONFIG_DIR}/pydio-cells/config:/var/cells
+      - ${CONFIG_DIR}/pydio-cells/data:/var/cells/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
