@@ -53,6 +53,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
 - [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
 - [LinkStack](./services/linkstack) - A simple LinkTree like service for simple link sharing
+- [Pydio Cells](./services/pydio-cells) - A simple file sync platform
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases

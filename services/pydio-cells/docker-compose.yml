@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  pydiocells:
+    image: pydio/cells:latest
+    container_name: pydiocells
+    hostname: pydiocells
+    ports:
+      - 28080:8080
+    environment:
+      - CELLS_BIND=0.0.0.0:8080
+      - CELLS_EXTERNAL=http://localhost
+      - CELLS_NO_TLS=1
+      - CELLS_ENABLE_METRICS=true
+      - CELLS_METRICS_BASIC_AUTH=${METRICS_ADMIN_USER}:${METRICS_ADMIN_PASS}
+    volumes:
+      - ${CONFIG_DIR}/pydio-cells/config:/var/cells
+      - ${CONFIG_DIR}/pydio-cells/data:/var/cells/data
+      - ${CONFIG_DIR}/pydio-cells/metrics:/var/cells/services/pydio.gateway.metrics
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
