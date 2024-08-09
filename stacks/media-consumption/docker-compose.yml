@@ -36,6 +36,8 @@ services:
   kavita:
     image: jvmilazz0/kavita:latest
     container_name: kavita
+    environment:
+      - TZ=${TIMEZONE:-America/New_York}
     volumes:
       - ${CONFIG_DIR}/kavita:/kavita/config
       - ${MEDIA_DIR}:/media
