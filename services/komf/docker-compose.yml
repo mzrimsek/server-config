@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  komf:
+    image: sndxr/komf:latest
+    container_name: komf
+    ports:
+      - "8085:8085"
+    user: ${PUID:-1000}:${PGID:-1000}
+    environment:
+      - KOMF_KAVITA_BASE_URI=${KAVITA_URL}
+      - KOMF_KAVITA_API_KEY=${KAVITA_APIKEY}
+      - KOMF_LOG_LEVEL=INFO
+      - TZ=${TIMEZONE:-America/New_York}
+      - JAVA_TOOL_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -XX:ShenandoahGCHeuristics=compact -XX:ShenandoahGuaranteedGCInterval=3600000 -XX:TrimNativeHeapInterval=3600000
+    volumes:
+      - ${CONFIG_DIR}/komf:/config
+    restart: unless-stopped
