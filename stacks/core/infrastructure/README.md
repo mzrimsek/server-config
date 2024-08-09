@@ -229,3 +229,4 @@ Add this to your Prometheus configuration to scrap Authelia data
 - Increased the Authelia buffer sizes because some services (Firefly III) will have massive requests that get rejected
 - Added duplicati specific user and group id variables to help with some permission issues
 - When you spin up the radarr-audiobooks instance you need to go into the config file it generates and modify the port from 8787 to 8788
+- When you spin up the mylar3-manga instance you need to go into the config.ini file it generates, navigate to the Interface section and modify the http port property from 8090 to 8091
