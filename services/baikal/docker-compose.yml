@@ -1,0 +1,10 @@
+services:
+  baikal:
+    image: ckulka/baikal:nginx
+    container_name: baikal
+    ports:
+      - "8428:80"
+    volumes:
+      - ${CONFIG_DIR}/baikal/config:/var/www/baikal/config
+      - ${CONFIG_DIR}/baikal/data:/var/www/baikal/Specific
+    restart: unless-stopped

@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  linkstack:
+    hostname: linkstack
+    container_name: linkstack
+    image: linkstackorg/linkstack:latest
+    environment:
+      - HTTP_SERVER_NAME=${APP_URL}
+      - HTTPS_SERVER_NAME=${APP_URL}
+      - SERVER_ADMIN=${ADMIN_EMAIL}
+      - TZ=${TIMEZONE:-America/New_York}
+      - LOG_LEVEL=info
+      - PHP_MEMORY_LIMIT=512M
+      - UPLOAD_MAX_FILESIZE=8M
+    volumes:
+      - linkstack_data:/htdocs # trying to map a directory doesn't work for whatever reason
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linkstack.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.linkstack.entrypoints=websecure"
+      - "traefik.http.routers.linkstack.tls.certresolver=tlsresolver"
+      - "traefik.http.services.linkstack.loadbalancer.server.port=443"
+      - "traefik.http.routers.linkstack.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

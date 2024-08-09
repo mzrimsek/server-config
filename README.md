@@ -28,6 +28,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
 - [Jellyfin](./services/jellyfin) - Media organization and viewing
   - Includes Jellyseerr
+- [Jellyfin Auto Collections](./services/jellyfin-auto-collections/) - Automatically create collections in Jellyfin based on configurable lists
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
 - [OpenLDAP](./services/ldap) - User credential backend
@@ -52,6 +53,9 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Paperless-NGX](./services/paperless-ngx) - A PDF processing and management server
 - [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
 - [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
+- [LinkStack](./services/linkstack) - A simple LinkTree like service for simple link sharing
+- [Pydio Cells](./services/pydio-cells) - A simple file sync platform
+- [Baikal](./services/baikal) - A CalDAV and CardDAV server
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases

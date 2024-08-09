@@ -1,0 +1,22 @@
+services:
+  baikal:
+    image: ckulka/baikal:nginx
+    container_name: baikal
+    volumes:
+      - ${CONFIG_DIR}/baikal/config:/var/www/baikal/config
+      - ${CONFIG_DIR}/baikal/data:/var/www/baikal/Specific
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.baikal.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.baikal.entrypoints=websecure"
+      - "traefik.http.routers.baikal.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.baikal.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
