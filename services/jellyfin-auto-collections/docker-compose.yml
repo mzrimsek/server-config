@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  jellyfin-auto-collections:
+    image: ghcr.io/ghomashudson/jellyfin-auto-collections:latest
+    container_name: jellyfin-auto-collections
+    environment:
+      - CRONTAB=${SCHEDULING_CRONTAB:-0 6 * * *}
+      - TZ=${SCHEDULING_TIMEZONE:-America/New_York}
+      - JELLYFIN_SERVER_URL=${JELLYFIN_SERVER_URL}
+      - JELLYFIN_API_KEY=${JELLYFIN_API_KEY}
+      - JELLYFIN_USER_ID=${JELLYFIN_USER_ID}
+    volumes:
+      - ${CONFIG_DIR}/jellyfin-auto-collections:/app/config
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
