@@ -1,0 +1,11 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    environment:
+      SIGNUPS_ALLOWED: "true"
+    volumes:
+      - ${CONFIG_DIR}/vaultwarden/data:/data
+    ports:
+      - 11001:80
+    restart: unless-stopped
