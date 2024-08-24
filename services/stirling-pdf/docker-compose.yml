@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    container_name: stirling-pdf
+    ports:
+      - "9980:8080"
+    volumes:
+      - ${CONFIG_DIR}/stirling-pdf/trainingData:/usr/share/tessdata
+      - ${CONFIG_DIR}/stirling-pdf/extraConfigs:/configs
+      - ${CONFIG_DIR}/stirling-pdf/customFiles:/customFiles/
+      - ${CONFIG_DIR}/stirling-pdf/logs:/logs/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=true
+      - LANGS=en_US
+    restart: unless-stopped

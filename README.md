@@ -56,6 +56,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Pydio Cells](./services/pydio-cells) - A simple file sync platform
 - [Baikal](./services/baikal) - A CalDAV and CardDAV server
 - [Vaultwarden](./services/vaultwarden) - A password manager
+- [Stirling PDF](./services/stirling-pdf) - A collection of tools for working with PDFs
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
