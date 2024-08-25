@@ -58,6 +58,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Vaultwarden](./services/vaultwarden) - A password manager
 - [Stirling PDF](./services/stirling-pdf) - A collection of tools for working with PDFs
 - [ConvertX](./services/convertx) - A collection of tools for converting files
+- [Web-Check](./services/web-check) - A service to check the status of web services
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
