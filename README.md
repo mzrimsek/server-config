@@ -52,6 +52,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Paperless-NGX](./services/paperless-ngx) - A PDF processing and management server
 - [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
 - [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
+- [Komf](./services/komf) - A metadata service for Kavita
 - [LinkStack](./services/linkstack) - A simple LinkTree like service for simple link sharing
 - [Pydio Cells](./services/pydio-cells) - A simple file sync platform
 - [Baikal](./services/baikal) - A CalDAV and CardDAV server
