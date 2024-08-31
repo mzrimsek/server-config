@@ -1,0 +1,27 @@
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx
+    container_name: convertx
+    environment:
+      - ACCOUNT_REGISTRATION=true
+      - JWT_SECRET=${JWT_SECRET}
+      - HTTP_ALLOWED=false
+      - ALLOW_UNAUTHENTICATED=false
+    volumes:
+      - ${CONFIG_DIR}/convertx:/app/data
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.convertx.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.convertx.entrypoints=websecure"
+      - "traefik.http.routers.convertx.tls.certresolver=tlsresolver"
+      - "traefik.http.services.convertx.loadbalancer.server.port=3000"
+      - "traefik.http.routers.convertx.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
