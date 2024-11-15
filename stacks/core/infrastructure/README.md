@@ -18,7 +18,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 - Mylar3 - Comic torrent management
 - Bazarr - Subtitle Management
 - Jellyseerr - Streamlines requests to Sonarr and Radarr for a Jellyfin library
-- Trilium - Knowledge-base and note taking
 - Mosquitto - Lightweight MQTT server
 - Duplicati - Remote file backup
 - OpenLDAP - Open source LDAP server for centralized user & group management
@@ -60,7 +59,6 @@ All the services deployed on the NAS in one stack. Services that live on the NAS
 | PGADMIN_DEFAULT_EMAIL    | PgAdmin default user email                                                                                                  |
 | PGADMIN_DEFAULT_PASSWORD | PgAdmin default user password                                                                                               |
 | PGADMIN_URL              | Subdomain to route to PgAdmin database management dashboard                                                                 |
-| TRILIUM_URL              | Subdomain to route to Trilium knowledge-base                                                                                |
 | PROWLARR_URL             | Subdomain to route to torrent indexer management interface                                                                  |
 | SONARR_URL               | Subdomain to route to tv show torrent management interface                                                                  |
 | RADARR_URL               | Subdomain to route to movie torrent management interface                                                                    |

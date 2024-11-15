@@ -271,28 +271,6 @@ services:
       - TZ=${TIMEZONE}
     restart: unless-stopped
 
-  ## NOTES MANAGEMENT
-
-  # knowledgebase
-  trilium:
-    container_name: trilium
-    image: zadam/trilium:latest
-    environment:
-      - TRILIUM_DATA_DIR=/data
-      - USER_UID=${PUID}
-      - USER_GID=${PGID}
-    volumes:
-      - ${CONFIG_DIR}/trilium:/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.trilium.rule=Host(`${TRILIUM_URL}`)"
-      - "traefik.http.routers.trilium.entrypoints=websecure"
-      - "traefik.http.routers.trilium.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.trilium.middlewares=authelia@docker"
-      - "traefik.http.services.trilium.loadbalancer.server.port=8080"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
   ## MEDIA MANAGEMENT
 
   #indexer management
