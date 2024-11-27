@@ -6,8 +6,10 @@ services:
     image: triliumnext/notes:latest
     environment:
       - TRILIUM_DATA_DIR=/data
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
     ports:
       - 5600:8080
     volumes:
-      - /opt/trilium:/data
+      - ${CONFIG_DIR}/trilium:/data
     restart: unless-stopped
