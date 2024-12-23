@@ -17,15 +17,34 @@ fi
 
 topicurl=${NTFY_URL}/${topic}
 
-curl -s \
-  -d "Watermelon-Pi rebooted at $formattedDate" \
-  -H "Title=[PROXMOX] Reboot CRON" \
-  -H "Tags=proxmox,watermelon-pi,reboot" \
-  -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
-  $topicurl
+# Attempt to reboot
+if reboot now; then
+  # Reboot successful, send notification
+  curl -s \
+    -d "Watermelon-Pi rebooted at $formattedDate" \
+    -H "Title=[PROXMOX] Reboot CRON" \
+    -H "Tags=proxmox,watermelon-pi,reboot" \
+    -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
+    $topicurl
 
-# Check if curl command was successful
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to send notification."
-  exit 1
+  # Check if curl command was successful
+  if [ $? -ne 0 ]; then
+    echo "Error: Failed to send notification."
+    exit 1
+  fi
+else
+  # Reboot failed, send high priority notification
+  curl -s \
+    -d "Failed to reboot Watermelon-Pi at $formattedDate" \
+    -H "Title=[PROXMOX] Reboot CRON - FAILURE" \
+    -H "Tags=proxmox,watermelon-pi,reboot,failure" \
+    -H "Priority=4" \
+    -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
+    $topicurl
+
+  # Check if curl command was successful
+  if [ $? -ne 0 ]; then
+    echo "Error: Failed to send high priority notification."
+    exit 1
+  fi
 fi
