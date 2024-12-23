@@ -1,17 +1,22 @@
 #!/bin/bash
 
+log() {
+  local message=$1
+  echo "$(date +"%Y-%m-%d %H:%M:%S") - $message"
+}
+
 validate_ntfy_env_vars() {
   if [ -z "$NTFY_URL" ]; then
-    echo "Error: NTFY_URL is not set."
+    log "Error: NTFY_URL is not set."
     exit 1
   fi
-  echo "NTFY_URL is set to $NTFY_URL"
+  log "NTFY_URL is set to $NTFY_URL"
 
   if [ -z "$NTFY_ACCESS_TOKEN" ]; then
-    echo "Error: NTFY_ACCESS_TOKEN is not set."
+    log "Error: NTFY_ACCESS_TOKEN is not set."
     exit 1
   fi
-  echo "NTFY_ACCESS_TOKEN is set."
+  log "NTFY_ACCESS_TOKEN is set."
 }
 
 send_ntfy_notification() {
@@ -32,7 +37,8 @@ send_ntfy_notification() {
     $topicurl
 
   if [ $? -ne 0 ]; then
-    echo "Error: Failed to send notification."
+    log "Error: Failed to send notification."
     exit 1
   fi
+  log "Notification sent successfully to $topicurl"
 }

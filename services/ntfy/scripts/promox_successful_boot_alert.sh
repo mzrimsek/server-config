@@ -5,13 +5,13 @@ source ./common.sh
 topic=infrastructure_alerts
 formattedDate=$(date +"%Y-%m-%d %H:%M:%S")
 
-echo "Validating environment variables..."
+log "Validating environment variables..."
 validate_ntfy_env_vars
 
-echo "Waiting for 30 seconds before sending notification..."
+log "Waiting for 30 seconds before sending boot notification..."
 sleep 30
 
-echo "Sending notification..."
+log "Sending notification about successful boot..."
 send_ntfy_notification \
   "$topic" \
   "Watermelon-Pi successfully booted at $formattedDate" \
