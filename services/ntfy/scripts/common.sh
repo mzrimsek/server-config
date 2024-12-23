@@ -1,5 +1,19 @@
 #!/bin/bash
 
+validate_ntfy_env_vars() {
+  if [ -z "$NTFY_URL" ]; then
+    echo "Error: NTFY_URL is not set."
+    exit 1
+  fi
+  echo "NTFY_URL is set to $NTFY_URL"
+
+  if [ -z "$NTFY_ACCESS_TOKEN" ]; then
+    echo "Error: NTFY_ACCESS_TOKEN is not set."
+    exit 1
+  fi
+  echo "NTFY_ACCESS_TOKEN is set."
+}
+
 send_ntfy_notification() {
   local topic=$1
   local message=$2
