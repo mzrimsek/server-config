@@ -18,10 +18,9 @@ if [ -z "$NTFY_ACCESS_TOKEN" ]; then
 fi
 echo "NTFY_ACCESS_TOKEN is set."
 
-topicurl=${NTFY_URL}/${topic}
-
-echo "Sending notification to $topicurl..."
+echo "Sending notification..."
 send_ntfy_notification \
+  "$topic" \
   "Watermelon-Pi will reboot in 30 seconds at $formattedDate" \
   "[PROXMOX] Reboot CRON" \
   "proxmox,watermelon-pi,reboot"
@@ -40,8 +39,9 @@ if reboot now; then
   echo "Reboot command executed successfully."
 else
   echo "Error: Failed to reboot Watermelon-Pi."
-  echo "Sending high priority notification to $topicurl..."
+  echo "Sending high priority notification..."
   send_ntfy_notification \
+    "$topic" \
     "Failed to reboot Watermelon-Pi at $formattedDate" \
     "[PROXMOX] Reboot CRON - FAILURE" \
     "proxmox,watermelon-pi,reboot,failure" \

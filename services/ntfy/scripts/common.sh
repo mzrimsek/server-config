@@ -1,11 +1,13 @@
-
 #!/bin/bash
 
 send_ntfy_notification() {
-  local message=$1
-  local title=$2
-  local tags=$3
-  local priority=$4
+  local topic=$1
+  local message=$2
+  local title=$3
+  local tags=$4
+  local priority=$5
+
+  local topicurl=${NTFY_URL}/${topic}
 
   curl -s \
     -d "$message" \

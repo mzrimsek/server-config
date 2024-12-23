@@ -18,13 +18,12 @@ if [ -z "$NTFY_ACCESS_TOKEN" ]; then
 fi
 echo "NTFY_ACCESS_TOKEN is set."
 
-topicurl=${NTFY_URL}/${topic}
-
 echo "Waiting for 30 seconds before sending notification..."
 sleep 30
 
-echo "Sending notification to $topicurl..."
+echo "Sending notification..."
 send_ntfy_notification \
+  "$topic" \
   "Watermelon-Pi successfully booted at $formattedDate" \
   "[PROXMOX] Boot Notification" \
   "proxmox,watermelon-pi,boot"
