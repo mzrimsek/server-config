@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./common.sh
+
 topic=infrastructure_alerts
 formattedDate=$(date +"%Y-%m-%d %H:%M:%S")
 
@@ -22,12 +24,10 @@ echo "Waiting for 30 seconds before sending notification..."
 sleep 30
 
 echo "Sending notification to $topicurl..."
-curl -s \
-  -d "Watermelon-Pi successfully booted at $formattedDate" \
-  -H "Title: [PROXMOX] Boot Notification" \
-  -H "Tags: proxmox,watermelon-pi,boot" \
-  -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
-  $topicurl
+send_ntfy_notification \
+  "Watermelon-Pi successfully booted at $formattedDate" \
+  "[PROXMOX] Boot Notification" \
+  "proxmox,watermelon-pi,boot"
 
 if [ $? -ne 0 ]; then
   echo "Error: Failed to send notification."

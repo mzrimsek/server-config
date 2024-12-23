@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./common.sh
+
 topic=infrastructure_alerts
 formattedDate=$(date +"%Y-%m-%d %H:%M:%S")
 
@@ -19,12 +21,10 @@ echo "NTFY_ACCESS_TOKEN is set."
 topicurl=${NTFY_URL}/${topic}
 
 echo "Sending notification to $topicurl..."
-curl -s \
-  -d "Watermelon-Pi will reboot in 30 seconds at $formattedDate" \
-  -H "Title: [PROXMOX] Reboot CRON" \
-  -H "Tags: proxmox,watermelon-pi,reboot" \
-  -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
-  $topicurl
+send_ntfy_notification \
+  "Watermelon-Pi will reboot in 30 seconds at $formattedDate" \
+  "[PROXMOX] Reboot CRON" \
+  "proxmox,watermelon-pi,reboot"
 
 if [ $? -ne 0 ]; then
   echo "Error: Failed to send notification."
@@ -39,15 +39,13 @@ echo "Rebooting Watermelon-Pi..."
 if reboot now; then
   echo "Reboot command executed successfully."
 else
-echo "Error: Failed to reboot Watermelon-Pi."
-echo "Sending high priority notification to $topicurl..."
-  curl -s \
-    -d "Failed to reboot Watermelon-Pi at $formattedDate" \
-    -H "Title: [PROXMOX] Reboot CRON - FAILURE" \
-    -H "Tags: proxmox,watermelon-pi,reboot,failure" \
-    -H "Priority: 4" \
-    -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
-    $topicurl
+  echo "Error: Failed to reboot Watermelon-Pi."
+  echo "Sending high priority notification to $topicurl..."
+  send_ntfy_notification \
+    "Failed to reboot Watermelon-Pi at $formattedDate" \
+    "[PROXMOX] Reboot CRON - FAILURE" \
+    "proxmox,watermelon-pi,reboot,failure" \
+    4
 
   if [ $? -ne 0 ]; then
     echo "Error: Failed to send high priority notification."
