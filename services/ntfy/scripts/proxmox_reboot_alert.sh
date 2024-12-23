@@ -3,50 +3,55 @@
 topic=infrastructure_alerts
 formattedDate=$(date +"%Y-%m-%d %H:%M:%S")
 
-# Check if NTFY_URL is set
+echo "Checking if NTFY_URL and NTFY_ACCESS_TOKEN are set..."
 if [ -z "$NTFY_URL" ]; then
   echo "Error: NTFY_URL is not set."
   exit 1
 fi
+echo "NTFY_URL is set to $NTFY_URL"
 
-# Check if NTFY_ACCESS_TOKEN is set
 if [ -z "$NTFY_ACCESS_TOKEN" ]; then
   echo "Error: NTFY_ACCESS_TOKEN is not set."
   exit 1
 fi
+echo "NTFY_ACCESS_TOKEN is set."
 
 topicurl=${NTFY_URL}/${topic}
 
-# Send notification about the reboot attempt
+echo "Sending notification to $topicurl..."
 curl -s \
-  -d "Watermelon-Pi is about to reboot at $formattedDate" \
-  -H "Title=[PROXMOX] Reboot CRON" \
-  -H "Tags=proxmox,watermelon-pi,reboot" \
+  -d "Watermelon-Pi will reboot in 30 seconds at $formattedDate" \
+  -H "Title: [PROXMOX] Reboot CRON" \
+  -H "Tags: proxmox,watermelon-pi,reboot" \
   -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
   $topicurl
 
-# Check if curl command was successful
 if [ $? -ne 0 ]; then
   echo "Error: Failed to send notification."
   exit 1
 fi
+echo "Notification sent successfully."
 
-# Attempt to reboot
+echo "Waiting for 30 seconds before rebooting..."
+sleep 30
+
+echo "Rebooting Watermelon-Pi..."
 if reboot now; then
   echo "Reboot command executed successfully."
 else
-  # Reboot failed, send high priority notification
+echo "Error: Failed to reboot Watermelon-Pi."
+echo "Sending high priority notification to $topicurl..."
   curl -s \
     -d "Failed to reboot Watermelon-Pi at $formattedDate" \
-    -H "Title=[PROXMOX] Reboot CRON - FAILURE" \
-    -H "Tags=proxmox,watermelon-pi,reboot,failure" \
-    -H "Priority=4" \
+    -H "Title: [PROXMOX] Reboot CRON - FAILURE" \
+    -H "Tags: proxmox,watermelon-pi,reboot,failure" \
+    -H "Priority: 4" \
     -H "Authorization: Bearer $NTFY_ACCESS_TOKEN" \
     $topicurl
 
-  # Check if curl command was successful
   if [ $? -ne 0 ]; then
     echo "Error: Failed to send high priority notification."
     exit 1
   fi
+  echo "High priority notification sent successfully."
 fi
