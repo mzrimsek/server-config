@@ -1,6 +1,6 @@
 services:
   ersatztv:
-    image: jasongdove/ersatztv:develop-vaapi
+    image: jasongdove/ersatztv:latest-vaapi
     volumes:
       - ${CONFIG_DIR}/ersatztv:/root/.local/share/ersatztv
       # - ${MEDIA_DIR}:/media:ro # for local media
