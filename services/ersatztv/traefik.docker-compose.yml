@@ -1,0 +1,29 @@
+services:
+  ersatztv:
+    image: jasongdove/ersatztv:develop-vaapi
+    volumes:
+      - ${CONFIG_DIR}/ersatztv:/root/.local/share/ersatztv
+      # - ${MEDIA_DIR}:/media:ro # for local media
+      - type: tmpfs
+        target: /root/.local/share/etv-transcode
+    ports:
+      - "8409:8409"
+    environment:
+      - TZ=${TIMEZONE:-America/New_York}
+    container_name: ersatztv
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ersatztv.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.ersatztv.entrypoints=websecure"
+      - "traefik.http.routers.ersatztv.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.ersatztv.middlewares=authelia@docker"
+      - "traefik.http.services.ersatztv.loadbalancer.server.port=8409"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    name: ${TRAEFIK_PUBLIC_NETWORK}
+    external: true
