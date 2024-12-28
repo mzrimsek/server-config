@@ -1,5 +1,6 @@
 services:
   ersatztv:
+    container_name: ersatztv
     image: jasongdove/ersatztv:latest-vaapi
     volumes:
       - ${CONFIG_DIR}/ersatztv:/root/.local/share/ersatztv
@@ -10,7 +11,9 @@ services:
       - "8409:8409"
     environment:
       - TZ=${TIMEZONE:-America/New_York}
-    container_name: ersatztv
+    devices: # pass iGPU for transcoding
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
     networks:
       - public
     labels:

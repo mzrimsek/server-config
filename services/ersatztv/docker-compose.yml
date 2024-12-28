@@ -1,5 +1,6 @@
 services:
   ersatztv:
+    container_name: ersatztv
     image: jasongdove/ersatztv:latest-vaapi
     restart: unless-stopped
     volumes:
@@ -9,6 +10,8 @@ services:
         target: /root/.local/share/etv-transcode
     ports:
       - "8409:8409"
+    devices: # pass iGPU for transcoding
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
     environment:
       - TZ=${TIMEZONE:-America/New_York}
-    container_name: ersatztv
