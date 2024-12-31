@@ -28,7 +28,7 @@ services:
       # System
       - TZ=${TIMEZONE:-America/New_York}
       - USER_LOCALES=${USER_LOCALES:-"en_US.UTF-8 UTF-8"}
-      - DISPLAY=${DISPLAY:-":55"}
+      - DISPLAY=${DISPLAY:-:55}
 
       # User
       - PUID=${PUID:-1000}
