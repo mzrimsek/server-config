@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     ## NOTE: This config uses privileged to access to host to be able to access the required devices
     privileged: true
-    shm_size: ${SHM_SIZE}
+    shm_size: ${SHM_SIZE:-2G}
     ipc: host # Could also be set to 'shareable'
     ulimits:
       nofile:
