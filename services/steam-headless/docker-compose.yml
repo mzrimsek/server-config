@@ -3,6 +3,7 @@ version: "3.8"
 services:
   steam-headless:
     image: josh5/steam-headless:latest
+    container_name: steam-headless
     restart: unless-stopped
     ## NOTE: This config uses privileged to access to host to be able to access the required devices
     privileged: true
