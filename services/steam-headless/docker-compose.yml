@@ -3,21 +3,15 @@ version: "3.8"
 services:
   steam-headless:
     image: josh5/steam-headless:latest
-    container_name: steam-headless
     restart: unless-stopped
-    shm_size: ${SHM_SIZE:-2G}
+    ## NOTE: This config uses privileged to access to host to be able to access the required devices
+    privileged: true
+    shm_size: ${SHM_SIZE}
     ipc: host # Could also be set to 'shareable'
     ulimits:
       nofile:
         soft: 1024
         hard: 524288
-    cap_add:
-      - NET_ADMIN
-      - SYS_ADMIN
-      - SYS_NICE
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
 
     # NETWORK:
     ## NOTE:  With this configuration, if we do not use the host network, then physical device input
@@ -67,20 +61,6 @@ services:
       # - NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:-all}
       # - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
       # - NVIDIA_DRIVER_VERSION=${NVIDIA_DRIVER_VERSION}
-
-    # DEVICES:
-    devices:
-      # Use the host fuse device [REQUIRED].
-      - /dev/fuse
-      # Add the host uinput device [REQUIRED].
-      - /dev/uinput
-      # Add AMD/Intel HW accelerated video encoding/decoding devices [REQUIRED].
-      # NOTE: See documentation for determining which devices to configure here if you have multiple GPUs
-      - /dev/dri/card0
-      - /dev/dri/renderD128
-    # Ensure container access to devices 13:*
-    device_cgroup_rules:
-      - "c 13:* rmw"
 
     # VOLUMES:
     volumes:

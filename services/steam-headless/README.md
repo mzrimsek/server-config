@@ -2,6 +2,8 @@
 
 There is some setup to do - https://github.com/Steam-Headless/docker-steam-headless/blob/master/docs/docker-compose.md
 
+Make sure to add your `GAMES_DIR` to Steam as a Library in the settings.
+
 ## Variables
 
 | Environment Variable | Description                            |
