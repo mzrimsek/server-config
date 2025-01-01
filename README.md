@@ -62,6 +62,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Web-Check](./services/web-check) - A service to check the status of web services
 - [My-IP](./services/my-ip) - A service to check the IP of the client and related information
 - [ErsatzTV](./services/ersatztv) - A service to create a TV guide for your media
+- [Steam-Headless](./services/steam-headless) - A headless Steam client for running games on a server you can access from your browser
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
