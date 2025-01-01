@@ -78,3 +78,5 @@ services:
 
       # Pulse audio socket.
       - ${CONFIG_DIR}/steam-headless/pulse/:/tmp/pulse/:rw
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
