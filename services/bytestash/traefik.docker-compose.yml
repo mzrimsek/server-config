@@ -1,0 +1,37 @@
+services:
+  bytestash:
+    image: "ghcr.io/jordan-dalby/bytestash:latest"
+    container_name: bytestash
+    volumes:
+      - ${CONFIG_DIR}/bytestash/snippets:/data/snippets
+    environment:
+      BASE_PATH: ""
+      JWT_SECRET: ${JWT_SECRET}
+      TOKEN_EXPIRY: 24h
+      ALLOW_NEW_ACCOUNTS: true
+      DEBUG: false
+      DISABLE_ACCOUNTS: false
+      DISABLE_INTERNAL_ACCOUNTS: true
+
+      OIDC_ENABLED: true
+      OIDC_DISPLAY_NAME: ${OIDC_DISPLAY_NAME}
+      OIDC_ISSUER_URL: ${OIDC_ISSUER_URL}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_SCOPES: "openid profile email"
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bytestash.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.bytestash.entrypoints=websecure"
+      - "traefik.http.routers.bytestash.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.bytestash.middlewares=authelia@docker"
+      - "traefik.http.services.bytestash.loadbalancer.server.port=5000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

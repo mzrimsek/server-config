@@ -1,0 +1,24 @@
+services:
+  bytestash:
+    image: "ghcr.io/jordan-dalby/bytestash:latest"
+    container_name: bytestash
+    volumes:
+      - ${CONFIG_DIR}/bytestash/snippets:/data/snippets
+    ports:
+      - 5280:5000
+    environment:
+      BASE_PATH: ""
+      JWT_SECRET: ${JWT_SECRET}
+      TOKEN_EXPIRY: 24h
+      ALLOW_NEW_ACCOUNTS: true
+      DEBUG: false
+      DISABLE_ACCOUNTS: false
+      DISABLE_INTERNAL_ACCOUNTS: true
+
+      OIDC_ENABLED: true
+      OIDC_DISPLAY_NAME: ${OIDC_DISPLAY_NAME}
+      OIDC_ISSUER_URL: ${OIDC_ISSUER_URL}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_SCOPES: "openid profile email"
+    restart: unless-stopped

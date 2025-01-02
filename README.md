@@ -63,6 +63,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [My-IP](./services/my-ip) - A service to check the IP of the client and related information
 - [ErsatzTV](./services/ersatztv) - A service to create a TV guide for your media
 - [Steam-Headless](./services/steam-headless) - A headless Steam client for running games on a server you can access from your browser
+- [ByteStash](./services/bytestash) - A small service to store code snippets and other text data
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases
