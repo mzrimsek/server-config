@@ -1,0 +1,27 @@
+version: "3"
+services:
+  pinchflat:
+    image: ghcr.io/kieraneglin/pinchflat:latest
+    container_name: pinchflat
+    environment:
+      - TZ=${TIMEZONE:-America/New_York}
+    volumes:
+      - ${CONFIG_DIR}/pinchflat:/config
+      - ${DOWNLOADS_DIR}:/downloads
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pinchflat.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.pinchflat.entrypoints=websecure"
+      - "traefik.http.routers.pinchflat.tls.certresolver=tlsresolver"
+      - "traefik.http.services.pinchflat.loadbalancer.server.port=8945"
+      - "traefik.http.routers.pinchflat.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

@@ -26,9 +26,6 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Muse](./services/muse) - A Discord music bot
 - [n8n](./services/n8n) - An automation platform similar to
 - [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
-- [Jellyfin](./services/jellyfin) - Media organization and viewing
-  - Includes Jellyseerr
-- [Jellyfin Auto Collections](./services/jellyfin-auto-collections/) - Automatically create collections in Jellyfin based on configurable lists
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
 - [OpenLDAP](./services/ldap) - User credential backend
@@ -43,9 +40,6 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Ntfy](./services/ntfy) - Simple notification service
 - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
 - [Linkding](./services/linkding) - Bookmark management
-- [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
-- [Jellystat](./services/jellystat) - A page to get stats on your Jellyfin server usage
-- [Metube](./services/metube) - A service to assist in downloading youtube videos
 - [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
 - [Traggo](./services/traggo) - A simple time tracking service
 - [Ghost](./services/ghost) - A simple blogging platform
@@ -61,9 +55,17 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [ConvertX](./services/convertx) - A collection of tools for converting files
 - [Web-Check](./services/web-check) - A service to check the status of web services
 - [My-IP](./services/my-ip) - A service to check the IP of the client and related information
-- [ErsatzTV](./services/ersatztv) - A service to create a TV guide for your media
 - [Steam-Headless](./services/steam-headless) - A headless Steam client for running games on a server you can access from your browser
 - [ByteStash](./services/bytestash) - A small service to store code snippets and other text data
+- [Media](./media)
+  - [ErsatzTV](./services/ersatztv) - A service to create a TV guide for your media
+  - [Jellyfin](./services/jellyfin) - Media organization and viewing
+    - Includes Jellyseerr
+  - [Jellyfin Auto Collections](./services/jellyfin-auto-collections/) - Automatically create collections in Jellyfin based on configurable lists
+  - [Wizarr](./services/wizarr) - User management and onboarding for Jellyfin
+  - [Jellystat](./services/jellystat) - A page to get stats on your Jellyfin server usage
+  - [Metube](./services/metube) - A service to assist in downloading youtube videos
+  - [Pinchflat](./services/pinchflat) - A service to assist in downloading youtube videos, but more focused on continuous downloads playlists and channels (for archiving, collecting shows for Jellyfin, etc).
 - [Databases](./databases)
   - [CloudBeaver](./services/databases/cloudbeaver) - A web-based database management tool
   - [SQLite-Browser](./services/databases/sqlite-browser) - A GUI for SQLite databases

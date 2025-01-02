@@ -1,0 +1,11 @@
+version: "3"
+services:
+  pinchflat:
+    image: ghcr.io/kieraneglin/pinchflat:latest
+    environment:
+      - TZ=${TIMEZONE:-America/New_York}
+    ports:
+      - 8945:8945
+    volumes:
+      - ${CONFIG_DIR}/pinchflat:/config
+      - ${DOWNLOADS_DIR}:/downloads
