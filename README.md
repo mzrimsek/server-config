@@ -13,11 +13,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 ## Services
 
 - [Portainer](./services/portainer) - Docker Container and Kubernetes Cluster Management and Orchestration
-- [Traefik](./services/traefik) - Container-focused Reverse Proxy
 - [Jenkins](./services/jenkins) - Customizable Build Server
-- [MQTT](./services/mqtt) - MQTT Servers for Cross-Server Communication
-  - RabbitMQ
-  - Mosquitto
 - [Home Assistant](./services/homeassistant) - Home Automation Platform
 - [Homepage](./services/homepage) - Simple and Customizable Dashboard for your Services
 - [Vikunja](./services/vikunja) - Task Management Platform
@@ -25,12 +21,9 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Firefly III](./services/fireflyiii) - Budgeting and Transaction Tracking
 - [Muse](./services/muse) - A Discord music bot
 - [n8n](./services/n8n) - An automation platform similar to
-- [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
 - [Transmission](./services/torrent) - Torrenting download client
 - [Duplicati](./services/duplicati/) - File backup
 - [OpenLDAP](./services/ldap) - User credential backend
-- [Wireguard](./services/vpn) - VPN tunnel
-- Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
 - [Grafana](./services/grafana/) - Data visualization
 - [Speedtest Tracker](./services/speedtest/) - Continuous Network Speedtests
 - [Uptime Kama](./services/uptime/) - Continuous uptime monitoring for websites, ports, and various other services
@@ -38,25 +31,34 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Grocy](./services/grocy) - Groceries and household management
 - [KitchenOwl](./services/kitchenowl) - Grocery and Recipe management
 - [Ntfy](./services/ntfy) - Simple notification service
-- [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
 - [Linkding](./services/linkding) - Bookmark management
 - [Dozzle](./services/dozzle) - A light weight service to view logs from docker containers
 - [Traggo](./services/traggo) - A simple time tracking service
 - [Ghost](./services/ghost) - A simple blogging platform
 - [Paperless-NGX](./services/paperless-ngx) - A PDF processing and management server
-- [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
 - [BookBounty](./services/bookbounty) - An application to extend Radarr to allow for automatic querying from Library Genesis
 - [Komf](./services/komf) - A metadata service for Kavita
 - [LinkStack](./services/linkstack) - A simple LinkTree like service for simple link sharing
 - [Pydio Cells](./services/pydio-cells) - A simple file sync platform
 - [Baikal](./services/baikal) - A CalDAV and CardDAV server
 - [Vaultwarden](./services/vaultwarden) - A password manager
-- [Stirling PDF](./services/stirling-pdf) - A collection of tools for working with PDFs
-- [ConvertX](./services/convertx) - A collection of tools for converting files
-- [Web-Check](./services/web-check) - A service to check the status of web services
-- [My-IP](./services/my-ip) - A service to check the IP of the client and related information
 - [Steam-Headless](./services/steam-headless) - A headless Steam client for running games on a server you can access from your browser
 - [ByteStash](./services/bytestash) - A small service to store code snippets and other text data
+- [Utilities](./services/utilities)
+  - [Stirling PDF](./services/stirling-pdf) - A collection of tools for working with PDFs
+  - [ConvertX](./services/convertx) - A collection of tools for converting files
+  - [Web-Check](./services/web-check) - A service to check the status of web services
+  - [My-IP](./services/my-ip) - A service to check the IP of the client and related information
+  - [IT-Tools](./services/it-tools) - A collection of tools for Developers and IT professionals
+- [Networking](./services/networking/)
+  - [Traefik](./services/traefik) - Container-focused Reverse Proxy
+  - [Cloudflared](./services/cloudflared) - Cloudflare's Zero Trust tunnels
+  - [Wireguard](./services/vpn) - VPN tunnel
+  - [PiHole](./services/pihole) - Network-wide Adblocking and DNS Management
+  - [MQTT](./services/mqtt) - MQTT Servers for Cross-Server Communication
+    - RabbitMQ
+    - Mosquitto
+  - Authelia (part of stacks) - Reverse proxy forward auth middleware and SSO provider
 - [Media](./media)
   - [ErsatzTV](./services/ersatztv) - A service to create a TV guide for your media
   - [Jellyfin](./services/jellyfin) - Media organization and viewing
