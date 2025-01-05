@@ -13,7 +13,8 @@ services:
     volumes:
       - ${CONFIG_DIR}/duplicati:/config
       - ${CONFIG_DIR}/duplicati/backups:/backups
-      - ${BACKUP_ROOT}:/source
+      - ${BACKUP_ROOT1}:/source/root1
+      - ${BACKUP_ROOT2}:/source/root2
     network_mode: "host" # port 8200
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
