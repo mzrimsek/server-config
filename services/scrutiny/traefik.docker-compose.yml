@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  analogj:
+    image: "ghcr.io/analogj/scrutiny:master-omnibus"
+    container_name: scrutiny
+    devices:
+      - /dev/sdk
+      - /dev/sdj
+      - /dev/sdi
+      - /dev/sdh
+      - /dev/sdg
+      - /dev/sdf
+      - /dev/sdb
+      - /dev/sdc
+      - /dev/sdd
+      - /dev/sde
+    cap_add:
+      - SYS_RAWIO
+    volumes:
+      - /run/udev:/run/udev:ro
+      - ${CONFIG_DIR}/scrutiny/influxdb:/opt/scrutiny/influxdb"
+      - ${CONFIG_DIR}/scrutiny/config:/opt/scrutiny/config"
+    ports:
+      - 8698:8086 # influxdb
+      - 8699:8080 # web ui
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.scrutiny.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.scrutiny.entrypoints=websecure"
+      - "traefik.http.routers.scrutiny.tls.certresolver=tlsresolver"
+      - "traefik.http.services.scrutiny.loadbalancer.server.port=8080"
+      - "traefik.http.routers.scrutiny.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

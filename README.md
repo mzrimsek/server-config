@@ -44,6 +44,7 @@ As a side note, many of these setups also include Kubernetes configurations. If 
 - [Vaultwarden](./services/vaultwarden) - A password manager
 - [Steam-Headless](./services/steam-headless) - A headless Steam client for running games on a server you can access from your browser
 - [ByteStash](./services/bytestash) - A small service to store code snippets and other text data
+- [Scrutiny](./services/scrutiny) - A service to monitor the health of your hard drives
 - [Utilities](./services/utilities)
   - [Stirling PDF](./services/stirling-pdf) - A collection of tools for working with PDFs
   - [ConvertX](./services/convertx) - A collection of tools for converting files
