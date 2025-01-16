@@ -69,7 +69,9 @@ services:
       - ${ROMS_DIR}/gbc:/data/gbc/roms
       - ${ROMS_DIR}/nds:/data/nds/roms
       - ${ROMS_DIR}/n64:/data/n64/roms
+      - ${ROMS_DIR}/nes:/data/nes/roms
       - ${ROMS_DIR}/snes:/data/snes/roms
+      - ${ROMS_DIR}/psx:/data/psx/roms
     ports:
       - 17500:3000 # internal configuration interface
     networks:
