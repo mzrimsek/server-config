@@ -10,6 +10,8 @@ services:
       - ${CONFIG_DIR}/homepage/config:/app/config
       - ${CONFIG_DIR}/homepage/images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=${SERVICE_DASHBOARD_URL}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.service-dashboard.rule=Host(`${SERVICE_DASHBOARD_URL}`)"
