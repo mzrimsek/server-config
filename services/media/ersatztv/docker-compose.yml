@@ -1,7 +1,7 @@
 services:
   ersatztv:
     container_name: ersatztv
-    image: jasongdove/ersatztv:latest-vaapi
+    image: jasongdove/ersatztv:latest
     restart: unless-stopped
     volumes:
       - ${CONFIG_DIR}/ersatztv:/root/.local/share/ersatztv
