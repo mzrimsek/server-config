@@ -15,3 +15,7 @@ https://github.com/shenxn/protonmail-bridge-docker/tree/master?tab=readme-ov-fil
 3. After ths sync in complete, run "info" and note down the username and password.
 4. Run the "exit" command to stop the bridge gracefully
 5. Exit the container
+6. Now you need to add the email account in Paperless and test it's configuration to make sure you can sync
+
+- [Useful article](https://www.richardneililagan.com/posts/paperless-ngx-with-proton-mail/)
+  - Key takeaways are to use the 143 port to connect and the hostname of the bridge container and the use the credentials obtained in step 3.
