@@ -90,9 +90,6 @@ services:
     image: shenxn/protonmail-bridge
     networks:
       - internal
-    ports:
-      - 1025:25/tcp
-      - 1143:143/tcp
     volumes:
       - protonmail-bridge:/root
     restart: unless-stopped

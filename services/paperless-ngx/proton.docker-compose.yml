@@ -75,9 +75,6 @@ services:
   protonmail-bridge:
     container_name: paperless-ngx-protonmail-bridge
     image: shenxn/protonmail-bridge
-    ports:
-      - 1025:25/tcp
-      - 1143:143/tcp
     volumes:
       - protonmail-bridge:/root
     restart: unless-stopped
