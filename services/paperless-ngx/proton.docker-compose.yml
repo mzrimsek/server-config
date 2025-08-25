@@ -21,7 +21,7 @@ services:
       - ${CONFIG_DIR}/paperless-ngx/export:/usr/src/paperless/export
       - ${CONSUME_DIR}:/usr/src/paperless/consume
     ports:
-      - 7788:8000
+      - 7789:8000
     environment:
       PAPERLESS_REDIS: redis://paperless-ngx-redis:6379
       PAPERLESS_TIKA_ENABLED: 1
