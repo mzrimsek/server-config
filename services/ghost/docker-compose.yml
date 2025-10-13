@@ -13,6 +13,8 @@ services:
       database__connection__password: ${DB_PASSWORD}
       database__connection__database: ghost
       url: http://${APP_URL}
+      # https://www.reddit.com/r/Ghost/comments/1kqov3m/failed_to_send_email_please_check_your_site/
+      security__staffDeviceVerification: false
     volumes:
       - ${CONFIG_DIR}/ghost/content:/var/lib/ghost/content
     restart: unless-stopped
