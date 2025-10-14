@@ -1,0 +1,29 @@
+version: "3.1"
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost-blog
+    environment:
+      database__client: mysql
+      database__connection__host: ${DB_HOST}
+      database__connection__user: ${DB_USER}
+      database__connection__password: ${DB_PASSWORD}
+      database__connection__database: ghost
+      url: http://${APP_URL}
+      # https://www.reddit.com/r/Ghost/comments/1kqov3m/failed_to_send_email_please_check_your_site/
+      security__staffDeviceVerification: false
+    ports:
+      - 2595:2368
+    volumes:
+      - ${CONFIG_DIR}/ghost/content:/var/lib/ghost/content
+    networks:
+      - public
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${CLOUDFLARED_NETWORK}
