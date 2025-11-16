@@ -53,39 +53,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
-  # roms
-  emulatorjs:
-    image: lscr.io/linuxserver/emulatorjs:latest
-    container_name: emulatorjs
-    environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - TZ=${TIMEZONE:-America/New_York}
-    volumes:
-      - ${CONFIG_DIR}/emulatorjs/config:/config
-      - ${CONFIG_DIR}/emulatorjs/data:/data
-      - ${ROMS_DIR}/gb:/data/gb/roms
-      - ${ROMS_DIR}/gba:/data/gba/roms
-      - ${ROMS_DIR}/gbc:/data/gbc/roms
-      - ${ROMS_DIR}/nds:/data/nds/roms
-      - ${ROMS_DIR}/n64:/data/n64/roms
-      - ${ROMS_DIR}/nes:/data/nes/roms
-      - ${ROMS_DIR}/snes:/data/snes/roms
-      - ${ROMS_DIR}/psx:/data/psx/roms
-    ports:
-      - 17500:3000 # internal configuration interface
-    networks:
-      - public
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.emulatorjs.rule=Host(`${EMULATORJS_URL}`)"
-      - "traefik.http.routers.emulatorjs.entrypoints=websecure"
-      - "traefik.http.routers.emulatorjs.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.emulatorjs.middlewares=authelia@docker"
-      - "traefik.http.services.emulatorjs.loadbalancer.server.port=80"
-      - "com.centurylinklabs.watchtower.enable=true"
-    restart: unless-stopped
-
   # audiobooks & podcasts
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest

@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+  romm:
+    image: rommapp/romm:latest
+    container_name: romm
+    environment:
+      - DB_HOST=romm-db
+      - DB_NAME=romm
+      - DB_USER=romm-user
+      - DB_PASSWD=${DB_PASSWORD}
+      - ROMM_AUTH_SECRET_KEY=${ROMM_AUTH_SECRET_KEY}
+      - SCREENSCRAPER_USER=${SCREENSCRAPER_USER}
+      - SCREENSCRAPER_PASSWORD=${SCREENSCRAPER_PASSWORD} # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#screenscraper
+      - RETROACHIEVEMENTS_API_KEY=${RETROACHIEVEMENTS_API_KEY} # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#retroachievements
+      - STEAMGRIDDB_API_KEY=${STEAMGRIDDB_API_KEY} # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#steamgriddb
+      - HASHEOUS_API_ENABLED=true # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#hasheous
+      - IGDB_CLIENT_ID=${IGDB_CLIENT_ID}
+      - IGDB_CLIENT_SECRET=${IGDB_CLIENT_SECRET}
+    volumes:
+      - ${CONFIG_DIR}/romm/resources:/romm/resources # Resources fetched from IGDB (covers, screenshots, etc.)
+      - ${CONFIG_DIR}/romm/redis-data:/redis-data # Cached data for background tasks
+      - ${LIBRARY_PATH}:/romm/library # Your game library. Check https://docs.romm.app/latest/Getting-Started/Folder-Structure/ for more details.
+      - ${CONFIG_DIR}/romm/assets:/romm/assets # Uploaded saves, states, etc.
+      - ${CONFIG_DIR}/romm/config:/romm/config # (Optional) Path where config.yml is stored
+    networks:
+      - internal
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.romm.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.romm.entrypoints=websecure"
+      - "traefik.http.routers.romm.tls.certresolver=tlsresolver"
+      - "traefik.http.services.romm.loadbalancer.server.port=8080"
+      - "traefik.http.routers.romm.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+    depends_on:
+      romm-db:
+        condition: service_healthy
+        restart: true
+
+  romm-db:
+    image: mariadb:latest
+    container_name: romm-db
+    hostname: romm-db
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=romm
+      - MARIADB_USER=romm-user
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ${CONFIG_DIR}/romm/db:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      start_interval: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  internal:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}
