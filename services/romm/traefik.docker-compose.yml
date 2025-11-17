@@ -26,6 +26,8 @@ services:
     networks:
       - internal
       - public
+    ports:
+      - 5996:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.romm.rule=Host(`${APP_URL}`)"
