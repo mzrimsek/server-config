@@ -22,7 +22,7 @@ services:
       - 6767:6767 # bazarr
       - 8090:8090 # mylar3
       - 8091:8091 # mylar3-manga
-      - 5055:5055 # jellyseerr
+      - 5055:5055 # seerr
     networks:
       - public
     environment:
@@ -278,22 +278,29 @@ services:
     restart: unless-stopped
 
   # media request interface
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
       - LOG_LEVEL=debug
       - TZ=${TIMEZONE}
     volumes:
-      - ${CONFIG_DIR}/jellyseerr:/app/config
+      - ${CONFIG_DIR}/seerr:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
     network_mode: service:service-vpn
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyseerr.rule=Host(`${JELLYSEERR_URL}`)"
-      - "traefik.http.routers.jellyseerr.entrypoints=websecure"
-      - "traefik.http.routers.jellyseerr.tls.certresolver=tlsresolver"
-      - "traefik.http.routers.jellyseerr.middlewares=authelia@docker"
-      - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
+      - "traefik.http.routers.seerr.rule=Host(`${SEERR_URL}`)"
+      - "traefik.http.routers.seerr.entrypoints=websecure"
+      - "traefik.http.routers.seerr.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.seerr.middlewares=authelia@docker"
+      - "traefik.http.services.seerr.loadbalancer.server.port=5055"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - service-vpn
