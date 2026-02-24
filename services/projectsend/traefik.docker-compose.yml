@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  projectsend:
+    image: lscr.io/linuxserver/projectsend:latest
+    container_name: projectsend
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-America/New_York}
+    volumes:
+      - ${CONFIG_DIR}/projectsend/config:/config
+      - ${CONFIG_DIR}/projectsend/data:/data
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.projectsend.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.projectsend.entrypoints=websecure"
+      - "traefik.http.routers.projectsend.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.projectsend.middlewares=authelia@docker"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+networks:
+  public:
+    external:
+      name: ${TRAEFIK_PUBLIC_NETWORK}

@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  projectsend:
+    image: lscr.io/linuxserver/projectsend:latest
+    container_name: projectsend
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-America/New_York}
+    volumes:
+      - ${CONFIG_DIR}/projectsend/config:/config
+      - ${CONFIG_DIR}/projectsend/data:/data
+    ports:
+      - 6564:80
+    restart: unless-stopped
